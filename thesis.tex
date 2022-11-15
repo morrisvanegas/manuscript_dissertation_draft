@@ -1,0 +1,135 @@
+% ----------------------------------------------------------------------------
+% thesis.tex:	Master Thesis
+% ----------------------------------------------------------------------------
+% edited by:	Hans Gunar Schirner
+% last update:	see cvs
+% ----------------------------------------------------------------------------
+
+% Options
+% PHD    -- PhD Dissertation (default: MS Thesis)
+% draft  -- label as draft version (default: final)
+\documentclass[PHD]{macro/neu_msthesis}
+
+% --- Global Definitions for title and others ---
+
+% define thesis title 
+\title{Towards Translation of Portable, Non-invasive, Near-infrared Imaging Systems}
+
+% define thesis author 
+\author{Morris D. Vanegas}
+
+% department name 
+\dept{Bioengineering}
+
+% degree name if not "Master of Science" or "Doctor of Philosophy"
+% should not be needed
+%\degree{My Custom Degree Name}
+
+% area of degree (typically the same as \dept{})
+% will be used on degree page: 	
+\degreename{Bioengineering}
+
+% General field in which degree is obtainded (usually same as \degreename{})
+\field{Bioengineering}
+
+% Define month when submitted (START writing early or it will be very soon too late :-) )
+\submitdate{May 2023}
+
+% how many committee members (including adviser)
+\numberofmembers{3}
+
+% Define committee member names
+\principaladviser{Dr. Qianqian Fang}
+\firstreader{Dr. Mark Niedre}
+\secondreader{Dr. Meryem Y\"{u}cel}
+%\thirdreader{Third Reader Name}
+%\fourthreader{Fourth Reader Name}
+%\fifthreader{Fifth Reader Name}
+
+% name chair of department
+\chairman{Dr. Lee Makowski}
+
+% name of director graduate school
+\dean{Dr. Gregory D. Abowd} %dean
+
+% all user defined macros 
+% outsourced conveniently to keep this file clean
+\input{macro/macro}
+
+
+% --- begin of document ---
+\begin{document}
+
+% add a pdf bookmark to the cover page
+\pdfbookmark[1]{Cover}{cover}
+
+% --- title page ---
+\titlepage
+
+% --- front matter ---
+\begin{frontmatter}
+
+% print signature page
+\signaturepage % may have to manually replace
+
+% abstract
+\input{tex/abstract.tex}
+
+% dedication
+\input{tex/dedication.tex}
+
+% acknowledgments
+\input{tex/acknowledgements.tex} 
+
+% preface
+\input{tex/preface.tex}
+
+% table of content (add a bookmark for convenience)
+\pdfbookmark[1]{Table of Contents}{contents}
+\tableofcontents
+\listoffigures
+\newpage\ssp
+\listoftables
+% list of Acronyms (comment out if no acronyms are specified)
+\input{tex/acronyms.tex}
+
+\end{frontmatter}
+
+
+% --- body of the document ---
+
+%\pagestyle{plain}
+\pagestyle{myheadings}
+
+% include chapters
+\input{tex/intro.tex}
+\input{tex/background.tex}
+\input{tex/moxi.tex}
+\input{tex/mobi.tex}
+\input{tex/omci.tex}
+\input{tex/3dprint.tex}
+\input{tex/conclusion.tex}
+
+
+% --- Bibliography ----
+\bibliographystyle{plain}
+
+% include bibliography definition
+\bibliography{bib/thesis}
+
+
+% --- Appendix ---
+%\appendix
+%include anything you need in the appendix
+%\include{appendix/appendix}
+
+
+% --- Index ----
+%\printindex
+
+
+% --- that's it ---
+\end{document}
+
+% --- EOF --------------------------------------------------------------------
+
