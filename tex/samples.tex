@@ -2,60 +2,36 @@
 
 \chapter{INTRODUCTION} % all caps please
 \label{chap:intro}
-This is where the intro goes. 
-There is a planet ... where people still believe digital watches are the 
-greatest invention. It is mostly harmless. 
+
+
+%multi figure image
+\begin{figure}
+	\begin{center}
+	\subfigure[]{\label{fig:mammography_top}\includegraphics[height=5cm]{mammography_top.pdf}}
+	\subfigure[]{\label{fig:mammography_side}\includegraphics[height=5cm]{mammography_side.pdf}}
+	\subfigure[]{\label{fig:mammography_setup}\includegraphics[width=5cm]{sli_model.pdf}}
+	\end{center}
+	\caption{ (a) Top-view of the breast compression compartment -- upper: SLI system; bottom: horizontal cross-section (orange line) of the compressed breast with blue circles indicating the placement of the checkerboard used for system calibration. Numbers 1-5 indicate the 5 board orientations repeated at each location for calibration. (b) Side-view of the breast compression plates, showing the linear translation stage (blue bar on the right) and a linear encoder (in yellow), and  (c) 3-D rendering of the SLI system, an acrylic bottom plate and an acrylic compression paddle (top). } 
+	\label{fig:mammographysetup}
+\end{figure} 
+
+
+% single figure image
+\begin{figure}
+    \begin{center}
+    \includegraphics[width=.9\textwidth]{sli_flowchart.pdf}
+    \end{center}
+    \caption{Flow chart of image acquisition for both subject measurements and system calibration. Subject measurements calculate a saturation scaling factor and mask the illumination patterns prior to projecting patterns. System calibration measurements do not mask the illumination patterns and project at full intensity. The calibration loop (dashed lines) is repeated for each location and orientation of the calibration checkerboard.} 
+    \label{fig:sli_flowchart}
+\end{figure} 
+
+
 
 \section{Life, Universe and Everything}
 \label{chap:intro:design}
 
-Simple, quantitative answers to the most pondering questions are beautiful. More about question of life, universe and everything can be found in \cite{book:42}.
 
-This is where the text goes. One can refer to a previous chapter like \chapref{chap:intro}. To find all the other reference possibilities search in the MACROS folder for chapref. Also one can include pictures, preferably in the pdf format like shown in \figref{fig:intro:meth}.
 
-This demonstrates how to include a term\index{Term} into the index\index{Index}. For details, check out \cite{latex:index}.
-
-\begin{figure}[htbp]
-  \centering
-    \includegraphics[width=0.5\textwidth]{fig/meth.pdf}
-  \caption[Design methodology for SoC design]{\label{fig:intro:meth} Design methodology for SoC design (Source \cite{book:SpecC:yellow})}
-\end{figure}
-
-Also tables are possible as shown in \tabref{tab:ConclusionSummary}. What is really cool are the acronyms. The first time you use one, like \ac{3-D} then it appears with full description. Using it the second time makes only the acronym appears \ac{3-D}.
-
-\begin{table}[htbp]
-  \centering
-     \begin{tabular}{|l|c|}
-        \hline 
-         \textbf{Environment Condition} & \textbf{Applicable Model} \\
-			\hline
-			 \begin{tabular}{@{}l@{}}
-			 $\bullet\,$ single master bus \\
-			 $\bullet\,$ no overlap between masters bus access\\
-			 \end{tabular}
-			&
-			 \ac{ADC}
-			\\
-			\hline
-			 \begin{tabular}{@{}l@{}}
-			 $\bullet\,$ only locked transfers \\
-			 $\bullet\,$ unlocked transfers and low overlap\\
-			 \end{tabular}
-			&
-			 \ac{AFE}
-			\\
-			\hline
-			 \begin{tabular}{@{}l@{}}
-			 $\bullet\,$ unlocked transfers and high overlap\\
-			 \end{tabular}
-			&
-			 bus functional
-			\\
-			\hline
-		\end{tabular}
-	\caption{Conclusion summary}
-	\label{tab:ConclusionSummary}
-\end{table}
 
 
 
