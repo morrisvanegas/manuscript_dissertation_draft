@@ -85,35 +85,38 @@ One method of improving \ac{DOT} reconstructions is to further constrain the inv
 \label{chap:background:ilities}
 In general, medical instruments can be approached from multiple viewpoints~\cite{Webster2010}. They can be classified according to clinical medicine specialties (pediatrics, cardiology, radiology, etc.), the principle of transduction (ultrasonic, electrochemical, capacitive, etc.), or they can be studied separately for each organ system (pulmonary, nervous, endocrine, etc.)~\cite{Bushberg2011}. In this thesis, we focus on optical imaging in the near-infrared range. These systems can be classified as a radiology specialty with the principle of transduction being optical measurements perturbed by hemodynamics. We intentionally have not chosen a particular organ system to focus on so as not to limit the potential application of optical imaging. 
 
-Rather, we set the context of the three \ac{NIR} imaging systems in terms of their positions across ``-ility'' scales~\cite{DeWeck2012}. These ``-ilities,'' or attributes, are essentially interdisciplinary tools used to represent and compare \ac{NIR} imaging systems. While it is true that any system has a set of design criteria based on signal, environmental, medical, and economic factors that impose constraints based on their specific use, knowing just the fixed requirements is not helpful in understanding the capabilities of \ac{NIR} systems since we do not know how much each factor can vary. Rather, attributes describe features regarded as inherent characteristics of our systems. Each attribute can vary within the range between possible extremes for that attribute. In design methodology, this is known as a Pugh chart~\cite{Pugh1981}.  In this sense, the traditional set of requirements imposed in the design of an imaging system is simply a snapshot or fixed set of factors across attribute scales (Table~\ref{tab:pughtable}). 
+We will compare the three \ac{NIR} imaging systems in terms of their system lifecycle properties, or ilities~\cite{DeWeck2012}. While it is true that any system has a set of design criteria based on signal, environmental, medical, and economic factors that impose constraints based on their specific use, ilities are typically not primary functional requirements of a system. Rather, ilities often manifest themselves after a system has been put to initial use. Unlike other engineering properties that are more easily tested in a laboratory, ilities tend to not receive as much focus~\cite{DeWeck2012}. However, when discussing the potential translation of a medical technology to outside the laboratory setting, ilities better inform of wider system impact with respect to stakeholders and are better indicators of user needs~\cite{DeWeck2011}. 
 
+Rather, we set the context of the three \ac{NIR} imaging systems in terms of their positions across ``-ility'' scales~\cite{DeWeck2012}. These ``-ilities,'' or attributes, are essentially interdisciplinary tools used to represent and compare \ac{NIR} imaging systems. While it is true that any system has a set of design criteria based on signal, environmental, medical, and economic factors that impose constraints based on their specific use, knowing just the fixed requirements is not helpful in understanding the capabilities of \ac{NIR} systems since we do not know how much each factor can vary. Rather, attributes describe features regarded as inherent characteristics of our systems. 
+Each attribute can vary within the range between possible extremes for that attribute. In design methodology, this is known as a Pugh chart~\cite{Pugh1981}.  In this sense, the traditional set of requirements imposed in the design of an imaging system is simply a snapshot or fixed set of factors across attribute scales (Table~\ref{tab:pughtable}). 
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
 \begin{table}[]
 \centering
-\caption{Near-infrared system attributes}
-\label{tab:pughtable}
-\begin{tabular}{@{}lcccc@{}}
+\caption{Definition of ilities}
+\label{tab:ilities}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}ll@{}}
 \toprule
-                  & Pulse Oximeter & MOXI                      & MOBI                      & OMCI                            \\ \midrule
-Portability       & 0              & $\uparrow \uparrow \uparrow$ & $\downarrow$               & $\downarrow \downarrow \downarrow$ \\
-Adaptability      & 0              & 0                         & $\uparrow \uparrow \uparrow$ & $\uparrow$                       \\
-Affordability     & 0              & $\uparrow \uparrow$         & $\downarrow$               & $\downarrow \downarrow \downarrow$ \\
-Complexity        & 0              & $\uparrow$                 & $\uparrow \uparrow$         & $\uparrow \uparrow \uparrow$       \\
-Manufacturability & 0              & $\uparrow \uparrow \uparrow$ & 0                         & $\downarrow \downarrow \downarrow$ \\
-Operability       & 0              & $\uparrow \uparrow$         & $\downarrow$               & $\downarrow \downarrow \downarrow$ \\
-Scalability       & 0              & $\uparrow \uparrow \uparrow$ & $\uparrow$                 & $\downarrow \downarrow$           \\
-Maintainability   & 0              & $\uparrow \uparrow \uparrow$ & $\downarrow$               & $\downarrow \downarrow \downarrow$ \\
-Conformability    & 0              & $\downarrow$               & $\uparrow$                 & 0                               \\
-Comfortability    & 0              & $\downarrow$               & $\uparrow \uparrow \uparrow$ & $\downarrow \downarrow \downarrow$ \\ \bottomrule
-\end{tabular}
+Ility Name         & Definition ("ability of a system...")                                                                   \\ \midrule
+Adaptability*      & to be used for other applications besides what it was designed for with an acceptable level or resource \\
+Affordability      & to be purchased with minimal investment                                                                 \\
+Comfortability     & to be used extensively while actively measuring                                                         \\
+Conformability     & to physically match the surface it is trying to measure                                                 \\
+Extensibility*     & to accommodate new features after design                                                                \\
+Interoperability*  & to effectively interact with other systems                                                              \\
+Maintainability    & to remain in working condition without component replacement                                            \\
+Manufacturability  & to be built using minimal components and fabrication methods                                            \\
+Modifiability*     & to change the current set of specified system parameters                                                \\
+Operability        & to be operated by a non-technical user                                                                  \\
+Portability        & to be transported to another location with minimal resources                                            \\
+Reconfigurability* & to change its component arrangement and links reversibly                                                \\ \bottomrule
+\end{tabular}%
+}
 \end{table}
 
-Below, we closely define each attribute varied in this thesis.  \textbf{Portability} refers to the ability to be easily moved. If we consider a traditional pulse oximeter as being the center of the scale, then our smartphone-based \ac{MOXI} is more portable since it only requires a piece of paper and its software can be easily downloaded. Similarly, our \ac{OMCI} breast imaging system is much less portable than a pulse oximeter due to its size and weight. \textbf{Adaptability} refers to whether a system can be used for other applications besides what it was designed for. For example, although designed for stroke recovery monitoring, the features in our \ac{MOBI} modules allow it to be used in a range of neuroimaging studies without needing re-design. \textbf{Affordability} is cost. Compared to a traditional pulse oximeter, our \ac{OMCI} system is much more expensive than our \ac{MOXI} system that only requires only a small piece of paper. The reason for not ranking three up arrows for \ac{MOXI} in affordability is because it still requires a smartphone, which a user may or may not have in their possession. \textbf{Complexity} refers to the intricacy of a system. \ac{MOXI}, \ac{MOBI}, and \ac{OMCI} increase in complexity respectively because, despite all being based on the same near-infrared imaging principle, they use an increasing number of communication protocols, units, and subsystems. \textbf{Manufacturability} refers to how difficult a system is to build. While more complex in use, our \ac{MOBI} modules have very similar optical components and electronics to a pulse oximeter. The same expertise used in designing the circuit and fabricating the physical enclosure of a pulse oximeter clip is needed for a \ac{MOBI} module. On the other hand, our \ac{OMCI} system requires not only fabricating circuits but also mechanical assemblies and sensitive optical fibers. \textbf{Operability} is similar to usability in that it quantifies how much more (or less) difficult a system is to use and operate relative to a traditional pulse oximeter. While as easy to manufacture as a finger-clip pulse oximeter, our \ac{MOBI} modules require relatively longer setup times to connect modules and affix a cap onto a user. \textbf{Scalability} attempts to quantify the difficulty in increasing the number of users. Since it only requires a piece of paper and is software-based, it is much easier and faster for a new user to obtain a \ac{MOXI} system compared to manufacturing and shipping a traditional pulse oximeter.  While the \ac{MOBI} system is as simple to manufacture as a traditional pulse oximeter, we ranked it with one up arrow due to its broad range of applications that will likely entice more users than a non-adaptable pulse oximeter. \textbf{Maintainability} is the effort and cost needed to keep a system in working condition. Our \ac{MOXI} system can be easily maintained with regular software updates and replacing its inexpensive pieces of paper. While as simple to manufacture, we ranked the \ac{MOBI} modules with one down arrow due to the higher number of components (flat-flex cables, caps, master modules) that can potentially break and require replacement. \textbf{Conformability} is the ability of the system to physically match the surface it is trying to measure. The reflectance-based design of \ac{MOXI} relies on the flat surface of a phone camera that is susceptible to motion. \ac{OMCI} is slightly more conformable than \ac{MOXI} because it has two surfaces that compress the breast preventing motion. However, the mechanical principle of compressing tissue using two fixed-shaped surfaces is identical to a traditional pulse oximeter in the sense that neither adjusts to different user shapes. The flexible-circuit-based \ac{MOBI} modules conform easily to the scalp. \textbf{Comfortability} refers to long-term use. The silicone covers and wireless capability of the \ac{MOBI} modules allow them to be used for hours at a time. On the other hand, \ac{OMCI} requires heavy compression of the breast to minimize the thickness between paddles. This is so uncomfortable that we have to limit the time in compression to less than 3 minutes. The \ac{MOXI} system, although highly portable, requires the user to actively press onto the camera phone, which can cause discomfort over long-term use compared to the passive design of a traditional finger-clip pulse oximeter. 
-
-
-
-%%% Section
-\section{Thesis Aims}
-\label{chap:background:aims}
 
 
 % --- EOF ---
