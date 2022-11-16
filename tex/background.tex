@@ -86,7 +86,29 @@ One method of improving \ac{DOT} reconstructions is to further constrain the inv
 \label{chap:background:ilities}
 In general, medical instruments can be approached from multiple viewpoints~\cite{Webster2010}. They can be classified according to clinical medicine specialties (pediatrics, cardiology, radiology, etc.), the principle of transduction (ultrasonic, electrochemical, capacitive, etc.), or they can be studied separately for each organ system (pulmonary, nervous, endocrine, etc.)~\cite{Bushberg2011}. In this thesis, we focus on optical imaging in the near-infrared range. These systems can be classified as a radiology specialty with the principle of transduction being optical measurements perturbed by hemodynamics. We intentionally have not chosen a particular organ system to focus on so as not to limit the potential application of optical imaging. 
 
-Rather, we set the context of the three \ac{NIR} imaging systems in terms of their positions across ``-ility'' scales. These ``-ilities,'' or attributes, are essentially interdisciplinary tools used to represent and compare NIR imaging systems. While it is true that any system has a set of design criteria based on signal, environmental, medical, and economic factors that impose constraints based on their specific use, knowing just the fixed requirements is not helpful in understanding the capabilities of NIR systems since we do not know how much each factor can vary. Rather, attributes describe features regarded as inherent characteristics of our systems. Each attribute can vary within the range between possible extremes for that attribute. In design methodology, this is known as a Pugh chart[101].  In this sense, the traditional set of requirements imposed in the design of an imaging system is simply a snapshot or fixed set of factors across attribute scales. 
+Rather, we set the context of the three \ac{NIR} imaging systems in terms of their positions across ``-ility'' scales~\cite{DeWeck2012}. These ``-ilities,'' or attributes, are essentially interdisciplinary tools used to represent and compare \ac{NIR} imaging systems. While it is true that any system has a set of design criteria based on signal, environmental, medical, and economic factors that impose constraints based on their specific use, knowing just the fixed requirements is not helpful in understanding the capabilities of \ac{NIR} systems since we do not know how much each factor can vary. Rather, attributes describe features regarded as inherent characteristics of our systems. Each attribute can vary within the range between possible extremes for that attribute. In design methodology, this is known as a Pugh chart~\cite{Pugh1981}.  In this sense, the traditional set of requirements imposed in the design of an imaging system is simply a snapshot or fixed set of factors across attribute scales. Below, we closely define each attribute varied in this thesis.  
+
+\begin{table}[]
+\centering
+\caption{Near-infrared system attributes}
+\label{tab:pughtable}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+                  & Pulse Oximeter & MOXI                      & MOBI                      & OMCI                            \\ \midrule
+Portability       & 0              & $\uparrow \uparrow \uparrow$ & $\downarrow$               & $\downarrow \downarrow \downarrow$ \\
+Adaptability      & 0              & 0                         & $\uparrow \uparrow \uparrow$ & $\uparrow$                       \\
+Affordability     & 0              & $\uparrow \uparrow$         & $\downarrow$               & $\downarrow \downarrow \downarrow$ \\
+Complexity        & 0              & $\uparrow$                 & $\uparrow \uparrow$         & $\uparrow \uparrow \uparrow$       \\
+Manufacturability & 0              & $\uparrow \uparrow \uparrow$ & 0                         & $\downarrow \downarrow \downarrow$ \\
+Operability       & 0              & $\uparrow \uparrow$         & $\downarrow$               & $\downarrow \downarrow \downarrow$ \\
+Scalability       & 0              & $\uparrow \uparrow \uparrow$ & $\uparrow$                 & $\downarrow \downarrow$           \\
+Maintainability   & 0              & $\uparrow \uparrow \uparrow$ & $\downarrow$               & $\downarrow \downarrow \downarrow$ \\
+Conformability    & 0              & $\downarrow$               & $\uparrow$                 & 0                               \\
+Comfortability    & 0              & $\downarrow$               & $\uparrow \uparrow \uparrow$ & $\downarrow \downarrow \downarrow$ \\ \bottomrule
+\end{tabular}
+\end{table}
+
+
 
 %%% Section
 \section{Thesis Aims}
