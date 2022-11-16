@@ -1,0 +1,73 @@
+% intro.tex:
+
+\chapter{INTRODUCTION} % all caps please
+\label{chap:introduction}
+
+% WHY MEDICAL IMAGING?
+Modern civilization has leveraged medical imaging as a fundamental clincal and research tool. Although for the first 80 years or so were heavily focused ont he use of x-rays, due in part to the increasing availabilty of relatively inexpensive computational resources, we've seen an emergence of a plethora of new imaging technologies being developed and commercialized. "A variety of modalities have made their way into routine clinical use, each discernibly improving interventional outcomes over reliance on a combination of traditional diagnostic regimens and therapies. " In the recent decades, we have seen x-ray tomography, MRI, nuclear imaging (PET, SPECT, etc.), ultrasound, and eeg take a more prevailing center stage. Medical imaging has become a fundamental tool used from routine care to emergencies, across the globe, inside (and recently, outside) the clinical setting.  
+
+It is true---a large contribution to the general well being of humans on earth has been drivien by medical innovation. However, these "contemporary medicine relies heavily on radiological and mediconuclear investigations and procedures. However, the often essential information derived from such investigations is obtained at a risk that few doctors are fully aware of."  "Use of radiation for medical examinations and tests is the largest manmade source of radiation exposure." Dangers of MRI. Dangers of nuclear imaging. Dangers of ultrasound. 
+
+This dissertation is an opportunity to course correct. At the 30 year mark of MRI, we as a medical community owe it to ourselves to reflect on the use of our innovations to ensure a viable healthy future. With this in mind, the call to action of this thesis is to turn our attention to new imaging techniques that are non-invasive and non-ionizing and can be used to diagnose various areas of the body.  Enter: optical imaging. 
+
+
+% WHY OPTICAL IMAGING. WHY NIR LIGHT?
+"Optical imaging is a non-invasive and non-ionising technology, which uses light to probe cellular and molecular function in living subjects. Visible light is a form of electromagnetic radiation, which has properties of both particles and waves. As light travels through tissue, photons can be absorbed, reflected or scattered depending on the tissue composition. "  Though optical imaging can use agents (fluorescence and phosphorescence imaging), in this dissertation we focus on non-invasive (no agent) methods of optical imaging. 
+
+Optical imaging works because 
+"In addition, in the near-infrared (NIR) part of the electromagnetic spectrum, soft tissues show less scattering and absorption than in the visible band and, therefore, using NIR optical imaging enables the probing depth to be increased to a few centimetres."
+
+We want to show the potential of optical imaging as an imaging technique to create advancements for the rest of the 21st century. 
+
+
+% WHAT IS THE BIG CHALLENGE WE ARE ADDRESSING?
+We will be bold. 
+We chose challenges that had funding opportunities attached to them to help improve the impact of the work. 
+Diversity is key to shwoing the power of NIR. LMICs, stroke-recovery (age), and breast cancer (females). Varying populations and locations. 
+% The challenges (the approach)
+% Neonate deaths in developing countries (We demonstrate how we can leverage the power and communication that comes standard in the already ubiquitous smartphones to tackle respiratory complications in neonates and infants.)
+% neuroimaging in natural settings (We show how the inclusion of orientation sensors, communication protocols, and encoding strategies can improve a system's performance and tailor it towards its use outside the laboratory setting.)
+% Improve breast cancer detection (The addition of an optical system to existing mammography machines can help improve tomography reconstructions.)
+At times we will leverage computational improvements, better understanding of physics, technological advancements of sensors, and take a product-focused lens to ensure what we are building is addressing the needs of users (and not just building to build). This allows the focus on commercialization/translation. 
+
+This dissertation shows the potential of optical imaging to address a variety of current application-, user-, and setting-specific needs through the development of multiple \ac{NIR} systems. By demonstrating use cases and designs across a variety of medical imaging attributes, we hope to show the medical community at large the benefits of non-invasive methodologies and ways to translate these technologies outside of the research setting. 
+
+
+% WHAT IS THE SCOPE. WHAT IS INCLUDED/NOT INCLUDED?
+We also limited our design to the following requirements. This helped highlight NIRs, but also help provide design constraints.  Although each of the three imaging systems described in this study vary in their qualification of attributes (such as complexity, cost, and scalability), each system meets the following requirements. Thus, as the title of this thesis suggests, we must focus on the following requirements
+\begin{itemize}
+  \item They must be portable to ensure translation of these technologies outside of the research setting. 
+  \item They must be non-invasive (use no reactive agents)  and non-ionizing.
+  \item They utilize only the visible and/or near-infrared spectral window.
+\end{itemize}
+
+A focus on translation of the technology. Although translation means transitioning a technique from the laboratory to the clinical setting, we are taking a step further into natural settings.  For MOXI, pulse ox is already used outside clinics. This means that we focus on development of a new design but with the same technique that allows for higher adoption. For MOBI, which is in the midst of transitioning, that means adding technical features to facilitate the translation of fNIRS into natural settings. For OMCI, we need to first improve existing optical reconstruction methods. We also need to create a solution that integrates into existing mammography systems because they are expensive. We are not trying to replace, but rather augment.  
+
+
+% WHAT ARE THE AIMS?
+%\section{Aims and Objectives}
+This thesis is separated into four main aims. The first three refer to the development of three individual portable and/or wearable near-infrared imaging systems. The objectives for each aim refer to the actions taken to achieve the aim—the design, fabrication, and characterization of these systems as well as measurements on human test subjects. The fourth aim in this thesis refers to the use of additive manufacturing in the development of optical phantoms utilized by all three systems in the first three aims. 
+
+
+%WHAT IS THE STRUCTURE OF THE THESIS?
+While this chapter sets the challenge, the other chapter focuses on the background necessary. We then have one chapter for each system (pulse ox, brain imaging, and tumor localization). Chapter X takes a dive into a new method of creating phantoms that can be used by all three systems (a big part of validating a new optical system is to characterize it with optical phantoms of know optical properties). Finally, in the conclusion, we compare the three systems across their ``-ilities.''
+
+
+
+%Pulse oximetry is an optical technique used to measure oxygen saturation in arterial blood. It is highly prevalent, and often regarded as the fifth vital sign in medical care (after temperature, pulse rate, respiration rate, and blood pressure). Though the principle of pulse oximetry is well understood, environmental and economic factors have hindered the adoption of pulse oximeters for use in \ac{LMIC} and for use with neonates[12]. 
+
+%In this study, we expand on the traditional pulse oximeter in 3 ways. First, we explore the use of broadband light, rather than red and IR wavelengths, in the calculation of RR. Second, to leverage existing optical components of smartphones, we explore reflection-based designs in which the sources and detector of a pulse oximeter are placed on the same side of the finger. Finally, rather than use photodetectors, we utilize a smartphone’s camera to measure light intensity, allowing us to explore non-contact methods of measuring SpO2. 
+
+%Although a recent neuroimaging modality, \ac{fNIRS} possesses many advantages to contemporary neuroimaging techniques, including being non-invasive and highly portable. In this thesis, we contribute to \ac{fNIRS} through the development of a new system with features tailored towards monitoring in natural settings. Features include the introduction of a new shape for modular \ac{fNIRS} architectures, the use of flexible circuits to conform to the scale, the use of orientation sensors for estimating source locations, an internal communication network for fast setup times, and the use of a spatial multiplexing strategy for improved full frame rates. 
+
+%The third aim of this thesis focuses on the development of an optical mammography co-imager (OMCI), which uses dual-wavelength wide-field illumination and camera-based detection for fast acquisition, a frequency-domain spectroscopy system to recover absolute tissue optical properties, and the use of x-ray mammography structural priors for high-resolution reconstruction. Notably, OMCI will also include a 3D breast surface shape acquisition subsystem to further constrain and improve reconstruction. 
+
+
+
+%\section{Significance}
+
+%\section{Thesis Outline}
+
+%In our first system, \ac{MOXI}, we demonstrate how optical imaging's inherent use of simple components allows for its use in even the most resource-poor settings.  In \ac{MOBI}, we demonstrate a modular optical system used for brain imaging to monitor stroke recovery.  Finally, in our breast imaging system, \ac{OMCI}, we demonstrate the power of optical imaging to improve existing imaging techniques. By combining the physiological measurements from DOT with the structural imaging from x-ray, we not only improve stand-alone DOT reconstructions, but also improve existing x-ray mammography, all without exposing a patient to more ionizing radiation. 
+
+% --- EOF ---
