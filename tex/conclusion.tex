@@ -2,21 +2,31 @@
 \label{chap:conclusion}
 
 
+\section{Pugh Chart}
 
-\section{Mobile-phone-based Oximeter}
+\begin{table}[]
+\centering
+\caption{Near-infrared system attributes}
+\label{tab:pughtable}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+                  & Pulse Oximeter & MOXI                      & MOBI                      & OMCI                            \\ \midrule
+Portability       & 0              & $\uparrow \uparrow \uparrow$ & $\downarrow$               & $\downarrow \downarrow \downarrow$ \\
+Adaptability      & 0              & 0                         & $\uparrow \uparrow \uparrow$ & $\uparrow$                       \\
+Affordability     & 0              & $\uparrow \uparrow$         & $\downarrow$               & $\downarrow \downarrow \downarrow$ \\
+Complexity        & 0              & $\uparrow$                 & $\uparrow \uparrow$         & $\uparrow \uparrow \uparrow$       \\
+Manufacturability & 0              & $\uparrow \uparrow \uparrow$ & 0                         & $\downarrow \downarrow \downarrow$ \\
+Operability       & 0              & $\uparrow \uparrow$         & $\downarrow$               & $\downarrow \downarrow \downarrow$ \\
+Scalability       & 0              & $\uparrow \uparrow \uparrow$ & $\uparrow$                 & $\downarrow \downarrow$           \\
+Maintainability   & 0              & $\uparrow \uparrow \uparrow$ & $\downarrow$               & $\downarrow \downarrow \downarrow$ \\
+Conformability    & 0              & $\downarrow$               & $\uparrow$                 & 0                               \\
+Comfortability    & 0              & $\downarrow$               & $\uparrow \uparrow \uparrow$ & $\downarrow \downarrow \downarrow$ \\ \bottomrule
+\end{tabular}
+\end{table}
+
+Below, we closely define each attribute varied in this thesis.  \textbf{Portability} refers to the ability to be easily moved. If we consider a traditional pulse oximeter as being the center of the scale, then our smartphone-based \ac{MOXI} is more portable since it only requires a piece of paper and its software can be easily downloaded. Similarly, our \ac{OMCI} breast imaging system is much less portable than a pulse oximeter due to its size and weight. \textbf{Adaptability} refers to whether a system can be used for other applications besides what it was designed for. For example, although designed for stroke recovery monitoring, the features in our \ac{MOBI} modules allow it to be used in a range of neuroimaging studies without needing re-design. \textbf{Affordability} is cost. Compared to a traditional pulse oximeter, our \ac{OMCI} system is much more expensive than our \ac{MOXI} system that only requires only a small piece of paper. The reason for not ranking three up arrows for \ac{MOXI} in affordability is because it still requires a smartphone, which a user may or may not have in their possession. \textbf{Complexity} refers to the intricacy of a system. \ac{MOXI}, \ac{MOBI}, and \ac{OMCI} increase in complexity respectively because, despite all being based on the same near-infrared imaging principle, they use an increasing number of communication protocols, units, and subsystems. \textbf{Manufacturability} refers to how difficult a system is to build. While more complex in use, our \ac{MOBI} modules have very similar optical components and electronics to a pulse oximeter. The same expertise used in designing the circuit and fabricating the physical enclosure of a pulse oximeter clip is needed for a \ac{MOBI} module. On the other hand, our \ac{OMCI} system requires not only fabricating circuits but also mechanical assemblies and sensitive optical fibers. \textbf{Operability} is similar to usability in that it quantifies how much more (or less) difficult a system is to use and operate relative to a traditional pulse oximeter. While as easy to manufacture as a finger-clip pulse oximeter, our \ac{MOBI} modules require relatively longer setup times to connect modules and affix a cap onto a user. \textbf{Scalability} attempts to quantify the difficulty in increasing the number of users. Since it only requires a piece of paper and is software-based, it is much easier and faster for a new user to obtain a \ac{MOXI} system compared to manufacturing and shipping a traditional pulse oximeter.  While the \ac{MOBI} system is as simple to manufacture as a traditional pulse oximeter, we ranked it with one up arrow due to its broad range of applications that will likely entice more users than a non-adaptable pulse oximeter. \textbf{Maintainability} is the effort and cost needed to keep a system in working condition. Our \ac{MOXI} system can be easily maintained with regular software updates and replacing its inexpensive pieces of paper. While as simple to manufacture, we ranked the \ac{MOBI} modules with one down arrow due to the higher number of components (flat-flex cables, caps, master modules) that can potentially break and require replacement. \textbf{Conformability} is the ability of the system to physically match the surface it is trying to measure. The reflectance-based design of \ac{MOXI} relies on the flat surface of a phone camera that is susceptible to motion. \ac{OMCI} is slightly more conformable than \ac{MOXI} because it has two surfaces that compress the breast preventing motion. However, the mechanical principle of compressing tissue using two fixed-shaped surfaces is identical to a traditional pulse oximeter in the sense that neither adjusts to different user shapes. The flexible-circuit-based \ac{MOBI} modules conform easily to the scalp. \textbf{Comfortability} refers to long-term use. The silicone covers and wireless capability of the \ac{MOBI} modules allow them to be used for hours at a time. On the other hand, \ac{OMCI} requires heavy compression of the breast to minimize the thickness between paddles. This is so uncomfortable that we have to limit the time in compression to less than 3 minutes. The \ac{MOXI} system, although highly portable, requires the user to actively press onto the camera phone, which can cause discomfort over long-term use compared to the passive design of a traditional finger-clip pulse oximeter. 
 
 
 
-\section{Modular Optical Brain Imager}
 
-
-
-\section{Optical Mammography Co-Imager}
-
-
-
-\section{3-D Printed Phantoms}
-
-
-
-\section{``-ilities'' Pugh Chart}
+\section{Significance}
