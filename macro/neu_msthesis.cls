@@ -1413,27 +1413,29 @@ Northeastern University, {\@submitdate} \\
    \thesection. \ \fi ##1}}}}
 \else               % If one-sided printing.
 \def\ps@headings{\let\@mkboth\markboth
-\def\@oddfoot{\hfil\thepage\hfil}\def\@evenfoot{\hfil\thepage\hfil}%     page number centered in feet.
-\def\@oddhead{{\slshape \rightmark}\hfil \rmfamily}% Heading.
+%\def\@oddfoot{\hfil\thepage\hfil}
+%\def\@evenfoot{\hfil\thepage\hfil}%     page number centered in feet.
+ \def\@oddfoot{}\def\@evenfoot{}%       No feet.
+\def\@oddhead{{\slshape \rightmark}\hfil \rmfamily \thepage}% Heading.
 \def\chaptermark##1{\markright {\uppercase{\ifnum \c@secnumdepth >\m@ne
   \@chapapp\ \thechapter. \ \fi ##1}}}}
 \fi
 
 % Definition of 'myheadings' page style.
 %
-\def\ps@myheadings{\let\@mkboth\@gobbletwo
- \def\@oddhead{{\slshape\rightmark}\hfil \rmfamily\thepage}%
- \def\@oddfoot{}\def\@evenhead{\rmfamily \thepage\hfil\slshape\leftmark}%
- \def\@evenfoot{}\def\chaptermark##1{}\def\sectionmark##1{}%
- \def\subsectionmark##1{}}
+%\def\ps@myheadings{\let\@mkboth\@gobbletwo
+% \def\@oddhead{{\slshape\rightmark}\hfil \rmfamily\thepage}%
+% \def\@oddfoot{}\def\@evenhead{\rmfamily \thepage\hfil\slshape\leftmark}%
+% \def\@evenfoot{}\def\chaptermark##1{}\def\sectionmark##1{}%
+% \def\subsectionmark##1{}}
 
 % Definition of 'plain' page style.
 %
-\def\ps@plain{\let\@mkboth\markboth
-\def\@oddfoot{\rm\hfil\thepage\hfil} % remove number from footer  
-\def\@evenfoot{}                                % no feet
-\def\@oddhead{}            % heading (right)
-\def\@evenhead{}}          % heading (left)
+%\def\ps@plain{\let\@mkboth\markboth
+%\def\@oddfoot{\rm\hfil\thepage\hfil} % remove number from footer  
+%\def\@evenfoot{}                                % no feet
+%\def\@oddhead{}            % heading (right)
+%\def\@evenhead{}}          % heading (left)
 
 
 %    ****************************************
@@ -1475,6 +1477,7 @@ Northeastern University, {\@submitdate} \\
 
 \ps@plain                   % 'plain' page style
 \pagenumbering{arabic}      % Arabic page numbers
+
 \if@twoside\else\raggedbottom\fi % Ragged bottom unless twoside
                                  % option.
 \if@twocolumn
