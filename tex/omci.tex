@@ -7,7 +7,7 @@
 % challenge and application
 %innovation and significance
 
-\section{Introduction} %significan
+\section{Introduction} %significance
 \label{chap:omci:introduction}
 Breast cancer is the most commonly diagnosed cancer in women worldwide with an estimated 1,918,030 new cases in 2022 in the United States alone~\cite{Siegel2022}. X-ray mammography is the primary breast cancer screening technique~\cite{Secretan2015} used for early detection to reduce mortality rates~\cite{Tabar2003}. Despite its recommendation for screening, x-ray mammography suffers from a high false-positive diagnostic rate~\cite{Tabar2003, Elmore1998}. The technique lacks both strong structural contrast between healthy and tumor tissue and the ability to quantify tissue functions to assess benign versus malignancy~\cite{Leff2008}. These limitations have led researchers to investigate using diffuse optical tomography (DOT) techniques to characterize the breast tumor's physiology to lower false-positive diagnoses. 
 
@@ -25,7 +25,7 @@ In this work, we have developed a low-profile dual-camera SLI breast shape acqui
 
 \section{Methods}
 \label{chap:omci:methods}
-Here, we first briefly describe a mammography-mimicking parallel-plate transmission breast DOT system, designed to be used as either a standalone DOT scan of a compressed breast or combined with separately acquired mammography or DBT images in a multi-modality data analysis~\cite{Fang2009, Deng2015}. Then we elaborate on the SLI breast surface acquisition sub-system and surface data processing pipeline. This custom SLI system is designed to be compact, low-cost, and specifically tailored towards the low-light and space-confined mammography compression settings. Next, we compare this approach with a number of alternative breast shape acquisition methods, including single-axis and dual-axis contour-line extrusion methods, and create benchmarks to quantify the surface accuracy improvement of the proposed method. Finally, we compare results from a series of DOT image reconstructions based on simulated data with various surface acquisition methods to further quantify the impact of breast surface accuracy, especially for the accurate recovery of tumors embedded at various depths.
+Here, we first briefly describe a mammography-mimicking parallel-plate transmission breast DOT system, designed to be used as either a standalone DOT scan of a compressed breast or combined with separately acquired mammography or DBT images in a multi-modality data analysis~\cite{Fang2009a, Deng2015}. Then we elaborate on the SLI breast surface acquisition sub-system and surface data processing pipeline. This custom SLI system is designed to be compact, low-cost, and specifically tailored towards the low-light and space-confined mammography compression settings. Next, we compare this approach with a number of alternative breast shape acquisition methods, including single-axis and dual-axis contour-line extrusion methods, and create benchmarks to quantify the surface accuracy improvement of the proposed method. Finally, we compare results from a series of DOT image reconstructions based on simulated data with various surface acquisition methods to further quantify the impact of breast surface accuracy, especially for the accurate recovery of tumors embedded at various depths.
 
 %%% Subsection %%%
 \subsection{Wide-field parallel-plate transmission breast DOT system}
@@ -81,7 +81,6 @@ The same acquisition procedures are used for both calibrating the system and acq
     \label{fig:sli_flowchart}
 \end{figure} 
 
-
 %%% Subsection %%%
 \subsection{Alternative breast surface reconstruction methods for assessing SLI surface accuracy}
 To evaluate the accuracy of the SLI system, we compare its output against alternative surface acquisition methods. Each method estimates the surface of a 3-D breast derived from a DBT scan.
@@ -99,7 +98,6 @@ Fig.~\ref{fig:mesh_flowchart} shows the process of creating surface meshes from 
 
 \subsubsection{Single and double contour sweep-based surfaces}
 Three alternative surface estimation methods are employed in addition to the SLI surface acquisition method. These three methods use spline models of the DBT breast contours from two different planes (Fig.~\ref{fig:mammographysetup}). The extrusion method creates a surface mesh by extruding the $x/y$ breast contour in the $z$ direction to the thickness of the DBT breast measured by the linear encoder [Fig.~\ref{fig:mesh_extrude}]. The second and third methods utilize a curve-based sweep, in which a profile (shape) follows a path (contour) to create a 3-D model. In the ``top-sweep'' method, the $x/y$ breast contour profile is swept along the $y/z$ breast contour path [Fig.~\ref{fig:mesh_topsweep}]. Similarly, the ``side-sweep'' method uses the $y/z$ breast contour as the profile and the $x/y$ breast contour as the path [Fig.~\ref{fig:mesh_sidesweep}]. In both sweep methods, the profile normal is kept constant.
-
 
 \begin{figure}
 	\begin{center}
@@ -120,13 +118,12 @@ The SLI system estimates the surface of the compressed breast from the captured 
 \subsubsection{Surface estimation error}
 The surface estimation error, $E_s$, of each surface estimation method is computed by comparing the nodes in each surface mesh to the nodes in the DBT mesh. The residual for each node in the surface mesh is the shortest distance from that node to the DBT mesh. The SLI output mesh is linearly translated (rotation and translation only) into the projector's frame using the projector's extrinsic parameters prior to determining residuals. $E_s$ is defined as the average residual of all nodes for a particular surface estimation method. 
 
-
 %%% Subsection %%%
 \subsection{Evaluation of the impact of surface errors on DOT image reconstructions}
 Simulations were conducted to evaluate the impact of surface estimation accuracy on DOT reconstruction accuracy for inclusions of various depths. Breast surface meshes were converted to volumetric meshes with optical inclusions and the mean squared error of wide-field DOT reconstructions was calculated for each estimation method. 
 
 \subsubsection{Assessment of reconstruction accuracy}
-The effect of different surface estimations on lesion reconstruction was quantified using simulations of continuous wave (CW) pattern-illumination sources. A 5~mm radius spherical inclusion was added at the mid-plane of each volumetric mesh at distances of 5 to 45~mm away from the nipple. The $x$ and $z$ coordinates of the inclusion were fixed at 68 and 22~mm, respectively. The forward simulation was conducted on a ground truth volumetric mesh consisting of the DBT volumetric mesh and a spherical inclusion. The non-linear image reconstruction of tissue properties was calculated using an iterative Gauss-Newton method in which a series of corrective terms were added to an initial guess~\cite{Fang2009}. The reconstruction resulted in distributions, $\mathrm{\mu_{a}}_{i}$, representing the resulting 3-D absorption coefficient ($\mu_a$) maps at the $i^{th}$ node for each simulated tumor location and surface model.
+The effect of different surface estimations on lesion reconstruction was quantified using simulations of continuous wave (CW) pattern-illumination sources. A 5~mm radius spherical inclusion was added at the mid-plane of each volumetric mesh at distances of 5 to 45~mm away from the nipple. The $x$ and $z$ coordinates of the inclusion were fixed at 68 and 22~mm, respectively. The forward simulation was conducted on a ground truth volumetric mesh consisting of the DBT volumetric mesh and a spherical inclusion. The non-linear image reconstruction of tissue properties was calculated using an iterative Gauss-Newton method in which a series of corrective terms were added to an initial guess. The reconstruction resulted in distributions, $\mathrm{\mu_{a}}_{i}$, representing the resulting 3-D absorption coefficient ($\mu_a$) maps at the $i^{th}$ node for each simulated tumor location and surface model.
 
 \subsubsection{Reconstruction error assessment}
 We use mean squared error, MSE, to determine the accuracy of the image reconstruction resulting from each breast mesh. To compute the MSE, we first interpolate the reconstructed absorption map, $\mu_a$, to the DBT mesh, and then subtract the interpolated $\mu_a$ at each node $i$, with the corresponding ground truth absorption value defined on the same node, expressed as
@@ -140,6 +137,48 @@ where $N$ is the total node number; $\mathrm{\mu_{a}}_i$ and $\mathrm{\mu_{a0}}_
 
 \section{Results}
 \label{chap:omci:results}
+In this section, we first report the projector and camera re-projection errors of our SLI calibration using the calibration checkerboard. We then quantify the error of surface estimation methods in estimating the surface shape of the DBT breast. Finally, we show the effect of different surface estimation methods on optical property reconstruction using simulations of continuous wave pattern-illumination sources. 
+
+%%% Subsection %%%
+\subsection{Camera-projector calibration and surface acquisition}
+\label{ssec:calibrationresults}
+Our dual-camera SLI system was calibrated in a dark room using a checkerboard with 5$\times$7 internal corners with 1$\times$1~cm$^2$ black and white squares. The calibration checkerboard was printed and adhered to a black Delrin surface to ensure it remained planar. To account for varying breast shapes and curvatures, the checkerboard was placed at 7 locations. At each location, camera images were captured for 5 board orientations: 1) normal to the $y$-axis [see Fig.~\ref{fig:mammography_top}], 2) rotated left and 3) rotated right by 30 degrees relative to the $x$-axis, and 4) tilted forward and 5) tilted backward by 30 degrees in the $y/z$ plane [Fig.~\ref{fig:mammography_side}]. This results in a total of $7\times5=35$ checkerboard positions within the camera and projector field-of-views (Fig.~\ref{fig:mammographysetup}). Each rotation and tilt was measured manually using a printed protractor. The projector's resolution is 1280$\times$720 pixels and the resolution of the cameras is 1600$\times$896 pixels. Using a Gray-code of bit-length $P=9$, we acquire $P\times 4 + 2 = 38$ images (see Section~\ref{sec:sli}) at each board orientation/position placement. An exposure time of 0.25 seconds per image per camera results in a total one-time calibration time of $38 \times 7 \times 5 \times 2 \times 0.25 = 665$ seconds. The first camera-projector pair (Camera 1 with projector) resulted in a camera and projector re-projection error of 0.4089 and 0.2282 pixels, respectively. The second camera-projector pair resulted in a camera re-projection error of 0.4368 pixels and a projector re-projection error of 0.2889 pixels.
+
+A re-calibration is only necessary when the relative position of the cameras and projector is changed. Once calibrated, the SLI system can acquire a surface scan in about 35 seconds, including 16 seconds for adaptively adjusting the intensity scaling factor $\alpha$ for both cameras (see Section~\ref{sec:special} for details) and 19 seconds for image acquisition ($38 \times 2\times 0.25 = 19$ s).
+
+%%% Subsection %%%
+\subsection{Surface estimation errors}
+\begin{table}
+    \centering
+    \caption{Mean and standard deviation of the residuals of each point in a surface estimation mesh compared to the original DBT breast mesh.}
+    %\resizebox{\textwidth}{!}{%
+        \begin{tabular}{lcccc}
+        \toprule
+         & Extrusion & Top-Sweep & Side-Sweep & SLI \\ \midrule
+        Surface estimation error, $E_s$ [mm] & 6.8353 & 0.3772 & 0.4726 & \multicolumn{1}{l}{0.2543} \\
+        Standard deviation [mm] & 2.8671 & 0.3029 & 0.3370 & 0.2723 \\ \bottomrule
+        \end{tabular}%
+    %}
+    \label{tab:residuals}
+\end{table}
+
+The DBT breast model was 3-D printed (Ender 5, Creality, China) with a 0.1~mm layer height using white polylactic acid (PLA) filament. The 3-D printed DBT breast was placed in between the compression plates, compressed to the thickness of the printed DBT phantom, and scanned using the dual-camera SLI system. The saturation scaling factors $\alpha$ were automatically determined using twenty iterations, resulting in a $\alpha=0.8$ for both cameras. The two point-clouds from each camera-projector pair were transformed to the projector's coordinates, down-sampled, and merged prior to being denoised with the number of nearest neighbor points set to four and the outlier threshold set to one standard deviation from the mean of the average distance to those four neighboring points. The resulting point-cloud from the SLI system scan has 35,256 points.
+
+Table~\ref{tab:residuals} shows the mean and standard deviation of the residual of all the nodes in the estimated breast surface mesh. The $z$-extrusion method (EXT) results in the largest error ($E_s$) of all compared methods. While the top-sweep, side-sweep, and SLI methods all had similar standard deviations, the SLI method resulted in the smallest $E_s$.
+
+%%% Subsection %%%
+\subsection{Mean square error of optical property reconstruction}
+\begin{figure}
+	\begin{center}
+	    \includegraphics[width=.9\textwidth]{fig/omci/mse.pdf}
+	\end{center}
+	\caption{A comparison between the mean squared error (MSE) of the reconstructed absorption map using 4 estimated surfaces (EXT - $z$-axis extrusion, TOP - sweeping $x/y$ contour along $y/z$ contour, SIDE -- sweeping $y/z$ contour along $x/y$ contour, and SLI -- surface acquired from our SLI system) as well as the ground truth surface (DBT). A 1~cm diameter spherical inclusion is moved away from the breast surface at various depths between 5 and 45~mm in 1 mm increments. Image slices (in $x/y$ plane) of the reconstructed absorption coefficient ($\mu_a$ in mm$^{-1}$) (top-row) and the ground truth $\mu_a$ (bottom-right) are shown as insets.}
+	\label{fig:mse}
+\end{figure} 
+
+DOT reconstructions were performed using our in-house data analysis toolbox, Redbird-m~\cite{Redbird2008}. An $L$-curve analysis is used to determine the regularization parameter as $3.16\times 10^{-10}$, which is fixed over 10 Gauss-Newton iterations. The absorption coefficient of the spherical inclusion was set to be twice ($\mu_a=0.016$/mm) that of the background tissue ($\mu_a=0.008$/mm). The reduced scattering coefficient $\mu_s'$ was set to $1$~mm$^{-1}$ for both breast and inclusion tissues. A set of 32 (16 vertical, 16 horizontal) moving-bar source patterns~\cite{Yao2015} covering an area of 40$\times$40~mm$^2$ was centered at the spherical inclusion. Iso2Mesh was used to interpolate nodal values from the reconstructed mesh to the ground truth mesh based on linear interpolation in order for all reconstructed meshes to have the same number of nodes.
+
+The MSE errors from these reconstructed images are summarized in Fig.~\ref{fig:mse}, showing the effect of different surface estimation methods on the accuracy of optical property recovery. Overall, surface mesh accuracy appears to have a notable impact on relatively shallow tumors, with a depth of less than 25~mm. MSE values obtained using the SLI method closely follow those using the ground truth DBT mesh for most inclusion depths. The top- and side-sweep-based meshes followed similar trends, however, reporting higher errors compared to SLI especially when the tumor is relatively shallow. The maximum MSE value for the SLI mesh at a distance of 5~mm from the surface ($4.89\times 10^{-7}$~mm$^2$) was 23\% higher than the maximum MSE value for the DBT mesh ($4.35\times 10^{-7}$~mm$^2$). In contrast, the single-axis-extrusion method (EXT) MSE was nearly twice higher ($8.62\times 10^{-7}$ mm$^2$) than that from the DBT mesh. Although the DBT and SLI mesh MSEs plateau to their minimum around 15~mm from the surface, top-, side-, and extrusion-based mesh MSEs continue to decrease until a depth of 25~mm. Beyond the depth of 25 mm, the errors between different methods become minimal.
 
 
 
