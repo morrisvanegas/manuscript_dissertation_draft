@@ -32,9 +32,9 @@ Here, we first briefly describe a mammography-mimicking parallel-plate transmiss
 
 \begin{figure}
 	\begin{center}
-	\subfigure[]{\label{fig:mammography_top}\includegraphics[height=5cm]{mammography_top.pdf}}
-	\subfigure[]{\label{fig:mammography_side}\includegraphics[height=5cm]{mammography_side.pdf}}
-	\subfigure[]{\label{fig:mammography_setup}\includegraphics[width=5cm]{sli_model.pdf}}
+	\subfigure[]{\label{fig:mammography_top}\includegraphics[height=5cm]{fig/omci/mammography_top.pdf}}
+	\subfigure[]{\label{fig:mammography_side}\includegraphics[height=5cm]{fig/omci/mammography_side.pdf}}
+	\subfigure[]{\label{fig:mammography_setup}\includegraphics[width=5cm]{fig/omci/sli_model.pdf}}
 	\end{center}
 	\caption{ (a) Top-view of the breast compression compartment -- upper: SLI system; bottom: horizontal cross-section (orange line) of the compressed breast with blue circles indicating the placement of the checkerboard used for system calibration. Numbers 1-5 indicate the 5 board orientations repeated at each location for calibration. (b) Side-view of the breast compression plates, showing the linear translation stage (blue bar on the right) and a linear encoder (in yellow), and  (c) 3-D rendering of the SLI system, an acrylic bottom plate and an acrylic compression paddle (top). } 
 	\label{fig:mammographysetup}
@@ -54,9 +54,9 @@ Skin tone differences are known to affect light-based surface reconstruction acc
 
 \begin{figure}
 	\begin{center}
-	\subfigure[]{\label{fig:sli_setup}\includegraphics[height=2.4cm]{sli_photo.jpg}}
-	\subfigure[]{\label{fig:artifact1}\includegraphics[height=2.4cm]{bars_artifact.png}}
-	\subfigure[]{\label{fig:artifact2}\includegraphics[height=2.4cm]{bars.png}}
+	\subfigure[]{\label{fig:sli_setup}\includegraphics[height=2.4cm]{fig/omci/sli_photo.jpg}}
+	\subfigure[]{\label{fig:artifact1}\includegraphics[height=2.4cm]{fig/omci/bars_artifact.png}}
+	\subfigure[]{\label{fig:artifact2}\includegraphics[height=2.4cm]{fig/omci/bars.png}}
 	\end{center}
 	\caption{(a) Front-view photo of the SLI system. Cameras and projectors are embedded in an acrylic mount to prevent the need for re-calibration. (b) Horizontal bar patterns reflecting off the top compression plate and onto the breast show curved illumination bar artifacts when the scaling factor $\alpha$ is set to 1. In (c), we show the same illumination pattern with thickness-informed masking eliminating the curved bar artifacts by cropping the patterns exceeding the breast surface before projection. Additionally, the scaling factor is automatically calculated to prevent camera saturation.} 
 	\label{fig:barartifacts}
@@ -75,7 +75,7 @@ The same acquisition procedures are used for both calibrating the system and acq
 
 \begin{figure}
     \begin{center}
-    \includegraphics[width=.9\textwidth]{sli_flowchart.pdf}
+    \includegraphics[width=.9\textwidth]{fig/omci/sli_flowchart.pdf}
     \end{center}
     \caption{Flow chart of image acquisition for both subject measurements and system calibration. Subject measurements calculate a saturation scaling factor and mask the illumination patterns prior to projecting patterns. System calibration measurements do not mask the illumination patterns and project at full intensity. The calibration loop (dashed lines) is repeated for each location and orientation of the calibration checkerboard.} 
     \label{fig:sli_flowchart}
@@ -88,7 +88,7 @@ To evaluate the accuracy of the SLI system, we compare its output against altern
 
 \begin{figure}
     \begin{center}
-    \includegraphics[width=.9\textwidth]{mesh_flowchart2.pdf}
+    \includegraphics[width=.9\textwidth]{fig/omci/mesh_flowchart2.pdf}
     \end{center}
     \caption{Generation of breast surface meshes using multiple acquisition methods. The DBT volumetric mesh is created from segmented scans. The extrusion surface mesh is created by extruding the top contour to the breast thickness. The top and side contours of the DBT mesh are swept to create top and side surface meshes. The SLI mesh is created by scanning a 3-D printed breast phantom and trimming the resulting point-cloud using the linear encoder measurements. The surface estimation error is calculated for each of the surface meshes by comparing the surface estimations to the DBT mesh. All surface meshes are converted to volumetric meshes for validating the effect of surface estimation methods on inclusion reconstruction.}
     \label{fig:mesh_flowchart}
@@ -103,12 +103,12 @@ Three alternative surface estimation methods are employed in addition to the SLI
 
 \begin{figure}
 	\begin{center}
-	\subfigure[]{\label{fig:mesh_dbt}\includegraphics[width=.32\textwidth]{mesh_dbt.pdf}}
-	\subfigure[]{\label{fig:mesh_extrude}\includegraphics[width=.32\textwidth]{surf_ext.pdf}}
-	\subfigure[]{\label{fig:mesh_topsweep}\includegraphics[width=.32\textwidth]{surf_top.pdf}}
-	\subfigure[]{\label{fig:mesh_sidesweep}\includegraphics[width=.32\textwidth]{surf_side.pdf}}
-	\subfigure[]{\label{fig:pcmergea}\includegraphics[width=0.32\textwidth]{PC_dual.pdf}}
-	\subfigure[]{\label{fig:pcmergeb}\includegraphics[width=0.32\textwidth]{PC_merged.pdf}}
+	\subfigure[]{\label{fig:mesh_dbt}\includegraphics[width=.32\textwidth]{fig/omci/mesh_dbt.pdf}}
+	\subfigure[]{\label{fig:mesh_extrude}\includegraphics[width=.32\textwidth]{fig/omci/surf_ext.pdf}}
+	\subfigure[]{\label{fig:mesh_topsweep}\includegraphics[width=.32\textwidth]{fig/omci/surf_top.pdf}}
+	\subfigure[]{\label{fig:mesh_sidesweep}\includegraphics[width=.32\textwidth]{fig/omci/surf_side.pdf}}
+	\subfigure[]{\label{fig:pcmergea}\includegraphics[width=0.32\textwidth]{fig/omci/PC_dual.pdf}}
+	\subfigure[]{\label{fig:pcmergeb}\includegraphics[width=0.32\textwidth]{fig/omci/PC_merged.pdf}}
 	\end{center}
 	\caption{(a) Surface mesh of a digital breast tomosynthesis model obtained from The Cancer Imaging Archive~\cite{Clark2013}. Blue cyan lines show the $x/y$ and $y/z$ breast contours from the top and side views. (b) Estimate of the DBT surface using the extrusion method in which the contour (cyan) is extruded to the thickness of the breast along the $z$ axis. (c) The top-sweep method uses the $x/y$ contour as the profile (cyan) and the $y/z$ contour as the path to sweep (red). (d) The side-sweep method uses the $y/z$ contour as the profile (cyan) and the $x/y$ contour as the path to sweep (red). (e) point-clouds from both camera-projector pairs were generated by scanning a 3-D printed model of the DBT breast using the SLI system. The green (Camera 1) and magenta (Camera 2) point-clouds are in the respective camera coordinates. (f) Merged and denoised point-cloud in the projector's coordinates.} 
 	\label{fig:meshes}
