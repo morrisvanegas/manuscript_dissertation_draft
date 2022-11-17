@@ -22,7 +22,7 @@ Conformability    & 0              & -1   & 3    & -1   \\
 Extensibility     & 0              & 2    & 1    & 3    \\
 Interoperability  & 0              & 0    & 3    & 2    \\
 Maintainability   & 0              & 3    & -1   & -3   \\
-Manufacturability & 0              & 3    & 0    & -3   \\
+Manufacturability & 0              & 3    & -1   & -3   \\
 Modifiability     & 0              & 1    & 2    & 3    \\
 Operability       & 0              & 2    & -1   & -3   \\
 Portability       & 0              & 3    & -1   & -3   \\
@@ -39,7 +39,7 @@ Reconfigurability & 0              & 1    & 2    & 0    \\ \bottomrule
    \item[Extensibility] Given the context, our \ac{OMCI} system be easily extended to include features from state-of-the-art \ac{DOT} research including the use of optimal wide-field illumination patterns and sizes, new \ac{SLI} illumination patterns, and compression-sensor-based tomography.  In contrast, \ac{MOBI} would leverage features from portable fNIRS systems, which rely on the use of new driving electronics and optodes, which require new circuit designs. It, however, unlike a pulse oximeter, vary the intensity of light to accomodate hair artifacts. \ac{MOXI} can do software update easily, but features to support other vital signs necesitate specific electronics that the mobile-phone in use may not have. 
    \item[Interoperability] \ac{MOXI} is not better or worse in its ability to operate with other imaging systems. By design, \ac{OMCI} is capable of being integrated in existing x-ray mammography systems. However, \ac{MOBI} receives the highest score due to the auxiliary input of the master module, allow its measurements to synchronize with any other system that can output a \ac{TTL} signal. 
    \item[Maintainability] description.
-   \item[Manufacturability] description.
+   \item[Manufacturability] \ac{MOBI} modules have very similar optical components to a finger-clip pulse oximeter, thus same expertise used in designing the circuit and fabricating the physical enclosure of a pulse oximeter clip is needed for fabricating a \ac{MOBI} module. We ranked them $-1$ because a \ac{MOBI} system also requires the fabrication of the master and trigger boards, as well as the creating of the headgear that holds the modules in place. Our \ac{OMCI} system requires not only fabricating circuits but also mechanical assemblies and sensitive optical fibers. In contrast, \ac{MOXI} simply requires a piece of colored paper. 
    \item[Modifiability] Modifiability refers to the ability to change a default set of specified parameters. Besides the color of the paper filter, \ac{MOXI} does not allow any user changes. On our \ac{MOBI} system, a use can change the source currents, detector gains, and sampling strategy (sequentialy and spatial multiplexing). \ac{OMCI} receives the highest ranking in this category due to the ability to change the wide-field and \ac{SLI} patterns, position of the \ac{RF} source location, and scaling factor sensitivity. 
    \item[Operability] description.
    \item[Portability] description.
@@ -51,7 +51,7 @@ Reconfigurability & 0              & 1    & 2    & 0    \\ \bottomrule
 
 
 \textbf{Complexity} refers to the intricacy of a system. \ac{MOXI}, \ac{MOBI}, and \ac{OMCI} increase in complexity respectively because, despite all being based on the same near-infrared imaging principle, they use an increasing number of communication protocols, units, and subsystems. 
-\textbf{Manufacturability} refers to how difficult a system is to build. While more complex in use, our \ac{MOBI} modules have very similar optical components and electronics to a pulse oximeter. The same expertise used in designing the circuit and fabricating the physical enclosure of a pulse oximeter clip is needed for a \ac{MOBI} module. On the other hand, our \ac{OMCI} system requires not only fabricating circuits but also mechanical assemblies and sensitive optical fibers. 
+
 \textbf{Operability} is similar to usability in that it quantifies how much more (or less) difficult a system is to use and operate relative to a traditional pulse oximeter. While as easy to manufacture as a finger-clip pulse oximeter, our \ac{MOBI} modules require relatively longer setup times to connect modules and affix a cap onto a user. 
 \textbf{Scalability} attempts to quantify the difficulty in increasing the number of users. Since it only requires a piece of paper and is software-based, it is much easier and faster for a new user to obtain a \ac{MOXI} system compared to manufacturing and shipping a traditional pulse oximeter.  While the \ac{MOBI} system is as simple to manufacture as a traditional pulse oximeter, we ranked it with one up arrow due to its broad range of applications that will likely entice more users than a non-adaptable pulse oximeter. 
 \textbf{Maintainability} is the effort and cost needed to keep a system in working condition. Our \ac{MOXI} system can be easily maintained with regular software updates and replacing its inexpensive pieces of paper. While as simple to manufacture, we ranked the \ac{MOBI} modules with one down arrow due to the higher number of components (flat-flex cables, caps, master modules) that can potentially break and require replacement. 
