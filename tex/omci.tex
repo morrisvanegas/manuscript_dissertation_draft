@@ -205,10 +205,14 @@ A motorized multi-level attenuation filter wheel was used to characterize the dy
 A homogeneous silicon phantom slab was used to characterize the continuous wave wide-field system. A set of 32 sliding-bar patterns were projected onto the bottom surface of the phantom whereas the same pattern set was employed as digital detectors to mask the collected diffuse transmittance images (10 images per pattern, 320 images in total) as in single-pixel detection method~\cite{Pian2015}. The SNR was computed for the coupling of each source-detector pair and observed to range from 55 to 87~dB at 660~nm and from 56 to 74~dB at 830~nm. Wide-field system stability was assessed over a period of 4 hours per wavelength by projecting a fully illuminated pattern over the homogeneous phantom bottom surface. Images of the transmitted light were acquired at a 5 frames-per-minute pace (a total of 1200 images) to evaluate the intensity fluctuations due to ambient temperature and light source current control variability. Intensity variations $<$5\% in both wavelengths were observed during the evaluated time period.
 
 A heterogenous phantom was use...
-Optical contrast of inclusion, size of phantom, spherical inclusion size.
-Number of patterns illuminated. 
-Number of iterations.
-FWHM shown. 
+Optical contrast of inclusion (2 and 4x contrast), size of phantom (8x15x4.5cm), spherical inclusion size (1.5 and 2.5~cm diameters).
+Number of patterns illuminated (32 patterns). 
+Number of iterations (15).
+FWHM shown. at y=4cm.
+
+
+1.5 and 2.5~cm diameters
+
 \begin{figure}[]
     \begin{center}
     \subfigure[]{\label{fig:PhantomResultsA}\includegraphics[width=.4\textwidth]{fig/omci/PhantomResultsA.png}}
@@ -267,15 +271,44 @@ DOT reconstructions were performed using our in-house data analysis toolbox, Red
 The MSE errors from these reconstructed images are summarized in Fig.~\ref{fig:mse}, showing the effect of different surface estimation methods on the accuracy of optical property recovery. Overall, surface mesh accuracy appears to have a notable impact on relatively shallow tumors, with a depth of less than 25~mm. MSE values obtained using the SLI method closely follow those using the ground truth DBT mesh for most inclusion depths. The top- and side-sweep-based meshes followed similar trends, however, reporting higher errors compared to SLI especially when the tumor is relatively shallow. The maximum MSE value for the SLI mesh at a distance of 5~mm from the surface ($4.89\times 10^{-7}$~mm$^2$) was 23\% higher than the maximum MSE value for the DBT mesh ($4.35\times 10^{-7}$~mm$^2$). In contrast, the single-axis-extrusion method (EXT) MSE was nearly twice higher ($8.62\times 10^{-7}$ mm$^2$) than that from the DBT mesh. Although the DBT and SLI mesh MSEs plateau to their minimum around 15~mm from the surface, top-, side-, and extrusion-based mesh MSEs continue to decrease until a depth of 25~mm. Beyond the depth of 25 mm, the errors between different methods become minimal.
 
 \subsection{full system in-vivo patient results}
+\begin{figure}[]
+    \begin{center}
+    \subfigure[]{\label{fig:PatientResultsA}\includegraphics[width=.4\textwidth]{fig/omci/SLIMeshC.png}}
+    \subfigure[]{\label{fig:PatientResultsB}\includegraphics[width=.4\textwidth]{fig/omci/SLIMeshD.png}}
+    \subfigure[]{\label{fig:PatientResultsC}\includegraphics[width=.4\textwidth]{fig/omci/PatientResultsA.png}}
+    \subfigure[]{\label{fig:PatientResultsD}\includegraphics[width=.4\textwidth]{fig/omci/PatientResultsB.png}}
+    \end{center}
+    \caption{(a) The recovered point cloud from a patient measurement conforming to the breast curvature. (c) The generated 3D breast-shaped mesh from a SLI measurement on a healthy patient. (c-d) OMCI \textit{in-vivo} validation at two wavelengths. Recovered breast structures from a healthy patient corresponding to the axilla muscle, adipose tissue and fibroglandular structures.} 
+    \label{fig:PatientResults}
+\end{figure} 
+
+%Danvers, IRB approved, healthy subject, prior x-ray within X months.
+%Acquisition time, time in compression for each breast. 
+%Make sure patient we choose has a nipple (so we can see the SLI recovery). 
+%Find a patient with registered data. 
+
 
 
 \section{Discussion}
 \label{chap:omci:discussion}
+
+% FD results
+Our multi-distance and multi-wavelength frequency domain spectroscopy subsystem provides an accurate decoupling of the bulk tissue optical properties. By using a multi-distance and dual-wavelength approach, our FD subsystem provides accurate optical properties, even in the presence of tissue heterogeneities. Encoder-informed compression allows the FD subsystem to automatically derive source-detector distances and adjust for varying compression thicknesses. The use of galvo-based positioning allows our FD system to easily adapt to breasts of varying sizes or localized heterogeneities through either higher resolution positioning within a single axis or through the use of multiple axes for calculating bulk optical properties from larger areas. Although currently limited to a single degree of freedom, the characterization of the FD subsystem resulted long-term stable NEP and dynamic range comparable to existing DOT systems (Figure~\ref{fig:RFSystem}).  
+
+% WF results
+Our high-density wide-field light source combined with a camera-based detection of the diffuse transmitted light through the compressed breast allows us to obtain high-density spatial sampling and accelerated data acquisition all while bypassing traditional optical coupling coefficients artifacts. The \textit{in-vitro} validation in Figure~\ref{fig:PhantomResults} demonstrate this subsystem's ability to reconstruct the size and optical properties of spherical inclusions from a heterogeneous phantom. The phantom had a set of two- and four-fold absorption contrast inclusions (1.5 and 2.5~cm diameters) embedded inside a homogeneous media. The reconstructed inclusions were observed to be under estimated by a two-fold difference optical contrast while the inclusion sizes were over estimated by 20\%. Additionally, the recovered bulk optical properties of the homogeneous media using the FD subsystem matched the ground truth values.  
+
+% SLI results - reprojection errors
 The camera and projector re-projection errors in Section~\ref{ssec:calibrationresults} represent an average error of less than 0.5 pixels in estimating the corner locations of a calibration checkerboard placed between 50 and 250~mm away [Fig.~\ref{fig:mammography_side}] from the projector for all 35 checkerboard positions. Although the same illumination patterns and calibration checkerboard positions were used to calibrate each camera-projector pair, we find a slightly better calibration accuracy when the projector is paired with Camera 1 since Camera 1 is closer to the projector's lens (Fig.~\ref{fig:mammographysetup}). The discrepancy in the re-projection errors of the two pairs is due in part to the asymmetry of the dual-camera setup. The asymmetry arises from the projector offset relative to its housing, making one camera closer to the projector than the other [Fig.~\ref{fig:mammography_top}]. 
 
+% SLI results - surface errors
 From Table~\ref{tab:residuals}, the single-axis extrusion method resulted in the highest surface error because it does not account for the curvature of the breast in the $y/z$ plane [Fig.~\ref{fig:mesh_extrude}]. Table~\ref{tab:residuals} indicates that, on average, points in the extrusion-method-derived surface estimation mesh are approximately 6.84~mm away from the DBT mesh. The top- and side-sweep methods decrease the surface estimation error by incorporating a second breast contour from the $y/z$ plane [Figs.~\ref{fig:mesh_topsweep} and \ref{fig:mesh_sidesweep}]. Both methods improve the accuracy of surface estimations by approximating the 3-D curvature of the breast. We want to point out that both top-sweep and side-sweep methods require an additional camera to obtain two orthogonal views of the breast~\cite{Pinto2020}, which does not necessarily lead to simplified hardware compared to the SLI setup considering the mounting space constraints and lighting conditions~\cite{Rodriguez2017}. While also requiring two cameras, our mammography-tailored SLI system can produce sub-millimeter resolution of the surface compared to the reference DBT breast model based on Table~\ref{tab:residuals}.
 
+% SLI results - MSE
 Our results also demonstrated that the improvement in surface estimation accuracy can lead to improved DOT reconstruction accuracy. Fig.~\ref{fig:mse} shows using breast surfaces derived from SLI can accurately recover the absorption profile compared to those recovered using the ground-truth (DBT) mesh at most tested tumor depths. For superficial/shallow ($<$ 10~mm) tumors, the top- and side-sweep surface estimation methods followed similar trends to each other, reporting MSEs about 50\% higher compared to those from using ground-truth (DBT) surface models, and about 30\% higher than those from using SLI surfaces. As expected, the effect of the surface accuracy decreases as the inclusion is moving further away ($>$ 25~mm) from the skin.
+
+% Patient results
+In addition to the characterization of subsystems above, the complete OMCI system has also been successfully validated \textit{in-vivo}. In patient measurements, the SLI subsystem successfully adjusted its projector intensity to prevent webcam saturation. The recovered bulk breast tissue optical properties from the FD subsystem followed the reported values from our group~\cite{Fang2009} and others~\cite{Durduran2002}. Moreover, the 3-D reconstruction of the tissue physiology parameters resembles the internal breast tissue structures (i.e. adipose, muscle and fibroglandular tissue) described previously~\cite{Fang2009}, denoting the capability of our system to resolve breast compounds.
 
 %limitations
 Despite the ability to produce sub-millimeter resolution of breast surfaces in poorly lit and confined mammography-like settings, both our SLI system and our analysis have limitations. Firstly, the span of the output point-cloud from our SLI system is limited to the area of the breast that is well-illuminated by the projector. As a result, tissue boundaries near the chest wall or those in direct contact with the compression plate may not be well covered due to the limited angles of the projector/camera line-of-sight. Still, for DOT of a compressed breast, capturing a significant portion of the front-facing breast tissue as our system does, provides quantitative differences in reconstructions, as shown above. Future improvement of this system should consider using more compact, wide-angle projectors, higher resolution cameras, and patterns with higher order binary codes to both expand the field-of-view and increase the point-cloud resolution. Secondly, a 3-D printed breast model was used to experimentally compare different shape acquisition methods. Different choices of extruder sizes, filament colors, and printing techniques could impact the surface texture of the printed phantom and slightly alter the surface estimation errors. Finally, the quantification of reconstruction errors was based on simulations using a single set of pre-determined breast models, tumor size and shape, tumor contrast, and wide-field pattern size. An experimental validation using heterogeneous phantoms may produce more realistic comparisons.
