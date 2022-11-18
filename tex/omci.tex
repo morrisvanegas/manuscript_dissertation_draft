@@ -2,9 +2,7 @@
 
 \chapter{OPTICAL MAMMOGRAPHY CO-IMAGER (OMCI)} % all caps please
 \label{chap:omci}
-OMCI is a high-density standalone hybrid diffuse optical breast tomography system aimed at supplementing any structural breast imaging technique. The device integrates mechanical compression of the breast to resemble clinical mammography, uses a frequency-domain subsystem for recovering absolute tissue optical properties, uses a wide-field trans-illumination diffuse optical system to generate three-dimensional tomographic images, and recovers high-resolution meshes of the breast surface. Although OMCI is composed of four separate subsystems working in tandem, in this chapter, we will provide an overall instrument characterization as well as details into the dual-camera structured light imaging (SLI) breast shape acquisition system used for improving diffuse optical tomography image reconstructions.
-
-
+OMCI is a high-density standalone hybrid diffuse optical breast tomography system aimed at supplementing any structural breast imaging technique. The device integrates mechanical compression of the breast to resemble clinical mammography, uses a frequency-domain subsystem for recovering absolute tissue optical properties, uses a wide-field trans-illumination diffuse optical system to generate three-dimensional tomographic images, and recovers high-resolution meshes of the breast surface. Although OMCI is composed of four separate subsystems working in tandem, in this chapter, we will provide an overall instrument characterization as well as further elaborate the dual-camera structured light imaging (SLI) breast shape acquisition system used for improving diffuse optical tomography image reconstructions.
 
 % challenge and application
 %innovation and significance
@@ -34,7 +32,16 @@ In this chapter, we first describe the overall OMCI instrument and its subsystem
 
 \section{Methods}
 \label{chap:omci:methods}
-Here, we first briefly describe a mammography-mimicking parallel-plate transmission breast DOT system, designed to be used as either a standalone DOT scan of a compressed breast or combined with separately acquired mammography or DBT images in a multi-modality data analysis~\cite{Fang2009a, Deng2015}. Then we elaborate on the SLI breast surface acquisition sub-system and surface data processing pipeline. This custom SLI system is designed to be compact, low-cost, and specifically tailored towards the low-light and space-confined mammography compression settings. Next, we compare this approach with a number of alternative breast shape acquisition methods, including single-axis and dual-axis contour-line extrusion methods, and create benchmarks to quantify the surface accuracy improvement of the proposed method. Finally, we compare results from a series of DOT image reconstructions based on simulated data with various surface acquisition methods to further quantify the impact of breast surface accuracy, especially for the accurate recovery of tumors embedded at various depths.
+An overview of the OMCI system is shown in Figure~\ref{fig:OMCISystem}. The instrument integrates a mechanical motion stage, a sensor cluster for auxiliary monitoring, and three optical subsystems all controlled and monitored using an in-house developed software through an Arduino board (Arduino Uno, Arduino, Italy). 
+
+\begin{figure}[]
+    \begin{center}
+    \subfigure[]{\label{fig:OMCISystemA}\includegraphics[width=.3\textwidth]{./Images/OMCISystemImage_1.png}}
+    \subfigure[]{\label{fig:OMCISystemB}\includegraphics[width=.5\textwidth]{./Images/OMCISystemSketch.png}}
+    \end{center}
+    \caption{(a) The OMCI system in its fully compressed state. (b) A schematic of the OMCI components and subsystems. The wide field optical system consists of: CW lasers (CW-L1/2), lenses (L1/2), a dichroic mirror (DM), a digital micromirror Device (DMD), an expansion lens (EL), a reflection mirror (RM), and the measuring camera (CMR). The frequency domain subsystem consists of: RF lasers (RF-L1/2), a bifurcation fiber (BF), collimation lenses (CL1/2), a focusing lens (FL), dual-axis galvo mirrors (GM-X/Y), and a detection fiber located above the breast (RFD). The structured light imaging subsystem consists of: two webcams (W1/2) and a pattern illumination projector (PR).} 
+    \label{fig:OMCISystem}
+\end{figure} 
 
 %%% Subsection %%%
 \subsection{Wide-field parallel-plate transmission breast DOT system}
