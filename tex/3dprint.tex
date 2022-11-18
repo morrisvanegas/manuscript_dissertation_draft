@@ -23,7 +23,18 @@ This project utilizes an experimental fused deposition modeling (FDM) multi-mate
 \section{New Filament Characterization}
 The filament profiles are the derived settings used for a particular filaments. Although the majority of printing settings are consistent across PETG filaments, certain features must be accounted for, particularly, the extrusion multipliers and retraction amount. The extrusion multiplier (EM) is a setting used to account for variability in extrusion amounts. An extrusion multiplier of 1 means that 1 mm of filament is extruded for every 1 mm requested. Due to the filament path (the Bowden tube, motor teeth, varying temperatures), certain filaments in certain printers may require over or under extrusion to extrude the correct amount of filament. Retraction amount is the amount of filament to pull back up into the nozzle as the print head moves in between printing layers. When this value is too low, you will see ``stringing'' in prints from the oozing of material while the head is in motion. Too much retraction and the printer will not print the first few millimeters upon restarting since the nozzle is empty of filament.
 
-To account for variations in manufactured filament of the same color by the same manufacturer, we have developed a method to characterize filaments and create filament profiles for each spool of filament. In fairness, the variability in extrusion multiplier is not entirely due to the manufacturer. The QuadFusion head is a complex head that requires filaments to be driven through curved paths and high pressure that result in friction. We calculate filament-specific EMs for each spool used in our printer by printing a square wall with the thickness of a single path width (PW). We then empirically determine the EM based on the desired path width and actual path width of the print. The steps are outlined below. 
+To account for variations in manufactured filament of the same color by the same manufacturer, we have developed a method to characterize filaments and create filament profiles for each spool of filament. In fairness, the variability in extrusion multiplier is not entirely due to the manufacturer. The QuadFusion head is a complex head that requires filaments to be driven through curved paths and high pressure that result in friction. We calculate filament-specific EMs for each spool used in our printer by printing a square wall with the thickness of a single path width (PW). We then empirically determine the EM based on the desired path width and actual path width of the print. The steps are outlined in Figure~\ref{fig:emflowchart}.
+
+\begin{figure}
+	\begin{center}
+	   \subfigure[]  {\label{fig:emflowchart}\includegraphics[width=\textwidth]{fig/3dprint/emflowchart.pdf}}
+	   \subfigure[]{\label{fig:caliper}\includegraphics[width=.2\textwidth]{fig/3dprint/caliper.jpg}}
+	   \subfigure[]{\label{fig:clear}\includegraphics[width=.35\textwidth]{fig/3dprint/clear.jpg}}
+	\end{center}
+	\caption{} 
+	\label{fig:em}
+\end{figure} 
+
 \begin{enumerate}
     \item First, set the EM=1 and the path width to 0.4 mm and print the square wall.
     \item Use calipers to measure the actual path width of the print.
