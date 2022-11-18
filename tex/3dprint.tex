@@ -21,35 +21,54 @@ This project utilizes an experimental fused deposition modeling (FDM) multi-mate
 
 
 \section{New Filament Characterization}
-\subsection{Filament profiles}
-The filament profiles are used for slicing digital 3-D models for printing. Although the majority of printing settings are constant across PETG filaments, certain features must be accounted for, particularly, the extrusion multipliers and retraction amount. The extrusion multiplier (EM) is a setting used to account for variability in extrusion amounts. An extrusion multiplier of 1 means that 1 mm of filament is extruded for every 1 mm requested. Due to the filament path (the Bowden tube, motor teeth, varying temperatures), certain filaments in certain printers may require over or under extrusion to extrude the correct amount of filament. Retraction amount is the amount of filament to pull back up into the nozzle as the print head moves in between printing layers. When this value is too low, you will see ``stringing'' in prints from the oozing of material while the head is in motion. Too much retraction and the printer will not print the first few millimeters upon restarting since the nozzle is empty of filament.
+The filament profiles are the derived settings used for a particular filaments. Although the majority of printing settings are consistent across PETG filaments, certain features must be accounted for, particularly, the extrusion multipliers and retraction amount. The extrusion multiplier (EM) is a setting used to account for variability in extrusion amounts. An extrusion multiplier of 1 means that 1 mm of filament is extruded for every 1 mm requested. Due to the filament path (the Bowden tube, motor teeth, varying temperatures), certain filaments in certain printers may require over or under extrusion to extrude the correct amount of filament. Retraction amount is the amount of filament to pull back up into the nozzle as the print head moves in between printing layers. When this value is too low, you will see ``stringing'' in prints from the oozing of material while the head is in motion. Too much retraction and the printer will not print the first few millimeters upon restarting since the nozzle is empty of filament.
 
-We characterize each filament and create profiles for them. The profiles are used to calculate the settings for the mixed filament. This is done as a weighted average of the settings scaled by the mixing ratios. For example, if white, grey, black, and clear filaments each have extrusion multipliers of 1, 0.98, 1, and 0.9, respectively, and we want to mix them in a 30/20/0/50 ratio, then the final extrusion multiplier would be
-$(1\times30 + 0.98\times20 + 1\times0 + 0.9\times50) / (30+20+0+50) = 0.946$ Similarly, the extrusion motors are driven at scaled rates based on the filament mixing ratio.
-
-\subsection{Extrusion multiplier determination}
-To account for variations in manufactured filament of the same color by the same manufacturer, we have developed a method to characterize filaments and create filament profile. In fairness, the variability in extrusion multiplier is not entirely due to the manufacturer. The QuadFusion head is a complex head that requires filaments to be driven through curved paths and high pressure that result in friction. We have developed a method to determine the extrusion multiplier of new filaments for use in our particular printer through printing a square wall with the thickness of a single path width (PW). The steps are outlined below. 
+To account for variations in manufactured filament of the same color by the same manufacturer, we have developed a method to characterize filaments and create filament profiles for each spool of filament. In fairness, the variability in extrusion multiplier is not entirely due to the manufacturer. The QuadFusion head is a complex head that requires filaments to be driven through curved paths and high pressure that result in friction. We calculate filament-specific EMs for each spool used in our printer by printing a square wall with the thickness of a single path width (PW). We then empirically determine the EM based on the desired path width and actual path width of the print. The steps are outlined below. 
 \begin{enumerate}
     \item First, set the EM=1 and the path width to 0.4 mm and print the square wall.
     \item Use calipers to measure the actual path width of the print.
     \item Use the actual path width and designed path width to determine a new EM using the formula $EM_{new} = EM_{printed} \times (PW_{desired}/PW_{measured})$
     \item Print the square wall again with the new EM and repeat steps 2 and 3 until the measured EM matches your desired EM. 
 \end{enumerate}
- 
-This method allows for the calculation of filament-specific EM for our printer that are saved to the filament profiles. 
+
+A 3-D printed tissue type is a simply a mixing ratio of multiple characterized filament profiles. While one filament profile informs of the settings for printing a single filament, we have to create combined printing settings when mixing multiple filaments (tissue types). This is done as a weighted average of the settings scaled by the mixing ratios. For example, if white, grey, black, and clear filaments each have extrusion multipliers of 1, 0.98, 1, and 0.9, respectively, and we want to mix them in a 30/20/0/50 ratio, then the final extrusion multiplier would be
+$(1\times30 + 0.98\times20 + 1\times0 + 0.9\times50) / (30+20+0+50) = 0.946$ Similarly, the extrusion motors are driven at scaled rates based on the filament mixing ratio.
 
 
 
 \section{Multi-filament slicing}
-
 \subsection{Artifacts for purging during transition}
+One difficulty in fused multi-material 3-D printing not found in single filament printing is the need to purge the nozzle in between changing mixing ratios for different tissue types on the same layer. For example, if we want two separate mixing ratios for concentric rods, the nozzle needs to be purged in between printing the outside color and printing the inside color. Purging refers to the extrusion of sacrificial filament when the outputted mixed filament is transitioning between different two ratios (tissue types).
+
+We have implemented a ``caging'' method in which a cage is built around the print to purge the nozzle. The method is an extension of the ``brim'' artifact commonly used to help prints adhere to the print bed. Essentially, at every layer, concentric shapes around the model are printed for each ratio. This allows the nozzle to fully transition to a new mixing ratio prior to continuing the print. This results in a cage around the print. 
+
+\begin{figure}
+	\begin{center}
+	\subfigure[]{\label{fig:caging01}\includegraphics[height=4cm]{fig/3dprint/caging01.png}}
+	\subfigure[]{\label{fig:caging02}\includegraphics[height=4cm]{fig/3dprint/caging02.png}}
+	\subfigure[]{\label{fig:caging03}\includegraphics[height=4cm]{fig/3dprint/caging03.jpg}}
+	\end{center}
+	\caption{The ``caging'' purge method (a) An example penguin composed of three different tissue types. (b) The same print with the cage shown. The colors of the cage indicate the colors on that segment of the print. (c) Resulting 3-D printed penguin. } 
+	\label{fig:caging}
+\end{figure} 
 
 \subsection{MOXI, MOBI, and OMCI system slicing}
 
 
 
 \section{Lessons learned for use of PETG in filament mixing}
+The use of PETG filament, a ``caging'' purging method, mixed filament ratio-based extrusion multipliers, and an experimental FDM 3-D printer has taught us many lessons. To facilitate future researchers in this space, here is a list of rule-of-thumbs and pitfalls to avoid. 
 
+\begin{itemize}
+    \item BED MATERIAL: PETG sticks very well to the bed. The use of sacrificial blue tape on the print bed will prevent you from buying new print beds when you can’t remove the print fully. \item LEVELING: Add a decent gap between nozzle and bed. Typical 3D printers level the bed by using a single sheet of regular printing paper as the unit of measure between the nozzle and the print bed. To account for the “gooey”-ness of PETG, use 3 pieces of paper.
+    \item BED TEMP: Start bed temperature around 80°C. Don't go above 100°C (90°C is probably the highest). Higher is better for bed adhesion, but PETG already adheres pretty well. Consider lowering your nozzle before increasing the temperature. 
+    \item NOZZLE TEMP: PETG prints between 230°C and 250°C. But PTFE, the white tube inside the nozzle, has a 250-260°C melting point, so don't print above 250°C.
+    \item Start at 230°C and do some test prints. If you hear a knocking noise during printing, your extruder is skipping, and you should increase the nozzle temperature by 5°C. If still stringing, retract more.
+    \item RETRACTION SPEEDS: Don’t go with high speeds for retraction PETG. Set the retraction speed to around 25 mm/s. Retraction distance should be set at about 3 or 4 millimeters for direct drive extruders. With PETG, retraction speed is more important than distance. If you still have oozing and stringing, try lowering the retraction speed.
+    \item TRAVEL SPEED: One more parameter that will help in reducing oozing is the travel speed. PETG tends to drip from the tip of the nozzle, especially if the nozzle temperature is high. To combat this, try increasing the travel speed as high as possible.
+    \item PRINT SPEED: PETG is very sensitive to print speed. Print too fast and you’ll have poor layer adhesion, extruder skipping, and low print quality—print too slow and you’ll end up with deformed parts, stringing, and oozing. You’ll have to find the sweet spot with the printer and filament you’re using. A good place to start is between 50-55mm/s. We suggest 25 mm/s for the first layer and the outer wall, while travel moves should be as fast as possible, at least 120 mm/s, to avoid oozing.
+    \item FANS: We recommend printing without fans for the first layer or two, and then full fan after that. Fan ON is slightly worse adhesion, but better quality.
+\end{itemize}
 
 
 % --- EOF ---
