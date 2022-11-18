@@ -49,12 +49,13 @@ An overview of the OMCI system is shown in Figure~\ref{fig:OMCISystem}. The inst
 \subsubsection{Mechanical stage and auxiliary sensors suite}
 OMCI is composed of a linear and rotary stage. The breast is compressed by a pair of acrylic plates, with one plate mounted at the stationary end of a linear stage (MN10-0160-M02-31 BiSlide, Velmex, NY, USA). The bottom paddle also serves as a cover for the OMCI projection box which encloses most of the components of the system. An acrylic mammography compression paddle is mounted on the moving gantry of the linear stage, allowing for a plate separation ranging from 300~mm (fully released) to 0~mm (fully closed). A linear encoder (ETI Systems, Carlsbad, CA, USA) is connected between the pair of compression plates to measure their separation. The entire breast compression assembly is mounted on a rotatory table (306045-1-s-M04-C376, Lintech, Monrovia, CA, USA), controlled by a foot paddle to permit mammography-like lateral-oblique compression. Each stage is actuated by a stepper motor (NEMA 34 PK296 Stepper Motor, Oriental Motor Corporation, MA, USA) controlled through a motor driver interface (VXM-2, Velmex Inc., USA). In addition to the linear encoder, sensor cluster encompasses two limit switches (BiSlide Push Button, Velmex Inc., NY, USA) in the translation stage, a reed switch in the rotary stage (L06 Non-Contact Reed Switch, LinTech Motors, CA, USA), and four load sensors (SEN-10245, SparkFun, CO, USA) inside the OMCI projection box. The limit and reed switches serve to confine the degree of motion of the linear and rotation stages while the pressure sensor informs of the compression force exerted on the breast. This design specifically enables registration of structural information from separately acquired mammography scans with the DOT images using the methods detailed in our previous studies~\cite{Deng2015}.
 
-\subsubsection{Galvo}
+\subsubsection{Galvo-based frequency-domain subsystem}
 \label{sec:RF}
 A custom-built frequency-domain (FD) spectroscopy device~\cite{Zimmermann2016} was employed for bulk tissue optical properties estimation. The FD subsystem consist of two laser modules at 690~nm (HL6750MG, Thorlabs GmbH, Germany) and 830~nm (HL8338MG, Thorlabs GmbH, Germany) modulated at 67.5 and 75~MHz, respectively, with an average power of 25~mW and a modualtion depth of 90\%. Each laser module is coupled to one of the two input fibers of a 400~$\mu$m core bifurcated fiber bundle (BFY400LS02, Thorlabs GmbH, Germany). The single fiber light output was collimated and focused to a 3~mm source spot at the surface of the bottom compression paddle through a collection of optical lenses (C610TME-B, LA4647-B and AC254-300-B, Thorlabs GmbH, Germany). Frequency multiplexing of the light sources allows for simultaneous dual-wavelength illumination. A dual-axis galvo motor system (GVS002, Thorlabs GmbH, Germany) was utilized to position the light source at nine different positions along a 6~cm length linear trace (parallel to the chest wall). A single customized 1000~$\mu$m core detection optical fiber (FP1000ERT, Thorlabs GmbH, Germany), located directly above the last source position and attached to the top compression paddle, was used to collect the diffuse transmitted light and deliver it to a frequency-domain detector (C5331-04, Hamamatsu, Japan) for subsequent frequency-domain analysis to subtract amplitude and phase parameters. Assuming an average sample thickness of 6~cm, the source-detector (SD) separation ranges from 6 to 8.5~cm.
 
-
-\subsubsection{WF}
+\subsubsection{Ultra-high-density wide-field tomography subsystem}
+\label{sec:WF}
+The wide-field (WF) tomography subsystem utilizes a modified projector (P300 Neo, Aaxa Technologies, USA) for dual-wavelength illumination. The built-in collimation lenses and dichroic mirrors were removed. The LED triplet was replaced by a pair of high-power laser modules at 660~nm and 830~nm and a single dichroic longpass filter (69-882, 750~nm cut-on, Edmund Optics, USA). The laser on/off switch is controlled by the OMCI software using an Arduino board (Arduino UNO, Arduino, Italy) interface. The modified projector produces a full illumination area of $11\times6~cm^2$ at the surface of the bottom compression paddle with a total output power of 26~mW (0.39~mW/cm$^2$) at 660~nm and 10~mW (0.15~mW/cm$^2$) at 830~nm. The projector's gamma function was corrected to account for the non-linearities of the projected light intensities. The light transmitted through the sampled tissue is collected by a 14-bit EMCCD camera (Andor Luca R, Oxford Instruments;, U.K) fixed at 45~cm from the top compression paddle using a 200~ms exposure time. A set of 32 sliding-bar patterns per wavelength are used to illuminate the targeted sample from underneath.
 
 %%% Subsection %%%
 \subsection{Dual-camera SLI breast surface scanning system}
@@ -158,20 +159,81 @@ We use mean squared error, MSE, to determine the accuracy of the image reconstru
 where $N$ is the total node number; $\mathrm{\mu_{a}}_i$ and $\mathrm{\mu_{a0}}_i$ define the recovered and ground truth $\mu_{a}$ values, respectively, at the $i^{th}$ node in the DBT mesh.
 
 
+%%% Subsection %%%
+\subsection{Optical phantom and patient data acquisition}
+\label{Sec:DataAcquisition}
+The recorded information from the three optical subsystems is supplemented by the auxiliary sensor data to obtain tomographic maps reconstructions. The data analysis pipeline that integrates all the captured information is shown in Figure~\ref{fig:DataAnalysis}. The data acquisition procedure consists of three steps. First, calibration images for each wavelength are acquired from each of the 32 sliding-bar source patterns while being projected onto a piece of paper placed over the bottom compression paddle. These images are used to locate the projection area and a realistic source pattern used during tomographic reconstruction to account for projection imperfections. Second, a reference measurement is acquired from a homogeneous optical phantom by recording images of the transmitted light when projecting each of the sliding-bar source patterns at each wavelength. Third, measurement images are acquired either from a heterogeneous phantom for system validation or from a patient breast to perform clinical measurements. A reference pattern at 660~nm is irradiated on the targeted sample to perform a iterative search of the optimum EMCCD gain value. To this end, the mean intensity over the hard-coded source pattern area in the acquired images is adjusted to be within a customized intensity-level that maximizes the signal-to-noise-ratio while avoiding saturation. This procedure is repeated for the same reference pattern irradiated at 830~nm. A solid black illumination pattern is also acquired for noise correction at the corresponding EMCCD gain value per wavelength. Next, an image of the diffuse transmitted light for each of the 32 sliding-bar projected patterns is captured using a exposure time of 200~ms. Offline post-processing of both calibration and measurement images is performed to reconstruct 3-D maps of the tissue optical properties.
+
+\begin{figure}[]
+\centering
+\includegraphics[width=0.90\textwidth]{fig/omci/OMCIWorkflow_280720.png}
+\caption{OMCI data processing pipeline. The calibration and measurement data is fed into its corresponding processing method. The auxiliary and SLI measurements produce a 3-D breast-shaped mesh as a simulation domain. Mesh-constrained Frequency Domain (FD) analysis produces the bulk tissue optical properties of the medium. Afterwards, both the DC component of the FD data and the acquired wide-field (WF) transmission images are employed to iteratively produce tissue absorption maps. The FD and WF analysis methods are repeated over the data acquired at each measured wavelength.}
+\label{fig:DataAnalysis}
+\end{figure}
+
+
+%%% Subsection %%%
+\subsection{Three-dimensional reconstruction methods}
+\label{Sec:FDanalysis}
+A homogeneous phantom with known optical properties is used to calibrate the acquired optical data from the targeted samples. Two sets of tetrahedral meshes, one finer and one coarser, generated using iso2mesh toolbox~\cite{Fang2009} are used for solving the forward and inverse problems, respectively. Phantom reconstructions are based on a slab mesh whereas the clinical data uses the high-resolution breast mesh generated from the SLI system point cloud.
+
+The calibrated frequency-domain optical measurements are used to estimate the bulk optical properties by solving the forward problem in the finer mesh using our in-house finite-element forward solver, redbird-m~\cite{Redbird2008}. This measurements serve as an initial guess in the iterative reconstruction process. Single pixel values~\cite{Yao2015} are computed as the dot product of the the captured wide-field transmission images and a 32$\times$ sliding-bar pattern (same as the source). Inverse problem of the diffusion approximation in the coarse mesh is solved by using an iterative Tikhonov-regularized Gauss-Newton method over 15 iterations. A finer representation of the reconstructed three-dimensional distribution of tissue physiology are obtained by mapping the coarser and finer meshes.
+
+
 
 \section{Results}
 \label{chap:omci:results}
-In this section, we first report the projector and camera re-projection errors of our SLI calibration using the calibration checkerboard. We then quantify the error of surface estimation methods in estimating the surface shape of the DBT breast. Finally, we show the effect of different surface estimation methods on optical property reconstruction using simulations of continuous wave pattern-illumination sources. 
+Here, we will report the results from the frequency domain and wide-field subsystems first. The SLI results section will be broken down into three parts. We will first report the projector and camera re-projection errors of our SLI calibration using the calibration checkerboard. We then quantify the error of surface estimation methods in estimating the surface shape of the DBT breast. Finally, we show the effect of different surface estimation methods on optical property reconstruction using simulations of continuous wave pattern-illumination sources. Once all subsystems are characterized individually, we will show patient results from a full system measurement.
+
 
 %%% Subsection %%%
-\subsection{Camera-projector calibration and surface acquisition}
+\subsection{Frequency-domain subsystem characterization}
+\begin{figure}[]
+    \begin{center}
+    \subfigure[]{\label{fig:RFSystemA}\includegraphics[width=.35\textwidth]{fig/omci/RFCharacterizationA.png}}
+    \subfigure[]{\label{fig:RFSystemB}\includegraphics[width=.35\textwidth]{fig/omci/RFCharacterizationB.png}}
+    \end{center}
+    \caption{Frequency domain subsystem characterization.} 
+    \label{fig:RFSystem}
+\end{figure} 
+
+A motorized multi-level attenuation filter wheel was used to characterize the dynamic range of the designed galvo-based frequency-domain subsystem. A noise equivalent power (NEP), the signal power that gives a signal-to-noise ratio of one in a one hertz output bandwidth, lower than 45~pW$/\sqrt{Hz}$ and 25~pW$/\sqrt{Hz}$ were obtained for 690~nm and 830~nm source wavelengths, respectively. A dynamic range greater than 100~dB (20log10) for both wavelengths was characterized when reaching the saturation level of the detection sensor at 1.5~mW (Figure.~\ref{fig:RFSystemA}). The phase noise was quantified to be less than 10~mrad in each wavelength at optical powers higher than the NEP (Figure.~\ref{fig:RFSystemB}). Finally, the system stability was assessed over a time period of 4 hours when irradiating light sources of 1~mW at each wavelength. No inter-wavelength or amplitude-to-phase crosstalk was observed during data acquisition.
+
+
+%%% Subsection %%%
+\subsection{Continuous wave wide-field subsystem characterization}
+A homogeneous silicon phantom slab was used to characterize the continuous wave wide-field system. A set of 32 sliding-bar patterns were projected onto the bottom surface of the phantom whereas the same pattern set was employed as digital detectors to mask the collected diffuse transmittance images (10 images per pattern, 320 images in total) as in single-pixel detection method~\cite{Pian2015}. The SNR was computed for the coupling of each source-detector pair and observed to range from 55 to 87~dB at 660~nm and from 56 to 74~dB at 830~nm. Wide-field system stability was assessed over a period of 4 hours per wavelength by projecting a fully illuminated pattern over the homogeneous phantom bottom surface. Images of the transmitted light were acquired at a 5 frames-per-minute pace (a total of 1200 images) to evaluate the intensity fluctuations due to ambient temperature and light source current control variability. Intensity variations $<$5\% in both wavelengths were observed during the evaluated time period.
+
+A heterogenous phantom was use...
+Optical contrast of inclusion, size of phantom, spherical inclusion size.
+Number of patterns illuminated. 
+Number of iterations.
+FWHM shown. 
+\begin{figure}[]
+    \begin{center}
+    \subfigure[]{\label{fig:PhantomResultsA}\includegraphics[width=.4\textwidth]{fig/omci/PhantomResultsA.png}}
+    \subfigure[]{\label{fig:PhantomResultsB}\includegraphics[width=.4\textwidth]{fig/omci/PhantomResultsB.png}}
+    \subfigure[]{\label{fig:PhantomResultsC}\includegraphics[width=.4\textwidth]{fig/omci/PhantomResultsC.png}}
+    \subfigure[]{\label{fig:PhantomResultsD}\includegraphics[width=.4\textwidth]{fig/omci/PhantomResultsD.png}}
+    \end{center}
+    \caption{OMCI \textit{in-vitro} validation at two wavelengths (columns). Localization of two absorption contrast (2x and 4x) inclusions. The recovered inclusion sizes of 2.1 cm and 3 cm (shaded area) denote an over estimation of about 0.5 cm with respect to the real inclusion size.} 
+    \label{fig:PhantomResults}
+\end{figure} 
+
+
+
+%%% Subsection %%%
+\subsection{SLI subsystem characterization}
+
+
+\subsubsection{Camera-projector calibration and surface acquisition}
 \label{ssec:calibrationresults}
 Our dual-camera SLI system was calibrated in a dark room using a checkerboard with 5$\times$7 internal corners with 1$\times$1~cm$^2$ black and white squares. The calibration checkerboard was printed and adhered to a black Delrin surface to ensure it remained planar. To account for varying breast shapes and curvatures, the checkerboard was placed at 7 locations. At each location, camera images were captured for 5 board orientations: 1) normal to the $y$-axis [see Fig.~\ref{fig:mammography_top}], 2) rotated left and 3) rotated right by 30 degrees relative to the $x$-axis, and 4) tilted forward and 5) tilted backward by 30 degrees in the $y/z$ plane [Fig.~\ref{fig:mammography_side}]. This results in a total of $7\times5=35$ checkerboard positions within the camera and projector field-of-views (Fig.~\ref{fig:mammographysetup}). Each rotation and tilt was measured manually using a printed protractor. The projector's resolution is 1280$\times$720 pixels and the resolution of the cameras is 1600$\times$896 pixels. Using a Gray-code of bit-length $P=9$, we acquire $P\times 4 + 2 = 38$ images (see Section~\ref{sec:sli}) at each board orientation/position placement. An exposure time of 0.25 seconds per image per camera results in a total one-time calibration time of $38 \times 7 \times 5 \times 2 \times 0.25 = 665$ seconds. The first camera-projector pair (Camera 1 with projector) resulted in a camera and projector re-projection error of 0.4089 and 0.2282 pixels, respectively. The second camera-projector pair resulted in a camera re-projection error of 0.4368 pixels and a projector re-projection error of 0.2889 pixels.
 
 A re-calibration is only necessary when the relative position of the cameras and projector is changed. Once calibrated, the SLI system can acquire a surface scan in about 35 seconds, including 16 seconds for adaptively adjusting the intensity scaling factor $\alpha$ for both cameras (see Section~\ref{sec:special} for details) and 19 seconds for image acquisition ($38 \times 2\times 0.25 = 19$ s).
 
 %%% Subsection %%%
-\subsection{Surface estimation errors}
+\subsubsection{Surface estimation errors}
 \begin{table}
     \centering
     \caption{Mean and standard deviation of the residuals of each point in a surface estimation mesh compared to the original DBT breast mesh.}
@@ -191,7 +253,7 @@ The DBT breast model was 3-D printed (Ender 5, Creality, China) with a 0.1~mm la
 Table~\ref{tab:residuals} shows the mean and standard deviation of the residual of all the nodes in the estimated breast surface mesh. The $z$-extrusion method (EXT) results in the largest error ($E_s$) of all compared methods. While the top-sweep, side-sweep, and SLI methods all had similar standard deviations, the SLI method resulted in the smallest $E_s$.
 
 %%% Subsection %%%
-\subsection{Mean square error of optical property reconstruction}
+\subsubsection{Mean square error of optical property reconstruction}
 \begin{figure}
 	\begin{center}
 	    \includegraphics[width=.9\textwidth]{fig/omci/mse.pdf}
@@ -204,6 +266,7 @@ DOT reconstructions were performed using our in-house data analysis toolbox, Red
 
 The MSE errors from these reconstructed images are summarized in Fig.~\ref{fig:mse}, showing the effect of different surface estimation methods on the accuracy of optical property recovery. Overall, surface mesh accuracy appears to have a notable impact on relatively shallow tumors, with a depth of less than 25~mm. MSE values obtained using the SLI method closely follow those using the ground truth DBT mesh for most inclusion depths. The top- and side-sweep-based meshes followed similar trends, however, reporting higher errors compared to SLI especially when the tumor is relatively shallow. The maximum MSE value for the SLI mesh at a distance of 5~mm from the surface ($4.89\times 10^{-7}$~mm$^2$) was 23\% higher than the maximum MSE value for the DBT mesh ($4.35\times 10^{-7}$~mm$^2$). In contrast, the single-axis-extrusion method (EXT) MSE was nearly twice higher ($8.62\times 10^{-7}$ mm$^2$) than that from the DBT mesh. Although the DBT and SLI mesh MSEs plateau to their minimum around 15~mm from the surface, top-, side-, and extrusion-based mesh MSEs continue to decrease until a depth of 25~mm. Beyond the depth of 25 mm, the errors between different methods become minimal.
 
+\subsection{full system in-vivo patient results}
 
 
 \section{Discussion}
