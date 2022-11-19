@@ -87,49 +87,49 @@ To evaluate the D1 prototype, we compared the obtained signals from our device a
 
 %%% Section %%%    
 \section{D2: Single Slit Oximeter}
-    \subsection{D2: Single Slit Hardware}
-    \begin{figure}
-        \begin{center}
-        \subfigure[]{\label{fig:D2top}\includegraphics[height=5cm]{fig/moxi/D2top.pdf}}
-        \subfigure[]{\label{fig:D2bottom}\includegraphics[height=5cm]{fig/moxi/D2bottom.pdf}}
-        \subfigure[]{\label{fig:D2on}\includegraphics[height=5cm]{fig/moxi/D2on.pdf}}
-        \end{center}
-        \caption{(a) Top side of D2 circuit showing USB connector and microcontroller. (B) Bottom side of D2 circuit showing deep red (top) and red (bottom LEDs). (C) D2 powered by a smartphone.} 
-        \label{fig:D2hardware}
-    \end{figure} 
-    The D2 design is a compact, low-cost, non-contact, and wearable LED-based illumination module to quantitatively measure tissue oxygenation (StO2). The D2 design is made from a 53x28mm circuit board with a 2x20 mm imaging window (the “slit”) [Figure~\ref{fig:D2top}]. Two LEDs (red, 640nm; deep red, 730 nm) are mounted facing the skin at opposite sides of the long dimension of the slit [Figure~\ref{fig:D2bottom}]. The LEDs were chosen because both are visible from the smartphone CMOS sensor; moreover, HbO shows a similar absorption at the two wavelengths and HbR has a higher absorption in 640 nm than 730 nm. 
-    
-    A micro-USB connector is added to provide power while a microcontroller (ATtiny85; Atmel) controls the LED timing [Figure~\ref{fig:D2on}]. Four of the eight pins on the microcontroller are used by the In-Service Programmer (ISP) to program the board using the Master-In-Slave-Out (MISO), Master-Out-Slave-In (MOSI), Serial Clock (SCK), and reset (RST) pins. Power and ground each have a dedicated pin, leaving two analog pins available for the red and deep red LEDs. The use of analog pins allows us to pulse width modulate (PWM) the LEDs. By varying the pulse width, we can control the time an LED is on and control its intensity. The microcontroller has a max output of 40 mA per pin, allowing the LEDs to be connected without the need for resistors. The board is programmed by holding the ISP pins onto the pads without soldering, allowing us to remove the programming pins after programming and reducing the board thickness. In total, the only four components on the D2 milled circuit board are the two LEDs, the microcontroller, and a USB female header for power. 
+\subsection{D2: Single Slit Hardware}
+\begin{figure}
+    \begin{center}
+    \subfigure[]{\label{fig:D2top}\includegraphics[height=5cm]{fig/moxi/D2top.pdf}}
+    \subfigure[]{\label{fig:D2bottom}\includegraphics[height=5cm]{fig/moxi/D2bottom.pdf}}
+    \subfigure[]{\label{fig:D2on}\includegraphics[height=5cm]{fig/moxi/D2on.pdf}}
+    \end{center}
+    \caption{(a) Top side of D2 circuit showing USB connector and microcontroller. (B) Bottom side of D2 circuit showing deep red (top) and red (bottom LEDs). (C) D2 powered by a smartphone and an on-the-go USB cable.} 
+    \label{fig:D2hardware}
+\end{figure} 
+The D2 design is a compact, low-cost, non-contact, and wearable LED-based illumination module to quantitatively measure tissue oxygenation (StO2). The D2 design is made from a 53x28~mm$^2$ circuit board with a 2x20~mm$^2$ imaging window (the ``slit'') [Figure~\ref{fig:D2top}]. Two LEDs (640 and 730~nm) are mounted facing the skin at opposite sides of the long dimension of the slit [Figure~\ref{fig:D2bottom}]. A 730~nm wavelength was chosen because IR light is not visible in the smartphone CMOS sensor. Moreover, HbO shows a similar absorption at the two wavelengths and HbR has a higher absorption in 640~nm than 730~nm. 
 
-    The D2 design is made of two milled copper boards placed back-to-back. This has two main advantages. First, it allows the ability to easily swap out any broken LEDs if they break during use without having to mill out all the traces. Secondly, the LEDs are soldered directly to the underside of the board, allowing them to be in direct contact with the skin to minimize specular reflection. The entire board is encased inside a 3D printed PLA cover. Velcro straps on the edges of the milled board allow the D2 design to be comfortable worn [Figure~\ref{fig:D2}]. 
+A micro-USB connector is added to provide power while a microcontroller (ATtiny85, Atmel, USA) controls the LED timing [Figure~\ref{fig:D2on}]. Four of the eight pins on the microcontroller are used by the In-Service Programmer (ISP) to program the board using the Master-In-Slave-Out (MISO), Master-Out-Slave-In (MOSI), Serial Clock (SCK), and reset (RST) pins. Power and ground each have a dedicated pin, leaving two analog pins available for the red and deep red LEDs. The use of analog pins allows us to pulse width modulate (PWM) the LEDs. By varying the pulse width, we can control the time an LED is on and control its intensity. The microcontroller has a max output of 40~mA per pin, allowing the LEDs to be connected without the need for resistors. The board is programmed by holding the ISP pins onto the pads without soldering, allowing us to remove the programming pins after programming and reducing the board thickness. In total, the only four components on the D2 milled circuit board are the two LEDs, the microcontroller, and a USB female header for power. 
 
-    \subsection{D2: Single Slit Software}
-    The microcontroller is programmed to cycle between three stages at one-second intervals. After securing the module with an elastic Velcro strap and powering the board with a USB cable, the microcontroller automatically begins cycling between the red LED on, deep red LED on, and no LEDs on, each for one second, indefinitely. The one-second interval with no LEDs on is used to capture background data. The diffuse-reflection profile across the slit of both wavelengths can be measured directly by taking a video of the slit opening using the smartphone camera controlled by our Moximeter application. The three intervals from the video stream are automatically detected by comparing intensity values at the ends of the slit. A moving bin average is used to estimate StO2 changes. 
+The D2 design is made of two milled copper boards placed back-to-back. This has two main advantages. First, it allows the ability to easily swap out any broken LEDs if they break during use without having to mill out all the traces. Secondly, the LEDs are soldered directly to the underside of the board, allowing them to be in direct contact with the skin to minimize specular reflection. The entire board is encased inside a 3-D printed PLA cover. Velcro straps on the edges of the milled board allow the D2 design to be comfortable worn [Figure~\ref{fig:D2}]. 
+
+\subsection{D2: Single Slit Software}
+The microcontroller is programmed to cycle between three stages at one-second intervals. After securing the module with an elastic Velcro strap and powering the board with a USB cable, the microcontroller automatically begins cycling between the red LED on, deep red LED on, and no LEDs on, each for one second, indefinitely. The one-second interval with no LEDs on is used to capture background data. The diffuse-reflection profile across the slit of both wavelengths can be measured directly by taking a video of the slit opening using the smartphone camera controlled by our Moximeter application. The three intervals from the video stream are automatically detected by comparing intensity values at the ends of the slit. A moving bin average is used to estimate StO2 changes. 
+
+\subsection{D2 Results}
+Here, we propose to use the linear slope of the log-scaled image intensity along the slit as a surrogate marker to correlate with tissue oxygenation changes. This slope can be easily computed in real-time on low-power devices such as a mobile phone.
     
-    \subsection{D2 Results}
-    Here, we propose to use the linear slope of the log-scaled image intensity along the slit as a surrogate marker to correlate with tissue oxygenation changes. This slope can be easily computed in real-time on low-power devices such as a mobile phone.
-    
-        \subsubsection{Protocol and Setup}
-        A Nexus 5 Android phone and an Andor Electron Multiplying Charge Coupled Device (EMCCD) camera (Luca-R, Andor) were both mounted above the slit ROI and used to acquire video recordings simultaneously (Figure XXX). Cameras recorded at 10.8 (Andor) and 30 (Nexus) frames per second while the red and deep red LEDs alternated every second. Data were captured in a dark room with the phone screen brightness set to the lowest setting. The subject held onto a handle during data gathering to minimize motion artifacts. An example of the acquired image, cropped using MATLAB, can be seen in Figure XXX. Slit images were analyzed frame by frame for either camera. A blood occlusion experiment was performed using a standard pressure cuff. Prior to data capture, the pressure was increased to 200 mmHg and held for 20 seconds. After 20 seconds of data capture, the pressure was released. 
-        \begin{figure}
-            \begin{center}
-            \subfigure[]{\label{fig:D2setup}\includegraphics[height=5cm]{fig/moxi/D2setup.pdf}}
-            \subfigure[]{\label{fig:D2zoom}\includegraphics[height=5cm]{fig/moxi/D2zoom.pdf}}
-            \end{center}
-            \caption{(a) D2 module powered by an on-the-go USB cable. (b) Nexus and Andor camera experimental setup. (c) Example cropped slit image for analysis.} 
-            \label{fig:D2protocol}
-        \end{figure} 
+\subsubsection{Protocol and Setup}
+\begin{figure}
+    \begin{center}
+    \subfigure[]{\label{fig:D2setup}\includegraphics[height=5cm]{fig/moxi/D2setup.pdf}}
+    \subfigure[]{\label{fig:D2zoom}\includegraphics[height=5cm]{fig/moxi/D2zoom.pdf}}
+    \end{center}
+    \caption{(a) Nexus and Andor camera experimental setup. (b) Example cropped slit image for analysis.} 
+    \label{fig:D2protocol}
+\end{figure} 
+A Nexus 5 Android phone and an Andor Electron Multiplying Charge Coupled Device (EMCCD) camera (Luca-R, Andor, UK) were both mounted above the slit ROI and used to acquire video recordings simultaneously [Figure~\ref{fig:D2setup}]. Cameras recorded at 10.8 (Andor) and 30 (Nexus) frames per second while the red and deep red LEDs alternated every second. Data were captured in a dark room with the phone screen brightness set to the lowest setting. The subject held onto a handle during data gathering to minimize motion artifacts. An example of the acquired image, cropped using MATLAB, can be seen in Figure~\ref{fig:D2zoom}. Slit images were analyzed frame by frame for each camera. A blood occlusion experiment was performed using a standard pressure cuff. Prior to data capture, the pressure was increased to 200~mmHg and held for 20 seconds. After 20 seconds of data capture, the pressure was released. 
         
-        \subsubsection{Benchtop Results}
-        \begin{figure}
-            \begin{center}
-            \subfigure[]{\label{fig:D2resultsa}\includegraphics[height=6cm]{fig/moxi/D2resultsa.pdf}}
-            \subfigure[]{\label{fig:D2resultsb}\includegraphics[height=6cm]{fig/moxi/D2resultsb.pdf}}
-            \end{center}
-            \caption{Intensity attenuation slopes for the Andor (a) and Nexus (b) camera data. Top (640 nm) and bottom (730 nm) rows show the averaged attenuation slope of the log-scaled light intensity over time within a selected window. The vertical green lines mark the point at which pressure from the cuff was released.} 
-            \label{fig:D2results}
-        \end{figure} 
-        The linear slope time courses obtained from the Andor and Nexus cameras for 640 and 730 nm are shown in Figure 10. Each marker in the plot is obtained by averaging the frames during the 1 second a particular LED is on. The vertical green line indicates the point of pressure release. The overall shape of the slope profile from the Nexus camera is similar to the Andor camera in both 640 and 730 nm. The pairwise linear correlation coefficients, R, between the two cameras are 0.8627 (640 nm) and 0.7986 (730 nm). The increase in slope immediately following the pressure release is expected due to the higher absorption coefficient of the total hemoglobin that rushes in. These results suggest that a low-cost phone camera is capable of capturing blood volume/oxygenation change in tissue. 
+\subsubsection{Benchtop Results}
+\begin{figure}
+    \begin{center}
+    \subfigure[]{\label{fig:D2resultsa}\includegraphics[height=6cm]{fig/moxi/D2resultsa.pdf}}
+    \subfigure[]{\label{fig:D2resultsb}\includegraphics[height=6cm]{fig/moxi/D2resultsb.pdf}}
+    \end{center}
+    \caption{Intensity attenuation slopes for the Andor (a) and Nexus (b) camera data. Top (640 nm) and bottom (730 nm) rows show the averaged attenuation slope of the log-scaled light intensity over time within a selected window. The vertical green lines mark the point at which pressure from the cuff was released.} 
+    \label{fig:D2results}
+\end{figure} 
+The linear slope time courses obtained from the Andor and Nexus cameras for 640 and 730 nm are shown in Figure~\ref{fig:D2results}. Each marker in the plot is obtained by averaging the frames during the 1 second a particular LED is on. The vertical green line indicates the point of pressure release. The overall shape of the slope profile from the Nexus camera is similar to the Andor camera in both 640 and 730~nm. The pairwise linear correlation coefficients, R, between the two cameras are 0.8627 (640~nm) and 0.7986 (730~nm). The increase in slope immediately following the pressure release is expected due to the higher absorption coefficient of the total hemoglobin that rushes in. These results suggest that a low-cost phone camera is capable of capturing blood volume and oxygenation change in tissue. 
 
 
 
