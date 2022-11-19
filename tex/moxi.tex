@@ -31,6 +31,15 @@ Rank & Barrier to Adoption \\ \midrule
 
 In this chapter, we establish the feasibility and accuracy of three smartphone-based approaches to monitoring oxygenation. In order of decreasing complexity of hardware, the first design (D1) is a Bluetooth wireless oximeter board with a dedicated pulse oximetry chip. The second design (D2) measures tissue oxygen saturation (StO2). It functions by imaging light attenuation in tissue through a slit on a circuit board carrying LEDs. The third design (D3) is a paper filter covering half of the field of view of a smartphone camera. Both D1 and D3 designs utilize our in-house developed mobile phone application to monitor heart rate (HR) and arterial oxygen saturation (SpO2). The three devices, along with a screenshot of the mobile phone application, are seen in the figure below. Although we include details on D1 and D2 for completeness, when we refer to the \ac{MOXI} system, we are referring to the D3 design. 
 
+\begin{figure}
+	\begin{center}
+	\subfigure[]{\label{fig:moximeter}\includegraphics[height=5cm]{fig/moxi/moximeter.pdf}}
+	\subfigure[]{\label{fig:D1D3}\includegraphics[height=5cm]{fig/moxi/D1D3.pdf}}
+	\subfigure[]{\label{fig:D2}\includegraphics[width=5cm]{fig/moxi/D2.pdf}}
+	\end{center}
+	\caption{(a) Screenshot of Moximeter mobile application simultaneously capturing D1 and D3 data. (b) D1 (green, dashed) and D3 (yellow, solid) mounted on a smartphone phone. (c) D2 board with cover.} 
+	\label{fig:designs}
+\end{figure} 
 
 
 \section{Methods}
