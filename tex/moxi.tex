@@ -88,6 +88,12 @@ To evaluate the D1 prototype, we compared the obtained signals from our device a
 %%% Section %%%    
 \section{D2: Single Slit Oximeter}
     \subsection{D2: Single Slit Hardware}
+    The D2 designs is a compact, low-cost, non-contact, and wearable LED-based illumination module to quantitatively measure tissue oxygenation (StO2). The D2 design is made from a 53x28mm circuit board with a 2x20 mm imaging window (the “slit”). Two LEDs (red, 640nm; deep red, 730 nm) are mounted facing the skin at opposite sides of the long dimension of the slit. The LEDs were chosen because both are visible from the smartphone CMOS sensor; moreover, HbO shows a similar absorption at the two wavelengths and HbR has a higher absorption in 640 nm than 730 nm. 
+    
+    A micro-USB connector is added to provide power while a microcontroller (ATtiny85; Atmel) controls the LED timing. Four of the eight pins on the microcontroller are used by the In-Service Programmer (ISP) to program the board using the Master-In-Slave-Out (MISO), Master-Out-Slave-In (MOSI), Serial Clock (SCK), and reset (RST) pins. Power and ground each have a dedicated pin, leaving two analog pins available for the red and deep red LEDs. The use of analog pins allows us to pulse width modulate (PWM) the LEDs. By varying the pulse width, we can control the time an LED is on and control its intensity. The microcontroller has a max output of 40 mA per pin, allowing the LEDs to be connected without the need for resistors. The board is programmed by holding the ISP pins onto the pads without soldering, allowing us to remove the programming pins after programming and reducing the board thickness. In total, the only four components on the D2 milled circuit board are the two LEDs, the microcontroller, and a USB female header for power. 
+
+    The D2 design is made of two milled copper boards placed back-to-back. This has two main advantages. First, it allows the ability to easily swap out any broken LEDs if they break during use without having to mill out all the traces. Secondly, the LEDs are soldered directly to the underside of the board, allowing them to be in direct contact with the skin to minimize specular reflection. The entire board is encased inside a 3D printed PLA cover. Velcro straps on the edges of the milled board allow the D2 design to be comfortable worm. 
+
     \subsection{D2: Single Slit Software}
     \subsection{D2 Results}
         \subsubsection{Protocol}
