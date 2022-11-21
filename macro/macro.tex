@@ -28,7 +28,7 @@
 % enable index generation
 \makeindex
 \usepackage{makeidx}
-\usepackage{acronym}
+\usepackage{acronym} %[nohyperlinks]{acronym}  % see https://tex.stackexchange.com/questions/25520/how-can-i-use-the-latex-acronym-package-and-optionally-create-an-acronym-list-i
 
 % format URLs
 \usepackage{url}
@@ -69,13 +69,17 @@ breaklinks=true           %Allows link text to break across lines;
 \fi
 
 
-\hypersetup{				% setup PDF information fields
-pdfauthor = {\authorRef},
-pdftitle = {\titleRef},
-pdfsubject = {\expandafter{\degreeRef} thesis submitted to Northeastern University},
-pdfkeywords = {add keywords here}
-pdfcreator = {LaTeX with hyperref package},
-pdfproducer = {dvips + ps2pdf}}
+\hypersetup{				% setup PDF information fields - https://pt.overleaf.com/learn/latex/Hyperlinks
+    colorlinks=true, %color the text of links
+    linkcolor=magenta, %the color. If black, on hover shows yellow
+    citecolor=blue, %the color of biblio references
+    pdfauthor = {\authorRef},
+    pdftitle = {\titleRef},
+    pdfsubject = {\expandafter{\degreeRef} thesis submitted to Northeastern University},
+    pdfkeywords = {add keywords here}
+    pdfcreator = {LaTeX with hyperref package},
+    pdfproducer = {dvips + ps2pdf}
+}
 
 
 % other packages
