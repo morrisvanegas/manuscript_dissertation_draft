@@ -86,7 +86,7 @@ Brain sensitivity ($S_{brain}$) refers to the magnitude of the measurement signa
 
 MOCA uses a five-layer slab model consisting of tissue imitating the scalp, skull, cerebral spinal fluid (CSF), white matter (WM), and gray matter (GM) to determine the spatial sensitivity profile for each SD pair in a probe~\cite{Okada2003}. The thickness of each tissue layer in the slab is set to the average thickness of that tissue type computed using the top half of a tetrahedral brain model~\cite{Sanchez2012}. We define the brain region as the combination of gray matter and white matter tissues. The optical properties and resulting thicknesses for each tissue type are summarized in Table~\ref{tab:opticalproperties}.
 
-\begin{table}
+\begin{table}[]
 \centering
 \caption{Optical properties used in the slab model for calculating brain sensitivity based on Fang~\emph{et al.}~\cite{Fang2010}. The thickness of each layer is derived by dividing the total tissue volume by the tissue's surface area from a tetrahedral five tissue brain model~\cite{Sanchez2012}. The absorption coefficient, $\mu_{a}$, is the average path a photon will travel in the medium before being absorbed. Similarly, the scattering coefficient, $\mu_{s}$, defines the average path length of photons before a scattering event. Anisotropy, g, is a unit less measure of the amount of forward direction retained after a single scattering event.}
 \label{tab:opticalproperties}
@@ -138,7 +138,7 @@ Staggering modules refers to shifting a row (or column) of tessellated modules i
 MOCA performs its analysis of module- and probe-level parameters on an infinite slab model derived from the Colin27 atlas. When 3-D analysis is desired, MOCA can export the probe layout to a ``.sd'' file for use in ``SDgui'' -- a built-in tool of AtlasViewer~\cite{Aasted2015} used for creating and editing ``.sd'' files. To properly represent a modular probe layout in AtlasViewer (which treats all optodes individually without a reference to a module), MOCA first translates the module-level parameters by creating fixed/rigid springs between all optode pairs (source-source, source-detector, and detector-detector) within each module. These fixed springs maintain the relative optode layout within each module while permitting bending at the junctions between springs. MOCA then adds fixed springs between each inter-module channel (SD pairs between modules with distances below the $SDS_{max}$) to translate the probe-level parameters (spacing, orientation, staggering). As an additional constraint, MOCA adds flexible springs (springs of length -1) for inter-module channels above the $SDS_{max}$. Finally, to register the probe to the surface of the selected atlas, MOCA adds three dummy optodes to the exported ``.sd'' file. All three optodes are placed at the midpoint between the minimum and maximum $x$ coordinates of all optodes in the probe. The $y$ coordinate of the first, second, and third dummy optodes are set to the minimum $y$ coordinate, midpoint, and maximum $y$ coordinate of all optodes in the probe, respectively. The first, second, and third dummy optodes are assigned to the Fpz, Cz, and Oz positions, respectively, in the standard 10-10 system. This places any MOCA-designed probe at the top of an atlas by default. A user can change the dummy optode anchors to re-position the probe on an atlas. The exported ``.sd'' file can then be loaded into AtlasViewer for placement on a generic or subject-specific atlas (Fig.~\ref{fig:SDoutput}).
 
 
-\begin{figure}
+\begin{figure}[]
 \begin{center}
 \subfigure[]{\label{fg:SD1}\includegraphics[width=.5\textwidth]{fig/moca/Fig_2a.pdf}}
 \subfigure[]{\label{fg:SD2}\includegraphics[width=.4\textwidth]{fig/moca/Fig_2b.pdf}}
@@ -256,7 +256,7 @@ The total $n_s$ compared to the $n_{SMG}$ arising from the tessellation of each 
 \subfigure[]{\label{fg:group1}\includegraphics[height=6cm]{fig/moca/Fig_7a.pdf}}
 \subfigure[]{\label{fg:group2}\includegraphics[height=6cm]{fig/moca/Fig_7b.pdf}}
 \end{center}
-\caption{Spatial multiplexing group results from the tessellation of the square-, hexagon-, and triangle-based probes. (a) Comparison of total number of sources (orange) and total number of spatial multiplexing groups (green). (b) The triangle-based module tessellation with sources (red circles) and detectors (blue crosses). The dashed red circles indicate the ``effective'' region (30~mm radius) of each of the nine sources in the first spatial multiplexing group. The nine sources turned on simultaneously in this group are indicated by filled in red circles.} \label{fig:fullgroups}
+\caption {Spatial multiplexing group results from the tessellation of the square-, hexagon-, and triangle-based probes. (a) Comparison of total number of sources (orange) and total number of spatial multiplexing groups (green). (b) The triangle-based module tessellation with sources (red circles) and detectors (blue crosses). The dashed red circles indicate the ``effective'' region (30~mm radius) of each of the nine sources in the first spatial multiplexing group. The nine sources turned on simultaneously in this group are indicated by filled in red circles.} \label{fig:fullgroups}
 \end{figure} 
 
 
@@ -302,12 +302,12 @@ Staggering adjacent modules within a high-density probe can increase inter-modul
 
 \begin{figure}
 \begin{center}
-\subfigure[]{\label{fg:stag1}\includegraphics[height=4.5cm]{fig/moca/Fig_10a.pdf}}
-\subfigure[]{\label{fg:stag2}\includegraphics[height=4.5cm]{fig/moca/Fig_10b.pdf}}
-\subfigure[]{\label{fg:stag4}\includegraphics[height=4.5cm]{fig/moca/Fig_10c.pdf}}
-\subfigure[]{\label{fg:stag5}\includegraphics[height=4.5cm]{fig/moca/Fig_10d.pdf}}
-\subfigure[]{\label{fg:stag3}\includegraphics[height=4.5cm]{fig/moca/Fig_10e.pdf}}
-\subfigure[]{\label{fg:stag6}\includegraphics[height=4.5cm]{fig/moca/Fig_10f.pdf}}
+\subfigure[]{\label{fg:stag1}\includegraphics[height=5cm]{fig/moca/Fig_10a.pdf}}
+\subfigure[]{\label{fg:stag2}\includegraphics[height=5cm]{fig/moca/Fig_10b.pdf}}
+\subfigure[]{\label{fg:stag4}\includegraphics[height=5cm]{fig/moca/Fig_10c.pdf}}
+\subfigure[]{\label{fg:stag5}\includegraphics[height=5cm]{fig/moca/Fig_10d.pdf}}
+\subfigure[]{\label{fg:stag3}\includegraphics[height=5cm]{fig/moca/Fig_10e.pdf}}
+\subfigure[]{\label{fg:stag6}\includegraphics[height=5cm]{fig/moca/Fig_10f.pdf}}
 \end{center}
 \caption {An analysis of square modules in a three-module probe. (a) A traditional three-module tessellation. Red circles represent sources and blue crosses represent detectors. (b) The resulting intra- and inter-module channel distribution from the probe layout in (a). (c) The average brain sensitivity for each layout resulting from module staggering separated by intra- and inter-module channel contributions. (d) The center module staggered by 26~mm, resulting in increased channel separation for inter-module channels, as shown in (e). (f) The total channel count and the number of spatial multiplexing groups of the probe layout as the center module is staggered between 0 and 42~mm.}
  \label{fig:stagger}
