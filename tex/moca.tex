@@ -36,7 +36,8 @@ The remainder of the paper is outlined below. In Section~\ref{sec:overview}, we 
     \includegraphics[height=10cm]{fig/moca/Fig_1.pdf}
     \end{tabular}
     \end{center}
-    \caption { \label{fig:flowchart} Workflow of module-level design parameters (left column; blue) used in probe-level processes (center column; red) to produce performance metrics to characterize a probe (right column; green). Performance metrics are organized top to bottom from least complex (two parameters needed) to most complex (four parameters needed). Arrows trace how parameters are used to derive specific performance metrics.} 
+    \caption{ Workflow of module-level design parameters (left column; blue) used in probe-level processes (center column; red) to produce performance metrics to characterize a probe (right column; green). Performance metrics are organized top to bottom from least complex (two parameters needed) to most complex (four parameters needed). Arrows trace how parameters are used to derive specific performance metrics.} 
+    \label{fig:flowchart}
 \end{figure} 
 
 A diagram showing the overall design process of a modular \ac{fNIRS} system is shown in Figure~\ref{fig:flowchart}. Specifically, the three parts describing \ac{MOCA}'s workflow are 1) the design parameters describing a single module design, 2) the processes and parameters used to assemble the modules into a probe, and 3) the derived performance metrics used to characterize the resulting probe. \ac{MOCA} starts with the definition of essential module parameters (shown in the left column in Figure~\ref{fig:flowchart}), applies those parameters along with probe-level constraints to a probe-generation process (center column in Figure~\ref{fig:flowchart}), and derives quantitative performance metrics of the resulting probe (shown in the right column in Figure~\ref{fig:flowchart}). Arrows in Figure~\ref{fig:flowchart} define dependencies between the derived performance metrics and the input parameters. For example, in order to calculate the probe's channel distribution, one must define the module geometry, \ac{ROI}, and optode layout design parameters. 
@@ -88,24 +89,24 @@ Brain sensitivity ($S_{brain}$) refers to the magnitude of the measurement signa
 \ac{MOCA} uses a five-layer slab model consisting of tissue imitating the scalp, skull, \ac{CSF}, \ac{WM}, and \ac{GM} to determine the spatial sensitivity profile for each \ac{SD} pair in a probe~\cite{Okada2003}. The thickness of each tissue layer in the slab is set to the average thickness of that tissue type computed using the top half of a tetrahedral brain model~\cite{Sanchez2012}. We define the brain region as the combination of gray matter and white matter tissues. The optical properties and resulting thicknesses for each tissue type are summarized in Table~\ref{tab:opticalproperties}.
 
 \begin{table}
-\centering
-\caption{Optical properties used in the slab model for calculating brain sensitivity based on Fang~\emph{et al.}~\cite{Fang2010}. The thickness of each layer is derived by dividing the total tissue volume by the tissue's surface area from a tetrahedral five-tissue brain model~\cite{Sanchez2012}. The absorption coefficient, $\mu_{a}$, is the average path a photon will travel in the medium before being absorbed. Similarly, the scattering coefficient, $\mu_{s}$, defines the average path length of photons before a scattering event. Anisotropy, g, is a unit less measure of the amount of forward direction retained after a single scattering event.}
-\label{tab:opticalproperties}
-\begin{tabular}{@{}lcccc@{}}
-\toprule
-Tissue Type  & $\mu_{a}$ [$mm^{-1}$] & $\mu_{s}$ [$mm^{-1}$] & g    & Thickness [$mm$] \\ \midrule
-Gray Matter                     & 0.020      & 9.000      & 0.89 & 7.25           \\
-White Matter                    & 0.080      & 40.900     & 0.84 & 4.00           \\
-Cerebral Spinal Fluid           & 0.004      & 0.009      & 0.89 & 2.73           \\
-Skull                           & 0.019      & 7.800      & 0.89 & 3.29           \\
-Scalp                           & 0.019      & 7.800      & 0.89 & 4.23           \\ \bottomrule
-\end{tabular}
+    \centering
+    \caption{Optical properties used in the slab model for calculating brain sensitivity based on Fang~\emph{et al.}~\cite{Fang2010}. The thickness of each layer is derived by dividing the total tissue volume by the tissue's surface area from a tetrahedral five-tissue brain model~\cite{Sanchez2012}. The absorption coefficient, $\mu_{a}$, is the average path a photon will travel in the medium before being absorbed. Similarly, the scattering coefficient, $\mu_{s}$, defines the average path length of photons before a scattering event. Anisotropy, g, is a unit less measure of the amount of forward direction retained after a single scattering event.}
+    \label{tab:opticalproperties}
+        \begin{tabular}{@{}lcccc@{}}
+        \toprule
+        Tissue Type  & $\mu_{a}$ [$mm^{-1}$] & $\mu_{s}$ [$mm^{-1}$] & g    & Thickness [$mm$] \\ \midrule
+        Gray Matter                     & 0.020      & 9.000      & 0.89 & 7.25           \\
+        White Matter                    & 0.080      & 40.900     & 0.84 & 4.00           \\
+        Cerebral Spinal Fluid           & 0.004      & 0.009      & 0.89 & 2.73           \\
+        Skull                           & 0.019      & 7.800      & 0.89 & 3.29           \\
+        Scalp                           & 0.019      & 7.800      & 0.89 & 4.23           \\ \bottomrule
+        \end{tabular}
 \end{table}
 
 For each \ac{SD} pair in the assembled probe, $3\times10^{8}$ photons are simulated using our in-house 3-D Monte Carlo photon transport simulator, \ac{MCX}~\cite{Fang2009}, using a pencil beam source and a single 1.5~mm radius detector placed at the surface of the slab at its corresponding \ac{SDS}. In a voxelated grid, $S_{brain}$ is defined as a ratio dividing the region-wise summation of the sensitivity matrix in each brain tissue region by the summation of the entire sensitivity matrix for each source-detector separation~\cite{Brigadoi2015}, i.e.
 \begin{equation}
-\label{eq:fov}
-S_{brain}(s,d) = \frac{\sum_{r\in\Omega_{GM}}J(r,s,d) + \sum_{r\in\Omega_{WM}}J(r,s,d)} {\sum_{r\in\Omega}J(r,s,d)},
+    \label{eq:fov}
+    S_{brain}(s,d) = \frac{\sum_{r\in\Omega_{GM}}J(r,s,d) + \sum_{r\in\Omega_{WM}}J(r,s,d)} {\sum_{r\in\Omega}J(r,s,d)},
 \end{equation}
 where the sensitivity matrix, also known as the Jacobian ($J$), is computed using the adjoint Monte Carlo method~\cite{Yao2018}. In addition to $S_{brain}$, \ac{MOCA} also calculates the average brain sensitivity for the entire probe, $\overline{S_{brain}}$, based on all the \ac{SD} separations above the \ac{SS} threshold. \ac{SS} channels are excluded in the calculation of $\overline{S_{brain}}$ because, by definition, they are designed to only sample superficial layers~\cite{Brigadoi2015}.
 
@@ -140,14 +141,13 @@ Staggering modules refers to shifting a row (or column) of tessellated modules i
 
 
 \begin{figure}
-\begin{center}
-\subfigure[]{\label{fg:SD1}\includegraphics[width=.5\textwidth]{fig/moca/Fig_2a.pdf}}
-\subfigure[]{\label{fg:SD2}\includegraphics[width=.4\textwidth]{fig/moca/Fig_2b.pdf}}
-\subfigure[]{\label{fg:SD3}\includegraphics[width=.3\textwidth]{fig/moca/Fig_2c.pdf}}
-\end{center}
-\caption{Example probe exported for use in AtlasViewer~\cite{Aasted2015}. (a) A four-module probe with three sources (red circles) and two detectors (blue crosses) plotted using MOCA. Intra- (blue) and inter-module (orange) channels are shown in solid lines. (b) Imported probe in SDgui. Solid lines represent fixed springs. Dashed green lines represent flexible springs between sources and detectors. Three dummy optodes (numbered 21, 22, and 23) are shown in black. (c) The resulting probe in AtlasViewer registered to an atlas using the dummy optodes as anchors.}
-\label{fig:SDoutput}
-
+    \begin{center}
+        \subfigure[]{\label{fg:SD1}\includegraphics[width=.5\textwidth]{fig/moca/Fig_2a.pdf}}
+        \subfigure[]{\label{fg:SD2}\includegraphics[width=.4\textwidth]{fig/moca/Fig_2b.pdf}}
+        \subfigure[]{\label{fg:SD3}\includegraphics[width=.3\textwidth]{fig/moca/Fig_2c.pdf}}
+    \end{center}
+    \caption{Example probe exported for use in AtlasViewer~\cite{Aasted2015}. (a) A four-module probe with three sources (red circles) and two detectors (blue crosses) plotted using MOCA. Intra- (blue) and inter-module (orange) channels are shown in solid lines. (b) Imported probe in SDgui. Solid lines represent fixed springs. Dashed green lines represent flexible springs between sources and detectors. Three dummy optodes (numbered 21, 22, and 23) are shown in black. (c) The resulting probe in AtlasViewer registered to an atlas using the dummy optodes as anchors.}
+    \label{fig:SDoutput}
 \end{figure} 
 
 
@@ -165,7 +165,7 @@ In this section, we first validate the $S_{brain}$ derived from a simplified fiv
     \includegraphics[width=9cm]{fig/moca/Fig_3.pdf}
     \end{tabular}
     \end{center}
-    \caption {Results comparing brain sensitivity derived from finite slab models used by MOCA and atlas-based models. The blue line shows calculated brain sensitivity based on a five-layer slab model for SD separations from 0 to 60~mm in 1~mm increments. Overlaid in black are the brain sensitivity results calculated from an atlas by averaging brain sensitivity for fixed source-detector separations across nineteen locations in the international 10-20 system~\cite{Strangman2013}. } 
+    \caption {Results comparing brain sensitivity derived from finite slab models used by MOCA and atlas-based models. The blue line shows calculated brain sensitivity based on a five-layer slab model for SD separations from 0 to 60~mm in 1~mm increments. Overlaid in black are the brain sensitivity results calculated from an atlas by averaging brain sensitivity for fixed source-detector separations across nineteen locations in the international 10-20 system~\cite{Strangman2013}.} 
     \label{fig:BScomparison}
 \end{figure} 
 
@@ -181,14 +181,13 @@ Simulations on a five-layer slab model show an increase in $S_{brain}$ as \ac{SD
 As mentioned above, \ac{MOCA} systematically tessellates the target \ac{ROI} using the module geometry and assigns each module an index number. If not considering within-module optode locations, only translation is needed for both square and hexagon modules to completely cover a region. For the triangle shape, \ac{MOCA} rotates every other triangle and its optodes 180 degrees to fill the \ac{ROI} without leaving any gaps. No other probe-level parameter changes are made for this comparison. Probe spacing is set to zero. The default \ac{SS} threshold is set to 10~mm and the $SDS_{max}$ is set to 30~mm. The minimum distance between sources used in calculating \ac{SMG}s is set to 2$\times SDS_{max}$. To avoid simultaneously changing multiple parameters and only focusing on module shape, an identical optode layout made of two sources and two detectors is used in all three module designs in this example. The edge length of the square is set to 33.33~mm, determined by the average length of three previously reported square-shaped module designs~\cite{Chitnis2016, Bci2017, Zimmermann2013}. The edge length of the hexagon and triangle is set to 20.68 and 50.65~mm, respectively, calculated to achieve the same area as the square module. The three-module designs as well as the tessellation of the hexagon-based probe over the \ac{ROI} are shown in Figure~\ref{fig:fullmodules}. The derived performance metrics for each of the three sample probes are summarized in Table~\ref{tab:results}. The results that follow are only applicable to the specific module- and probe-level parameters chosen for this showcase.
 
 \begin{figure}
-\begin{center}
-\subfigure[]{\label{fg:module1}\includegraphics[height=5cm]{fig/moca/Fig_4a.pdf}}
-\subfigure[]{\label{fg:module2}\includegraphics[height=5cm]{fig/moca/Fig_4b.pdf}}
-\subfigure[]{\label{fg:module3}\includegraphics[height=5cm]{fig/moca/Fig_4c.pdf}}
-\subfigure[]{\label{fg:module4}\includegraphics[height=5cm]{fig/moca/Fig_4d.pdf}}
-\end{center}
-\caption {Elementary module designs used in a full-head comparison. (a), (b), and (c) show the perimeter of the square, hexagon, and triangle-based module designs, respectively. The optode layout of all three shapes is identical. Red circles represent sources while blue crosses represent detectors. (d) Tessellation of the hexagon module over an ROI. The dashed green line outlines the 200$\times$200~mm ROI.} \label{fig:fullmodules}
-
+    \begin{center}
+        \subfigure[]{\label{fg:module1}\includegraphics[height=5cm]{fig/moca/Fig_4a.pdf}}
+        \subfigure[]{\label{fg:module2}\includegraphics[height=5cm]{fig/moca/Fig_4b.pdf}}
+        \subfigure[]{\label{fg:module3}\includegraphics[height=5cm]{fig/moca/Fig_4c.pdf}}
+        \subfigure[]{\label{fg:module4}\includegraphics[height=5cm]{fig/moca/Fig_4d.pdf}}
+    \end{center}
+    \caption {Elementary module designs used in a full-head comparison. (a), (b), and (c) show the perimeter of the square, hexagon, and triangle-based module designs, respectively. The optode layout of all three shapes is identical. Red circles represent sources while blue crosses represent detectors. (d) Tessellation of the hexagon module over an ROI. The dashed green line outlines the 200$\times$200~mm ROI.} \label{fig:fullmodules}
 \end{figure} 
 
 \begin{table}
@@ -222,14 +221,14 @@ As mentioned above, \ac{MOCA} systematically tessellates the target \ac{ROI} usi
 Figure~\ref{fig:fullchannels} shows a histogram of the \ac{SD} separations of the full-head (200$\times$200~mm area) probe composed from the three selected module shapes. Table~\ref{tab:results} shows that the number of modules needed to cover the \ac{ROI} varies for each shape due to the complete coverage constraint enforced by \ac{MOCA} for this showcase (Figure~\ref{fig:fullmodules}d). Since each module utilizes the same optode layout, the intra-module channel distributions (blue bars in Figures~\ref{fig:fullchannels}a, b, and c) are simply scaled by the total numbers of modules needed to completely cover the \ac{ROI}. The \ac{SDS} of inter-module channels are dependent on the module shape, resulting in varying inter-module channel distributions between all three probes (orange bars in Figures~\ref{fig:fullchannels}a, b, and c). 
 
 \begin{figure}
-\begin{center}
-\subfigure[]{\label{fg:chann1}\includegraphics[height=6.2cm]{fig/moca/Fig_5a.pdf}}
-\subfigure[]{\label{fg:chann2}\includegraphics[height=6.2cm]{fig/moca/Fig_5b.pdf}}
-\subfigure[]{\label{fg:chann3}\includegraphics[height=6.2cm]{fig/moca/Fig_5c.pdf}}
-\subfigure[]{\label{fg:chann4}\includegraphics[height=6.2cm]{fig/moca/Fig_5d.pdf}}
-\end{center}
-\caption {Channel distributions and total channel counts resulting from the tessellation of the three elementary module shapes over a 200$\times$200~mm region of interest. (a-c) Resulting intra- and inter-module channel distributions for square, hexagon, and triangle module-based probes. (d) The total channel count of each probe grouped by intra- and inter-module channels.} \label{fig:fullchannels}
-
+    \begin{center}
+        \subfigure[]{\label{fg:chann1}\includegraphics[height=6.2cm]{fig/moca/Fig_5a.pdf}}
+        \subfigure[]{\label{fg:chann2}\includegraphics[height=6.2cm]{fig/moca/Fig_5b.pdf}}
+        \subfigure[]{\label{fg:chann3}\includegraphics[height=6.2cm]{fig/moca/Fig_5c.pdf}}
+        \subfigure[]{\label{fg:chann4}\includegraphics[height=6.2cm]{fig/moca/Fig_5d.pdf}}
+    \end{center}
+    \caption {Channel distributions and total channel counts resulting from the tessellation of the three elementary module shapes over a 200$\times$200~mm region of interest. (a-c) Resulting intra- and inter-module channel distributions for square, hexagon, and triangle module-based probes. (d) The total channel count of each probe grouped by intra- and inter-module channels.} 
+    \label{fig:fullchannels}
 \end{figure} 
 
 For this particular example, the triangle-based probe reports both the highest number of total channels (Figure~\ref{fig:fullchannels}d) and the largest \ac{SD} separations of all three tessellated probes (Figure~\ref{fig:fullchannels}c). The hexagon-based probe appears to have the shortest inter-module channels (Figure~\ref{fig:fullchannels}b). Due to its symmetry and given the $SDS_{max}$ setting, the square-based probe happens to have all \ac{SD} separations at 24~mm. Notably, the triangle-based probe adds the most inter-module channels, almost twice the number of intra-module channels (Figure~\ref{fig:fullchannels}d), while also requiring two fewer modules than the hexagon-based probe (Table~\ref{tab:results}, Rows 1-5). Figure~\ref{fig:fullchannels}d also shows that the number of inter-module channels is greater than the number of intra-module channels for all three probes.
@@ -253,11 +252,11 @@ The $\overline{S_{brain}}$ values derived from the three probe designs, grouped 
 The total $n_s$ compared to the $n_{SMG}$ arising from the tessellation of each module over the \ac{ROI} are compared in Figure~\ref{fig:fullgroups}a. The total number of sources for the square-, hexagon- and triangle-based probes are 72, 84, and 80, respectively. Figure~\ref{fig:fullgroups}b overlays the first \ac{SMG} over the triangle-based full-head probe. Using the $n_{SMG}$ for each probe (Table~\ref{tab:results}, Row 10), the \ac{SMR} (the ratio between $n_s$ and $n_{SMG}$) is 8, 10.5, and 6.15 for the square-, hexagon-, and triangle-based probe, respectively. This result indicates that the hexagon-based probe's sampling rate can benefit the most when using  group-based spatial multiplexing.
 
 \begin{figure}
-\begin{center}
-\subfigure[]{\label{fg:group1}\includegraphics[height=6cm]{fig/moca/Fig_7a.pdf}}
-\subfigure[]{\label{fg:group2}\includegraphics[height=6cm]{fig/moca/Fig_7b.pdf}}
-\end{center}
-\caption {Spatial multiplexing group results from the tessellation of the square-, hexagon-, and triangle-based probes. (a) Comparison of the total number of sources (orange) and the total number of spatial multiplexing groups (green). (b) The triangle-based module tessellation with sources (red circles) and detectors (blue crosses). The dashed red circles indicate the ``effective'' region (30~mm radius) of each of the nine sources in the first spatial multiplexing group. The nine sources turned on simultaneously in this group are indicated by filled-in red circles.} \label{fig:fullgroups}
+    \begin{center}
+        \subfigure[]{\label{fg:group1}\includegraphics[height=6cm]{fig/moca/Fig_7a.pdf}}
+        \subfigure[]{\label{fg:group2}\includegraphics[height=6cm]{fig/moca/Fig_7b.pdf}}
+    \end{center}
+    \caption {Spatial multiplexing group results from the tessellation of the square-, hexagon-, and triangle-based probes. (a) Comparison of the total number of sources (orange) and the total number of spatial multiplexing groups (green). (b) The triangle-based module tessellation with sources (red circles) and detectors (blue crosses). The dashed red circles indicate the ``effective'' region (30~mm radius) of each of the nine sources in the first spatial multiplexing group. The nine sources turned on simultaneously in this group are indicated by filled-in red circles.} \label{fig:fullgroups}
 \end{figure} 
 
 
@@ -268,15 +267,15 @@ The ability to compute performance metrics from basic design parameters allows u
 Re-orienting modules within existing probes alters the \ac{SDS} distribution and, consequently, the probe's $S_{brain}$ and \ac{SMR}. In Figure~\ref{fig:orientation}, we simulate a 36~$\textrm{mm}^2$ square module in a probe configuration inspired by the $\mu$NTS \ac{fNIRS} module described in Chitnis~\emph{et al.}~\cite{Chitnis2016}. The modules in the initial tessellation are oriented in the same direction as in the original paper (Figure~\ref{fig:orientation}a). In our investigation, the spacing between each module is set to 5~mm and the $SDS_{max}$ is set to 30~mm. Each module has 2 sources and 4 detectors, resulting in 8 intra-module channels per module ranging from 8 to 29~mm. A total of 256 different probe configurations result from exhaustively re-orienting each module individually by 90 degrees. Without losing generality, a subset of 128 layouts are shown in Figure~\ref{fig:orientation}b to show the range of the variations.
 
 \begin{figure}
-\begin{center}
-\subfigure[]{\label{fg:orien1}\includegraphics[height=4.5cm]{fig/moca/Fig_8a.pdf}}
-\subfigure[]{\label{fg:orien2}\includegraphics[height=4.5cm]{fig/moca/Fig_8b.pdf}}
-\subfigure[]{\label{fg:orien4}\includegraphics[height=4.5cm]{fig/moca/Fig_8c.pdf}}
-\subfigure[]{\label{fg:orien5}\includegraphics[height=4.5cm]{fig/moca/Fig_8d.pdf}}
-\subfigure[]{\label{fg:orien3}\includegraphics[height=4.5cm]{fig/moca/Fig_8e.pdf}}
-\end{center}
-\caption{A 4-module probe simulated using MOCA. (a) All modules are oriented in the same direction. Red circles represent sources and blue crosses represent detectors. An exhaustive search of all combinations of orientations for each of the four modules results in 256 possible layouts. The average brain sensitivity and number of spatial multiplexing groups for the first 128 layouts are shown in (b). The original layout (layout number 1) is highlighted in the red square. An example layout with the maximum possible brain sensitivity (layout number 66) is highlighted in the green square. (c) A visual representation of layout 66 with the bottom-left and top-right modules rotated 90 degrees clockwise with respect to orientation in (a). Intra- and inter-module channel distribution resulting from the original layout is shown in (d). Channel counts resulting from the probe configuration in (c) are shown in (e). In both channel distribution histograms (d, e), intra- and inter-module channels are shown in blue and orange, respectively. Dark orange indicates overlapping histogram counts.} 
-\label{fig:orientation}
+    \begin{center}
+        \subfigure[]{\label{fg:orien1}\includegraphics[height=4.5cm]{fig/moca/Fig_8a.pdf}}
+        \subfigure[]{\label{fg:orien2}\includegraphics[height=4.5cm]{fig/moca/Fig_8b.pdf}}
+        \subfigure[]{\label{fg:orien4}\includegraphics[height=4.5cm]{fig/moca/Fig_8c.pdf}}
+        \subfigure[]{\label{fg:orien5}\includegraphics[height=4.5cm]{fig/moca/Fig_8d.pdf}}
+        \subfigure[]{\label{fg:orien3}\includegraphics[height=4.5cm]{fig/moca/Fig_8e.pdf}}
+    \end{center}
+    \caption{A 4-module probe simulated using MOCA. (a) All modules are oriented in the same direction. Red circles represent sources and blue crosses represent detectors. An exhaustive search of all combinations of orientations for each of the four modules results in 256 possible layouts. The average brain sensitivity and number of spatial multiplexing groups for the first 128 layouts are shown in (b). The original layout (layout number 1) is highlighted in the red square. An example layout with the maximum possible brain sensitivity (layout number 66) is highlighted in the green square. (c) A visual representation of layout 66 with the bottom-left and top-right modules rotated 90 degrees clockwise with respect to orientation in (a). Intra- and inter-module channel distribution resulting from the original layout is shown in (d). Channel counts resulting from the probe configuration in (c) are shown in (e). In both channel distribution histograms (d, e), intra- and inter-module channels are shown in blue and orange, respectively. Dark orange indicates overlapping histogram counts.} 
+    \label{fig:orientation}
 \end{figure} 
 
 Of the 256 possible layout configurations, 8 of those layouts result in a maximum average brain sensitivity of 9.87\%. These 8 layouts also achieve the minimum number ($n_{SMG}=4$) of spatial multiplexing groups. The intra- and inter-module channel distribution and channel count resulting from the \ac{MOCA} analysis of the original probe layout are shown in Figure~\ref{fig:orientation}d. Figure~\ref{fig:orientation}c shows the same 4-module probe but constructed with the bottom-left and top-right modules rotated 90 degrees clockwise, corresponding to layout number 66 in Figure~\ref{fig:orientation}b. Using \ac{MOCA}, the spatial channel plot overlaid onto this re-oriented probe shows a denser coverage of the center of the \ac{ROI} compared to the original probe layout. The channel count distribution of this re-oriented probe is shown in Figure~\ref{fig:orientation}e. As expected, the intra-module channels in Figure~\ref{fig:orientation}a and Figure~\ref{fig:orientation}c are identical. However, re-orienting the two modules produces a shift towards longer separation inter-module channels that are known to be more sensitive to brain tissues. The number of inter-module channels within the 10 to 20~mm range decreases from 8 to 4 and the number of 29~mm separation inter-module channels increases from 2 to 12 upon re-orienting the 2 modules. The re-orientation of modules not only allows the probe to have more long-separation channels, it also increases the total number of inter-module channels from 14 to 20 (Figures~\ref{fig:orientation}d and e). Additionally, $\overline{S_{brain}}$ of the probe increases from 8.56\% to 9.87\% (Figure~\ref{fig:orientation}f) while the number of spatial multiplexing groups, and subsequently the probe's sampling rate, remains the same.
@@ -287,11 +286,12 @@ Probe spacing\textemdash the distance between edges of adjacent modules in a pro
 
 
 \begin{figure}
-\begin{center}
-\subfigure[]{\label{fg:spacing1}\includegraphics[height=6cm]{fig/moca/Fig_9a.pdf}}
-\subfigure[]{\label{fg:spacing2}\includegraphics[height=6cm]{fig/moca/Fig_9b.pdf}}
-\end{center}
-\caption {An analysis of hexagonal modules in a twelve-module probe. (a) Green arrows indicate the distances between modules as probe spacing varies. (b) The total channel count, average brain sensitivity, and the spatial multiplexing ratio at probe spacing values between 1 and 30~mm. Module orientations are held constant.} \label{fig:spacing}
+    \begin{center}
+        \subfigure[]{\label{fg:spacing1}\includegraphics[height=6cm]{fig/moca/Fig_9a.pdf}}
+        \subfigure[]{\label{fg:spacing2}\includegraphics[height=6cm]{fig/moca/Fig_9b.pdf}}
+    \end{center}
+    \caption {An analysis of hexagonal modules in a twelve-module probe. (a) Green arrows indicate the distances between modules as probe spacing varies. (b) The total channel count, average brain sensitivity, and the spatial multiplexing ratio at probe spacing values between 1 and 30~mm. Module orientations are held constant.} 
+    \label{fig:spacing}
 \end{figure} 
 
 When all modules are densely packed with a spacing of 1~mm, the probe results in 328 total channels (184 of which are inter-module channels), an $\overline{S_{brain}}$ of 5.95\%, and 12 \ac{SMG}s. When the probe spacing is increased to 6~mm, the number of channels and spatial multiplexing groups remain the same while the $\overline{S_{brain}}$ increases (Figure~\ref{fig:spacing}b). The increase in $\overline{S_{brain}}$ arises due to the overall increased distances between sources and detectors of inter-module channels which sample deeper into the brain tissue. This results in a local maximum $\overline{S_{brain}}$ of 7.87\%. 
@@ -302,16 +302,16 @@ When we increase probe spacing to 8~mm, the inter-module channel separations inc
 Staggering adjacent modules within a high-density probe can increase inter-module \ac{SD} separations to improve performance. To demonstrate the effect of staggering on the resulting probe, in Figure~\ref{fig:stagger} we simulate a 42~$\textrm{mm}^2$ square module in a 3$\times$1 layout configuration inspired by M3BA modules~\cite{Bci2017}. Each of our simulated modules contains two sources and two detectors. The probe was staggered by translating the center module between 0~mm and 42~mm along the horizontal axis.
 
 \begin{figure}
-\begin{center}
-\subfigure[]{\label{fg:stag1}\includegraphics[height=5cm]{fig/moca/Fig_10a.pdf}}
-\subfigure[]{\label{fg:stag2}\includegraphics[height=5cm]{fig/moca/Fig_10b.pdf}}
-\subfigure[]{\label{fg:stag4}\includegraphics[height=5cm]{fig/moca/Fig_10c.pdf}}
-\subfigure[]{\label{fg:stag5}\includegraphics[height=5cm]{fig/moca/Fig_10d.pdf}}
-\subfigure[]{\label{fg:stag3}\includegraphics[height=5cm]{fig/moca/Fig_10e.pdf}}
-\subfigure[]{\label{fg:stag6}\includegraphics[height=5cm]{fig/moca/Fig_10f.pdf}}
-\end{center}
-\caption {An analysis of square modules in a three-module probe. (a) A traditional three-module tessellation. Red circles represent sources and blue crosses represent detectors. (b) The resulting intra- and inter-module channel distribution from the probe layout in (a). (c) The average brain sensitivity for each layout resulting from module staggering separated by intra- and inter-module channel contributions. (d) The center module staggered by 26~mm, resulting in increased channel separation for inter-module channels, as shown in (e). (f) The total channel count and the number of spatial multiplexing groups of the probe layout as the center module is staggered between 0 and 42~mm.}
- \label{fig:stagger}
+    \begin{center}
+        \subfigure[]{\label{fg:stag1}\includegraphics[height=5cm]{fig/moca/Fig_10a.pdf}}
+        \subfigure[]{\label{fg:stag2}\includegraphics[height=5cm]{fig/moca/Fig_10b.pdf}}
+        \subfigure[]{\label{fg:stag4}\includegraphics[height=5cm]{fig/moca/Fig_10c.pdf}}
+        \subfigure[]{\label{fg:stag5}\includegraphics[height=5cm]{fig/moca/Fig_10d.pdf}}
+        \subfigure[]{\label{fg:stag3}\includegraphics[height=5cm]{fig/moca/Fig_10e.pdf}}
+        \subfigure[]{\label{fg:stag6}\includegraphics[height=5cm]{fig/moca/Fig_10f.pdf}}
+    \end{center}
+    \caption {An analysis of square modules in a three-module probe. (a) A traditional three-module tessellation. Red circles represent sources and blue crosses represent detectors. (b) The resulting intra- and inter-module channel distribution from the probe layout in (a). (c) The average brain sensitivity for each layout resulting from module staggering separated by intra- and inter-module channel contributions. (d) The center module staggered by 26~mm, resulting in increased channel separation for inter-module channels, as shown in (e). (f) The total channel count and the number of spatial multiplexing groups of the probe layout as the center module is staggered between 0 and 42~mm.}
+    \label{fig:stagger}
 \end{figure} 
 
 In Figure~\ref{fig:stagger}a, we overlaid the intra- (blue) and inter-module (orange) channels over the three-module probe. The resulting channel distribution shows 12 intra-module channels at 28~mm and 4 inter-module channels at 14~mm \ac{SD} separations (Figure~\ref{fig:stagger}b). The $\overline{S_{brain}}$ of this probe using all channels is 8.79\% (Figure~\ref{fig:stagger}c). When analyzed separately by intra- and inter-module channels, the $\overline{S_{brain}}$ using only intra-module channels (10.75\%) is larger the $\overline{S_{brain}}$ when using only inter-module channels (2.9\%) since in this tessellation intra-module channels are larger and probe deeper into the tissue.  

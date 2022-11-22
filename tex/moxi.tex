@@ -11,28 +11,28 @@ Every year, nearly 3 million newborns die within the first 4 weeks of life in \a
 Finger-clip-based pulse oximeters, however, are difficult to use on small fingers. Newborn-specific pulse oximeter probes, often sold as disposable parts, can cost up to \$100 USD, and require a more expensive oximeter system to read and display results~\cite{Ouro-BangnaMaman2005,Heywood1989}. These designs thus have an extremely limited presence in first-level clinics in \ac{LMIC}s. In recent years, portable \ac{NIR} devices have been reported, but they generally have high costs dues to sensitive \ac{CCD} cameras and stand-alone image acquisition software~\cite{Jung2013}, or still require the use of a finger-clip~\cite{Karlen2011,Hudson2012}. Many factors, primarily high acquisition and maintenance costs (Table~\ref{tab:lmicbarriers}), have hindered the adoption of portable diagnostics tools~\cite{Malkin2007}. 
 
 \begin{table}
-\centering
-\caption{Barriers to adoption of new medical devices in \ac{LMIC}s}
-\label{tab:lmicbarriers}
-\begin{tabular}{@{}cl@{}}
-\toprule
-Rank & Barrier to Adoption \\ \midrule
-1    & Acquisition Costs   \\
-2    & Spare Parts         \\
-3    & Consumables         \\
-4    & Reliable Power      \\
-5    & Infrastructure      \\
-6    & Training            \\ \bottomrule
-\end{tabular}
+    \centering
+    \caption{Barriers to adoption of new medical devices in \ac{LMIC}s}
+    \label{tab:lmicbarriers}
+    \begin{tabular}{@{}cl@{}}
+    \toprule
+    Rank & Barrier to Adoption \\ \midrule
+    1    & Acquisition Costs   \\
+    2    & Spare Parts         \\
+    3    & Consumables         \\
+    4    & Reliable Power      \\
+    5    & Infrastructure      \\
+    6    & Training            \\ \bottomrule
+    \end{tabular}
 \end{table}
 
 A silver lining comes from the Pew Global Research Center, which reported that smartphone ownership in \ac{LMIC}s rose from 21\% to 45\% between 2013 and 2018, making smartphone networks the fastest growing infrastructure in \ac{LMIC}s~\cite{Poushter2016}. By capitalizing on the ubiquitous presence of smartphones worldwide, we aim to develop phone-camera-based and phone-communication facilitated \ac{NIRS} devices to measure tissue oxygenation, directly addressing the barriers to adoption in Table~\ref{tab:lmicbarriers}. These smartphone-based devices can address the current limitations of conventional pulse oximeters, including newborn-unfriendly clip designs, acquisition and maintenance costs of disposable probes, and the need for frequent disinfection due to direct skin contact. Leveraging smartphone features such as cameras, \ac{LED}s, and wireless communication along with their power and computation will pave the way for \ac{POC} smartphone-based diagnostic tools. 
 
 \begin{figure}
 	\begin{center}
-	\subfigure[]{\label{fig:moximeter}\includegraphics[height=6cm]{fig/moxi/moximeter.pdf}}
-	\subfigure[]{\label{fig:D1D3}\includegraphics[height=6cm]{fig/moxi/D1D3.pdf}}
-	\subfigure[]{\label{fig:D2}\includegraphics[height=6cm]{fig/moxi/D2.pdf}}
+    	\subfigure[]{\label{fig:moximeter}\includegraphics[height=6cm]{fig/moxi/moximeter.pdf}}
+    	\subfigure[]{\label{fig:D1D3}\includegraphics[height=6cm]{fig/moxi/D1D3.pdf}}
+    	\subfigure[]{\label{fig:D2}\includegraphics[height=6cm]{fig/moxi/D2.pdf}}
 	\end{center}
 	\caption{(a) Screenshot of Moximeter mobile application simultaneously capturing D1 and D3 data. (b) D1 (green, dashed) and D3 (yellow, solid) mounted on a smartphone phone. (c) D2 board with cover.} 
 	\label{fig:designs}
@@ -53,8 +53,8 @@ In reflectance measurements, the distance between the sources and detector deter
 \subsubsection{Phone Mount}
 \begin{figure}
     \begin{center}
-    \subfigure[]{\label{fig:D1mount}\includegraphics[height=5cm]{fig/moxi/D1mount.pdf}}
-    \subfigure[]{\label{fig:D1D3mount}\includegraphics[height=5cm]{fig/moxi/D1D3mount.pdf}}
+        \subfigure[]{\label{fig:D1mount}\includegraphics[height=5cm]{fig/moxi/D1mount.pdf}}
+        \subfigure[]{\label{fig:D1D3mount}\includegraphics[height=5cm]{fig/moxi/D1D3mount.pdf}}
     \end{center}
     \caption{(a) D1 phone mount. (b) Simultaneous capture of D1 and D3.} 
     \label{fig:D1hardware}
@@ -68,17 +68,15 @@ An Android phone application called Moximeter, written in Java, was developed to
 Unlike a transmission finger clip where the optodes and finger are coupled, a reflectance-based measurement is more prone to noise and artifacts since the finger being sampled can move independently of the optodes. To reduce this noise, 16 readings of red and \ac{IR} readings are sampled by the \ac{AFE4490} prior to sending an average value to Moximeter. The sampling is done onboard to maintain our 60~Hz sampling rate. Additionally, a 5~ms delay has been added between the \ac{SPI} transfer calls by the microcontroller to allow the \ac{AFE4490} to stabilize. This stabilization prevents the loss of data and decreases the likelihood of garbled measurements. As an added precaution, our processing of data workflow now incorporates a mean filter in addition to our bandpass filter to remove any unwanted ``chirps'' or spikes in data. 
         
 \subsubsection{Independent Source Control}
-%Photodiodes have a peak wavelength sensitivity and source pairs have different power outputs from their red and \ac{IR} \ac{LED}s for the same input current. Therefore, the ability to independently adjust each source transmission and receiving channel allows us to obtain comparable signals from the different optodes to increase the sensitivity of our \ac{SpO$_2$} calculations.
-
 The receiver channel of the board is made up of a differential current-to-voltage trans-impedance amplifier followed by a current \ac{DAC}. The amplifier has programmable a feedback resistor ($R_F$) and a capacitor ($C_F$) to form a low-pass filter for the input signal current. The output voltage of the amplifier includes the \ac{AC} component and a component resulting from ambient light leakage. The \ac{DAC} attempts to amplify only the \ac{AC} component of the \ac{PPG} signal. By systematically varying $R_F$, $C_F$, and the transmitter reference voltage for each optode, we are able to determine the \ac{AFE4490} configuration that maximizes the \ac{AC} components of both red and \ac{IR} \ac{PPG} signals, independently. Since the \ac{RR} is based on the amplitude of the \ac{AC} component of the \ac{PPG} signals, increasing the \ac{AC} range with optimized \ac{AFE4490} configurations allows for more sensitivity in \ac{RR} calculations and thus more accuracy in \ac{SpO$_2$} readings. 
         
 \subsection{D1 Results}
 \begin{figure}
     \begin{center}
-    \subfigure[]{\label{fig:D1resultsa}\includegraphics[width=.49\textwidth]{fig/moxi/D1resultsa.pdf}}
-    \subfigure[]{\label{fig:D1resultsb}\includegraphics[width=.49\textwidth]{fig/moxi/D1resultsb.pdf}}
+        \subfigure[]{\label{fig:D1resultsa}\includegraphics[width=.49\textwidth]{fig/moxi/D1resultsa.pdf}}
+        \subfigure[]{\label{fig:D1resultsb}\includegraphics[width=.49\textwidth]{fig/moxi/D1resultsb.pdf}}
     \end{center}
-    \caption{(a) EVM and prototype red (red) and infrared (black) \ac{PPG} signals. (b) Ratio-of-ratios in blue EVM and green (D1 Device).} 
+    \caption{(a) Photoplethysmogram signals from evaluation module board and D1 design. (b) Ratio-of-ratios in blue (evaluation module) and green (D1 Device).} 
     \label{fig:D1results}
 \end{figure}
 To evaluate the D1 prototype, we compared the obtained signals from our device against simultaneously acquired signals from an \ac{EVM}. The \ac{EVM} captures \ac{PPG} signals through transmission via a finger flip on the middle finger. The index finger of the same hand was placed over the optodes on the D1 device. The \ac{PPG} signals in Figure~\ref{fig:D1resultsa} were simultaneously captured from the D1 device and from the \ac{AFE4490} \ac{EVM} during a 46-second breath-holding procedure. Signals were band-pass filtered using a sixth-order zero-phase Butterworth filter to remove out-of-bound noise (0.2 to 5~Hz). As shown in Figure~\ref{fig:D1resultsb}, \ac{RR} (Equation~\ref{eq:RR}) increases as \ac{SpO$_2$} decreases due to the larger difference between extinction coefficients of \ac{HbO} and \ac{HbR} at red versus \ac{IR} light. The pairwise linear correlation coefficient, $R$, between the two ratio-of-ratio signals in Figure~\ref{fig:D1results} is 0.4856. 
@@ -164,7 +162,7 @@ The \ac{PPG} signal, the measured intensity by the detector, was simulated by in
     \begin{center}
     \includegraphics[width=\textwidth]{fig/moxi/D3process.pdf}
     \end{center}
-    \caption{Process of creating the ratio-of-ratio to \ac{SpO$_2$} mapping in simulation. Monte Carlo simulations result in fluence measurements at various \ac{SpO$_2$} values for both wavelengths at 0 and 20\% artery volume increase. An example 1 second \ac{PPG} pulse is scaled by the fluence measurements and repeated to create a time trace. Each repetition is low-pass filtered with a randomized cutoff frequency between 60 and 100 hz. The \ac{RR} value is then calculated from the simulated \ac{PPG} signals.} 
+    \caption{Process of creating the ratio-of-ratio to arterial blood oxygen saturation mapping in simulation. Monte Carlo simulations result in fluence measurements at various arterial blood oxygen saturation values for both wavelengths at 0 and 20\% artery volume increase. An example 1 second photoplethysmogram pulse is scaled by the fluence measurements and repeated to create a time trace. Each repetition is low-pass filtered with a randomized cutoff frequency between 60 and 100 hz. The ratio-of-ratio value is then calculated from the simulated photoplethysmogram signals.} 
     \label{fig:D3process}
 \end{figure} 
 The traditional calculation of \ac{RR} was altered slightly to account for broadband light. For this device, \ac{RR} is defined as 
@@ -178,7 +176,7 @@ where $A$ is the amplitude, $BB$ refers to the broadband \ac{PPG} signal, and $F
     \begin{center}
     \includegraphics[width=\textwidth]{fig/moxi/D3RR.pdf}
     \end{center}
-    \caption{Results of ratio-of-ratio mapping to \ac{SpO$_2$} based on Monte Carlo simulations. The curves are shown for two-wavelength simulations in transmission, two-wavelength simulations in reflection, and broadband simulations in reflection.} 
+    \caption{Results of ratio-of-ratio mapping to arterial blood oxygen saturation based on Monte Carlo simulations. The curves are shown for two-wavelength simulations in transmission, two-wavelength simulations in reflection, and broadband simulations in reflection.} 
     \label{fig:D3RR}
 \end{figure}
 The \ac{RR} values calculated from the fluence values at the detector locations from the \ac{MCX} simulations are shown in Figure~\ref{fig:D3RR}. Traditional two-wavelength transmission simulations showed a typical linearly decreasing relationship between \ac{RR} and \ac{SpO$_2$} as expected. The difference between the maximum and minimum \ac{RR} is 0.0795. In traditional two-wavelength reflection mode, the range of \ac{RR} dropped to 0.0519. This indicates that transmission mode is more sensitive to changes in \ac{RR}, and thus to changes in \ac{SpO$_2$}, than reflection mode. 
@@ -204,7 +202,7 @@ The Moximeter application controlled the smartphone's \ac{LED} flash and sampled
     \subfigure[]{\label{fig:D3resultsc}\includegraphics[width=.45\textwidth]{fig/moxi/D3resultsc.pdf}}
     \subfigure[]{\label{fig:D3resultsd}\includegraphics[width=.45\textwidth]{fig/moxi/D3resultsd.pdf}}
     \end{center}
-    \caption{Results from comparison of our broadband reflectance-based oximeter with a clinical grade pulse oximeter. Green lines indicate clinical pulse oximeter readings sampled at 1 Hz. Red lines indicate calculated \ac{SpO$_2$} measurements using our broadband oximeter. } 
+    \caption{Results from comparison of our broadband reflectance-based oximeter with a clinical grade pulse oximeter. Green lines indicate clinical pulse oximeter readings sampled at 1 Hz. Red lines indicate calculated arterial blood oxygen saturation measurements using our broadband oximeter. } 
     \label{fig:D3results}
 \end{figure} 
 Selected results from this pilot study are shown in Figure~\ref{fig:D3results}. In many cases [Figures~\ref{fig:D3results}(a), (b), and (c)], we observe a strong overall correlation between \ac{SpO$_2$} readings from our paper filter (red lines) and the finger-clip style Masimo clinical grad pulse oximeter readings (green lines). Figure~\ref{fig:D3results} shows that our D3 design captures the expected delay in \ac{SpO$_2$} drop after initial breath holding. Additionally, the D3 readings correlate well with the minimum \ac{SpO$_2$} values determined by the Masimo baseline. 
