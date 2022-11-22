@@ -56,9 +56,10 @@ Phantoms are objects with optical properties that mimic human tissues~\cite{Pogu
 Pulse oximetry is used to measure oxygen saturation of hemoglobin in arterial blood and is so widely prevalent it is regarded as the fifth vital sign in medical care~\cite{Neff1988}. It is based on two principles. The first is that $HbO_2$ and $HbR$ absorb red and \ac{IR} light differently~\cite{Bohn2015}. Because of this, pulse oximeters tend to emit two wavelengths of light. Traditional (finger-clip) pulse oximeters place light sources and detectors on opposite sides of the finger. The second principle is that arterial blood volume fluctuates with the cardiac cycle while blood volume in veins, capillaries, skin, fat, and bone remains relatively constant~\cite{Sinex1999}. Thus, light that propagates through the finger and is detected by the detector has two components during temporal measurements of the cardiac cycle---a relatively stable and non-pulsatile \ac{DC} component from the constant volume in veins and capillaries, and a pulsatile \ac{AC} component from the volume fluctuation of the arteries~\cite{Lopez2012}. This detected time trace is called a \ac{PPG}~\cite{Sinex1999}. 
 
 Pulse oximeters use the amplitudes of \ac{PPG} signals from red and \ac{IR} light to calculate oxygen saturation ($SpO_2$) at the finger. $SpO_2$ is calculated from the ratio of the \ac{AC} to \ac{DC} components of the red and \ac{IR} light. The \ac{RR} is defined as
-\begin{equation} \label{eq:RR}
+\begin{equation}
     RR = \frac{ A_{red,AC}/A_{red,DC} }{ A_{IR,AC}/A_{IR,DC} }
-    %RR = \frac{\frac{A_{red,AC}}{A_{red,DC}}}{\frac{A_{IR,AC}}{A_{IR,DC}}} 
+    %RR = \frac{\frac{A_{red,AC}}{A_{red,DC}}}{\frac{A_{IR,AC}}{A_{IR,DC}}}
+    \label{eq:RR}
 \end{equation}
 where $A$ is absorbance. At low oxygen saturation, the increased $HbR$ presence leads to a larger relative change in amplitude of red light due to the pulse compared to \ac{IR} absorbance ($A_{red,AC} > A_{IR,AC}$), resulting in a higher $RR$ value. $SpO_2$ is calculated from a calibration curve mapping $RR$ to $SpO_2$ generated from empirical measurements of $RR$ in healthy volunteers with altered saturations~\cite{Chan2013}. 
 
@@ -87,7 +88,7 @@ In general, medical instruments can be approached from multiple viewpoints~\cite
 
 We will compare the three \ac{NIR} imaging systems in terms of their system lifecycle properties, or ilities~\cite{DeWeck2012}. While it is true that any system has a set of design criteria based on signal, environmental, medical, and economic factors that impose constraints based on their specific use, ilities are typically not primary functional requirements of a system. Rather, ilities often manifest themselves after a system has been put to initial use. Unlike other engineering properties that are more easily tested in a laboratory, ilities tend to not receive as much focus~\cite{DeWeck2012}. However, when discussing the potential translation of a medical technology to outside the laboratory setting, ilities better inform of wider system impact with respect to stakeholders and are better indicators of user needs~\cite{DeWeck2011}. The ilities we will use in this thesis to compare across the three \ac{NIR} systems are defined in Table~\ref{tab:ilities}. 
 
-\begin{table}[]
+\begin{table}
 \centering
 \caption{Definition of ilities. Asterisks indicate the definition was replicated from de Weck et al., 2012~\cite{DeWeck2012}}
 \label{tab:ilities}
