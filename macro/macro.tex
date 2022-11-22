@@ -28,7 +28,12 @@
 % enable index generation
 \makeindex
 \usepackage{makeidx}
-\usepackage{acronym} %[nohyperlinks]{acronym}  % see https://tex.stackexchange.com/questions/25520/how-can-i-use-the-latex-acronym-package-and-optionally-create-an-acronym-list-i
+\usepackage[]{acronym} %[nohyperlinks]{acronym}  
+  % All commands: https://mirror.las.iastate.edu/tex-archive/macros/latex/contrib/acronym/acronym.pdf
+    % see https://tex.stackexchange.com/questions/25520/how-can-i-use-the-latex-acronym-package-and-optionally-create-an-acronym-list-i
+    % use \Ac not \ac when acronym is at the beginning of a sentence
+    % \acf uses full name even later on or when not the first time
+    % \acl gives only the full now (no acronym in parenthesis)
 
 % format URLs
 \usepackage{url}
