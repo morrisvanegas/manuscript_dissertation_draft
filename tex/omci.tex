@@ -2,7 +2,7 @@
 
 \chapter{OPTICAL MAMMOGRAPHY CO-IMAGER (OMCI)} % all caps please
 \label{chap:omci}
-\ac{OMCI} is a high-density breast multi-subsystem devide designed to be used in conjunction with existing x-ray mammography systems or as a standalone system for \ac{DOT}. It integrates four subsystems: a mechanical breast compression stage to resemble clinical mammography, a frequency-domain subsystem for recovering absolute tissue optical properties, a wide-field transmission-based diffuse optical subsystem, and high-resolution breast surface acquisition system. Although \ac{OMCI} is composed of four separate subsystems working in tandem, in this chapter, we will briefly provide an overall instrument description but will focus on design and characterization of the dual-camera structured light imaging (\ac{SLI}) breast shape acquisition system used for improving diffuse optical tomography image reconstructions.
+\ac{OMCI} is a high-density breast multi-subsystem devide designed to be used in conjunction with existing x-ray mammography systems or as a standalone system for \ac{DOT}. It integrates four subsystems: a mechanical breast compression stage to resemble clinical mammography, a frequency-domain subsystem for recovering absolute tissue optical properties, a wide-field transmission-based diffuse optical subsystem, and high-resolution breast surface acquisition system. Although \ac{OMCI} is composed of four separate subsystems working in tandem, in this chapter, we will briefly provide an overall instrument description but will focus on design and characterization of the dual-camera \ac{SLI} breast shape acquisition system used for improving diffuse optical tomography image reconstructions.
 
 
 \section{Introduction} %significance
@@ -32,9 +32,9 @@ In this chapter, we first describe the overall \ac{OMCI} instrument and its subs
 \subsection{OMCI Instrument}
 \begin{figure}
     \begin{center}
-        \includegraphics[width=.4\textwidth]{fig/omci/OMCIoverview.pdf}
+        \includegraphics[width=.6\textwidth]{fig/omci/OMCIoverview.pdf}
     \end{center}
-    \caption{The OMCI system in its fully compressed state.} 
+    \caption{The patient side of our OMCI system in its fully compressed state.} 
     \label{fig:OMCISystem}
 \end{figure} 
 
@@ -55,7 +55,7 @@ While the breast is in compression, it is illuminated with an \ac{FD} and a \ac{
 	\subfigure[]{\label{fig:mammography_side}\includegraphics[height=5cm]{fig/omci/mammography_side.pdf}}
 	\subfigure[]{\label{fig:mammography_setup}\includegraphics[width=5cm]{fig/omci/sli_model.pdf}}
 	\end{center}
-	\caption{ (a) Top-view of the breast compression compartment -- upper: \ac{SLI} system; bottom: horizontal cross-section (orange line) of the compressed breast with blue circles indicating the placement of the checkerboard used for system calibration. Numbers 1-5 indicate the 5 board orientations repeated at each location for calibration. (b) Side-view of the breast compression plates, showing the linear translation stage (blue bar on the right) and a linear encoder (in yellow), and  (c) 3-D rendering of the \ac{SLI} system, an acrylic bottom plate and an acrylic compression plate (top). } 
+	\caption{ (a) Top-view of the breast compression compartment -- upper: structured-light imaging system; bottom: horizontal cross-section (orange line) of the compressed breast with blue circles indicating the placement of the checkerboard used for system calibration. Numbers 1-5 indicate the 5 board orientations repeated at each location for calibration. (b) Side-view of the breast compression plates, showing the linear translation stage (blue bar on the right) and a linear encoder (in yellow), and  (c) 3-D rendering of the structured-light imaging system, an acrylic bottom plate, and an acrylic compression plate (top). } 
 	\label{fig:mammographysetup}
 \end{figure} 
 
@@ -63,7 +63,8 @@ The \ac{SLI} system is embedded between the compression plate to provide accurat
 
 Gray-code-based binary patterns~\cite{Inokuchi1984} are sequentially illuminated onto the breast surface and captured using both USB cameras. These patterns are characterized by their pattern order, $P$. A pattern set of $P=3$ results in 3 sequences which are a reflected binary of the previous (``01'', ``0110'', and ``01100110''). Four bar patterns are created for each sequence (a horizontal black and white bar pattern, a vertical black and white bar pattern, and the complimentary pattern of each)~\cite{Sels2019}. The digits correspond to the white (``1'') and black (``0'') bars. In addition, a full-bright (white) and full-dark (black) pattern are added to each pattern set. Thus, a pattern set of $P=3$ results in $4\times P+2$ illumination bar patterns. Complimentary Gray-code-based illumination pattern sets are used due to their robustness to decoding errors~\cite{Moreno2012}. The two USB cameras have overlapping field-of-views and sequentially capture images of the breast during each illumination pattern at an exposure time of 250~ms. Dual-camera simultaneous acquisition allows the \ac{SLI} system to capture the curved surface of breasts of varied sizes without moving components. 
 
-\subsubsection{Special data acquisition considerations}\label{sec:special}
+\subsubsection{Special data acquisition considerations}
+\label{sec:special}
 % skin tone
 Skin tone differences are known to affect light-based surface reconstruction accuracy, especially in low-light settings. To account for skin tone variations, the normalized illumination patterns are multiplied by a scaling factor $\alpha$ ranging from 0 to 1 to prevent camera saturation. The scaling factor for a camera is calculated prior to data acquisition by first illuminating a full-bright pattern with $\alpha=1$ onto the breast and capturing a single image using the camera. If the maximum pixel value of the captured image is above a preset threshold, $\alpha$ is decreased and the breast is re-illuminated with a full-bright pattern multiplied by the new $\alpha$ value. This procedure is repeated until the maximum pixel value of the captured image is less than 95\% of the camera's maximum allowable pixel value. This entire procedure takes an estimated 8 seconds to complete and is repeated for each camera.
 
@@ -73,7 +74,7 @@ Skin tone differences are known to affect light-based surface reconstruction acc
 	\subfigure[]{\label{fig:artifact1}\includegraphics[height=2.4cm]{fig/omci/bars_artifact.png}}
 	\subfigure[]{\label{fig:artifact2}\includegraphics[height=2.4cm]{fig/omci/bars.png}}
 	\end{center}
-	\caption{(a) Front-view photo of the \ac{SLI} system. Cameras and projectors are embedded in an acrylic mount to prevent the need for re-calibration. (b) Horizontal bar patterns reflecting off the top compression plate and onto the breast show curved illumination bar artifacts when the scaling factor $\alpha$ is set to 1. In (c), we show the same illumination pattern with thickness-informed masking eliminating the curved bar artifacts by cropping the patterns exceeding the breast surface before projection. Additionally, the scaling factor is automatically calculated to prevent camera saturation.} 
+	\caption{(a) Front-view photo of the structured-light imaging system. Cameras and projectors are embedded in an acrylic mount to prevent the need for re-calibration. (b) Horizontal bar patterns reflecting off the top compression plate and onto the breast show curved illumination bar artifacts when the scaling factor $\alpha$ is set to 1. In (c), we show the same illumination pattern with thickness-informed masking eliminating the curved bar artifacts by cropping the patterns exceeding the breast surface before projection. Additionally, the scaling factor is automatically calculated to prevent camera saturation.} 
 	\label{fig:barartifacts}
 \end{figure} 
 
@@ -104,7 +105,7 @@ To evaluate the accuracy of the \ac{SLI} system, we compare its output against a
     \begin{center}
     \includegraphics[width=.9\textwidth]{fig/omci/mesh_flowchart2.pdf}
     \end{center}
-    \caption{Generation of breast surface meshes using multiple acquisition methods. The \ac{DBT} volumetric mesh is created from segmented scans. The extrusion surface mesh is created by extruding the top contour to the breast thickness. The top and side contours of the \ac{DBT} mesh are swept to create top and side surface meshes. The \ac{SLI} mesh is created by scanning a 3-D printed breast phantom and trimming the resulting point-cloud using the linear encoder measurements. The surface estimation error is calculated for each of the surface meshes by comparing the surface estimations to the \ac{DBT} mesh. All surface meshes are converted to volumetric meshes for validating the effect of surface estimation methods on inclusion reconstruction.}
+    \caption{Generation of breast surface meshes using multiple acquisition methods. The digital breast tomosynthesis (DBT) volumetric mesh is created from segmented scans. The extrusion surface mesh is created by extruding the top contour to the breast thickness. The top and side contours of the DBT mesh are swept to create top and side surface meshes. The structured-light imaging mesh is created by scanning a 3-D printed breast phantom and trimming the resulting point-cloud using the linear encoder measurements. The surface estimation error is calculated for each of the surface meshes by comparing the surface estimations to the DBT mesh. All surface meshes are converted to volumetric meshes for validating the effect of surface estimation methods on inclusion reconstruction.}
     \label{fig:mesh_flowchart}
 \end{figure} 
 
@@ -123,11 +124,11 @@ Three alternative surface estimation methods are employed in addition to the \ac
 	\subfigure[]{\label{fig:pcmergea}\includegraphics[width=0.32\textwidth]{fig/omci/PC_dual.pdf}}
 	\subfigure[]{\label{fig:pcmergeb}\includegraphics[width=0.32\textwidth]{fig/omci/PC_merged.pdf}}
 	\end{center}
-	\caption{(a) Surface mesh of a digital breast tomosynthesis model obtained from The Cancer Imaging Archive~\cite{Clark2013}. Blue cyan lines show the $x/y$ and $y/z$ breast contours from the top and side views. (b) Estimate of the \ac{DBT} surface using the extrusion method in which the contour (cyan) is extruded to the thickness of the breast along the $z$ axis. (c) The top-sweep method uses the $x/y$ contour as the profile (cyan) and the $y/z$ contour as the path to sweep (red). (d) The side-sweep method uses the $y/z$ contour as the profile (cyan) and the $x/y$ contour as the path to sweep (red). (e) point-clouds from both camera-projector pairs were generated by scanning a 3-D printed model of the \ac{DBT} breast using the \ac{SLI} system. The green (Camera 1) and magenta (Camera 2) point-clouds are in the respective camera coordinates. (f) Merged and denoised point-cloud in the projector's coordinates.} 
+	\caption{(a) Surface mesh of a digital breast tomosynthesis (DBT) model obtained from The Cancer Imaging Archive~\cite{Clark2013}. Blue cyan lines show the $x/y$ and $y/z$ breast contours from the top and side views. (b) Estimate of the DBT surface using the extrusion method in which the contour (cyan) is extruded to the thickness of the breast along the $z$ axis. (c) The top-sweep method uses the $x/y$ contour as the profile (cyan) and the $y/z$ contour as the path to sweep (red). (d) The side-sweep method uses the $y/z$ contour as the profile (cyan) and the $x/y$ contour as the path to sweep (red). (e) point-clouds from both camera-projector pairs were generated by scanning a 3-D printed model of the DBT breast using the structured-light imaging system. The green (Camera 1) and magenta (Camera 2) point-clouds are in the respective camera coordinates. (f) Merged and denoised point-cloud in the projector's coordinates.} 
 	\label{fig:meshes}
 \end{figure} 
 
-\subsubsection{Structured light imaging surface mesh generation}
+\subsubsection{Structured-light imaging surface mesh generation}
 The \ac{SLI} system estimates the surface of the compressed breast from the captured images while the breast is illuminated with Gray-code sequence patterns. Each camera-projector pair's extrinsic parameters are used to generate a point-cloud in each camera's reference frame using Scan3d-Capture~\cite{Moreno2012a} [Fig.~\ref{fig:pcmergea}]. The alignment of each camera-projector pair point-cloud is done by a rigid transformation of each point-cloud to the projector's coordinates. The point-clouds are then down-sampled using a box grid filter and merged to a single point with normal properties averaged~\cite{Pomerleau2013}. Denoising is then performed to remove outliers~\cite{Rusu2008}. The point-cloud is trimmed in the $z$ direction to the height of the \ac{DBT} breast measured by the linear encoder [Fig.~\ref{fig:pcmergeb}]. The trimmed point-cloud is first converted to a mesh using a crust algorithm~\cite{Crust1999} prior to being cropped by a bounding-box mesh with height matching the breast thickness to form a closed surface mesh. 
 
 \subsubsection{Surface estimation error}
@@ -166,7 +167,7 @@ A re-calibration is only necessary when the relative position of the cameras and
 \subsection{Surface estimation errors}
 \begin{table}
     \centering
-    \caption{Mean and standard deviation of the residuals of each point in a surface estimation mesh compared to the original \ac{DBT} breast mesh.}
+    \caption{Mean and standard deviation of the residuals of each point in a surface estimation mesh compared to the original digital breast tomosynthesis breast mesh.}
     %\resizebox{\textwidth}{!}{%
         \begin{tabular}{lcccc}
         \toprule
@@ -188,7 +189,7 @@ Table~\ref{tab:residuals} shows the mean and standard deviation of the residual 
 	\begin{center}
 	    \includegraphics[width=.9\textwidth]{fig/omci/mse.pdf}
 	\end{center}
-	\caption{A comparison between the mean squared error (\ac{MSE}) of the reconstructed absorption map using 4 estimated surfaces (EXT - $z$-axis extrusion, TOP - sweeping $x/y$ contour along $y/z$ contour, SIDE -- sweeping $y/z$ contour along $x/y$ contour, and \ac{SLI} -- surface acquired from our \ac{SLI} system) as well as the ground truth surface (\ac{DBT}). A 1~cm diameter spherical inclusion is moved away from the breast surface at various depths between 5 and 45~mm in 1 mm increments. Image slices (in $x/y$ plane) of the reconstructed absorption coefficient ($\mu_a$ in mm$^{-1}$) (top-row) and the ground truth $\mu_a$ (bottom-right) are shown as insets.}
+	\caption{A comparison between the mean squared error (MSE) of the reconstructed absorption map using 4 estimated surfaces (EXT - $z$-axis extrusion, TOP - sweeping $x/y$ contour along $y/z$ contour, SIDE -- sweeping $y/z$ contour along $x/y$ contour, and SLI -- surface acquired from our structured-light imaging system) as well as the ground truth digital breast tomosynthesis surface. A 1~cm diameter spherical inclusion is moved away from the breast surface at various depths between 5 and 45~mm in 1 mm increments. Image slices (in $x/y$ plane) of the reconstructed absorption coefficient ($\mu_a$ in mm$^{-1}$) (top-row) and the ground truth $\mu_a$ (bottom-right) are shown as insets.}
 	\label{fig:mse}
 \end{figure} 
 
@@ -204,7 +205,7 @@ The \ac{MSE} errors from these reconstructed images are summarized in Fig.~\ref{
     \subfigure[]{\label{fig:PatientResultsC}\includegraphics[width=.4\textwidth]{fig/omci/PatientResultsA.png}}
     \subfigure[]{\label{fig:PatientResultsD}\includegraphics[width=.4\textwidth]{fig/omci/PatientResultsB.png}}
     \end{center}
-    \caption{\textcolor{red}{These images will be replaced with patient data showing SLI in a healthy volunteer. I will also show reconstructed results and will cite Edward + Miguel. Edward to provide me with patient IDs that have good SLI acquisitions. } (b) The generated 3D breast-shaped mesh from a \ac{SLI} measurement on a healthy patient.} 
+    \caption{\textcolor{red}{These images will be replaced with patient data showing structured-light imaging (SLI) in a healthy volunteer. I will also show reconstructed results and will cite Edward + Miguel. Edward to provide me with patient IDs that have good SLI acquisitions. } (b) The generated 3D breast-shaped mesh from a SLI measurement on a healthy patient.} 
     \label{fig:PatientResults}
 \end{figure} 
 
