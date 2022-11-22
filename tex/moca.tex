@@ -29,10 +29,10 @@ The remainder of the paper is outlined below. In Section~\ref{sec:overview}, we 
 \section{Modular Probe Parameters and Performance Metrics}
 \label{sec:overview}
 
-\begin{figure}[ht]
+\begin{figure}
     \begin{center}
     \begin{tabular}{c}
-    \includegraphics[height=10cm]{Fig_1.pdf}
+    \includegraphics[height=10cm]{fig/moca/Fig_1.pdf}
     \end{tabular}
     \end{center}
     \caption { \label{fig:flowchart} Workflow of module-level design parameters (left column; blue) used in probe-level processes (center column; red) to produce performance metrics to characterize a probe (right column; green). Performance metrics are organized top to bottom from least complex (two parameters needed) to most complex (four parameters needed). Arrows trace how parameters are used to derive specific performance metrics.} 
@@ -114,3 +114,205 @@ The density of assembled modular probes may impact the probe's temporal sampling
 The search for the SMG starts by randomly specifying a source position as the seed; a circle of radius $SDS_{max}$ centered at the seed position is drawn and a random source outside of this circle that is at least 2$\times SDS_{max}$ away is picked; the above process repeats until no additional source can be found. Once an SMG is identified, a new source that does not belong to any existing SMG is selected as the new seed for the next SMG and the above process repeats until every source is allocated. The total number of spatial multiplexing groups, $n_{SMG}$, depends on the tessellation of the module over the ROI as well as the choice of the seed position. As with channels, the $n_{SMG}$ are for a single wavelength. Thus, when estimating the total sampling rate of the probe using dual-wavelength sources, the control unit must cycle through each group twice (once for each wavelength).
 
 In addition to $n_{SMG}$, MOCA calculates the spatial multiplexing ratio (SMR), defined as $SMR=n_s/n_{SMG}$. This ratio is interpreted as the acceleration factor of the data acquisition speed when using spatial multiplexing. For example, for a 20-source probe, an $n_{SMG}$ of 5 can accelerate the data acquisition by a factor of $SMR=20/5=4$ fold.
+
+
+
+%%% Section %%%
+% Additional Features
+\section{Additional Functionalities}
+\label{sec:features}
+MOCA was created as an exploratory tool to interrogate specific design parameters and reveal the trade-offs, within a well-constrained search space, regarding specific design decisions. MOCA possess functions to facilitate changing probe-level parameters and exporting the desired probe for use in existing probe design tools such as AtlasViewer.
+
+\subsection{Parameter sweeping}
+\subsubsection{Altering spacing between modules}
+An optional parameter during module tessellation is probe spacing -- a uniform distance assumed between adjacent modules. The spacing sweep function varies the probe spacing within a user-defined range in user-defined increments. For the three built-in polygons (triangle, square, hexagon), spacing is increased between all adjacent sides of the modules within the probe. For arbitrary shapes, spacing is added to the horizontal and vertical sides of the rectangular bounding box. The number of modules required to cover the ROI is continuously adjusted as probe spacing is varied. The performance metrics for each of the resulting probes are reported by MOCA as a function of probe spacing.
+
+\subsubsection{Exhaustive search of module orientations}
+MOCA provides a limited orientation enumeration function to re-orient modules through a predefined number of orientations. For the three built-in polygons, the default number of re-orientations per module is simply the number of sides of the polygon. For arbitrary shapes, the default number of re-orientations is four based on the bounding box. Additionally, a user can describe the number of orientations for any shape. MOCA re-orients modules in evenly spaced angle increments. An exhaustive search is performed using the number of modules in the probe and the number of user-defined orientations. Each probe resulting from each permutation of module re-orientations is characterized by MOCA and reported as a function of various probe layouts.
+
+\subsubsection{Staggering rows of modules}
+Staggering modules refers to shifting a row (or column) of tessellated modules in the $x$ (or $y$) axis. Staggering is performed on tiling grid probe layouts. Adjusting this probe-level parameter is particularly useful for improving probes composed of modules with symmetrical optode layouts, where re-orienting modules does not affect SDS, or when high-density probes are needed, where probe spacing cannot be increased. A user defines both the range and increment by which to offset a particular row. Each resulting probe is analyzed and the corresponding performance metrics are calculated. MOCA then reports a plot of the $\overline{S_{brain}}$, spatial multiplexing ratio, and the number of channels for each staggered probe.
+
+
+\subsection{Exporting probe for use in AtlasViewer}
+MOCA performs its analysis of module- and probe-level parameters on an infinite slab model derived from the Colin27 atlas. When 3-D analysis is desired, MOCA can export the probe layout to a ``.sd'' file for use in ``SDgui'' -- a built-in tool of AtlasViewer~\cite{Aasted2015} used for creating and editing ``.sd'' files. To properly represent a modular probe layout in AtlasViewer (which treats all optodes individually without a reference to a module), MOCA first translates the module-level parameters by creating fixed/rigid springs between all optode pairs (source-source, source-detector, and detector-detector) within each module. These fixed springs maintain the relative optode layout within each module while permitting bending at the junctions between springs. MOCA then adds fixed springs between each inter-module channel (SD pairs between modules with distances below the $SDS_{max}$) to translate the probe-level parameters (spacing, orientation, staggering). As an additional constraint, MOCA adds flexible springs (springs of length -1) for inter-module channels above the $SDS_{max}$. Finally, to register the probe to the surface of the selected atlas, MOCA adds three dummy optodes to the exported ``.sd'' file. All three optodes are placed at the midpoint between the minimum and maximum $x$ coordinates of all optodes in the probe. The $y$ coordinate of the first, second, and third dummy optodes are set to the minimum $y$ coordinate, midpoint, and maximum $y$ coordinate of all optodes in the probe, respectively. The first, second, and third dummy optodes are assigned to the Fpz, Cz, and Oz positions, respectively, in the standard 10-10 system. This places any MOCA-designed probe at the top of an atlas by default. A user can change the dummy optode anchors to re-position the probe on an atlas. The exported ``.sd'' file can then be loaded into AtlasViewer for placement on a generic or subject-specific atlas (Fig.~\ref{fig:SDoutput}).
+
+
+\begin{figure}[]
+\begin{center}
+\subfigure[]{\label{fg:SD1}\includegraphics[height=5cm]{fig/moca/Fig_2a.pdf}}
+\subfigure[]{\label{fg:SD2}\includegraphics[height=5cm]{fig/moca/Fig_2b.pdf}}
+\subfigure[]{\label{fg:SD3}\includegraphics[height=5cm]{fig/moca/Fig_2c.pdf}}
+\end{center}
+\caption{Example probe exported for use in AtlasViewer~\cite{Aasted2015}. (a) A four module probe with three sources (red circles) and two detectors (blue crosses) plotted using MOCA. Intra- (blue) and inter-module (orange) channels are shown in solid lines. (b) Imported probe in SDgui. Solid lines represent fixed springs. Dashed green lines represent flexible springs between sources and detectors. Three dummy optodes (numbered 21, 22, and 23) are shown in black. (c) The resulting probe in AtlasViewer registered to an atlas using the dummy optodes as anchors.}
+\label{fig:SDoutput}
+
+\end{figure} 
+
+
+
+%%% Section %%%
+% RESULTS
+\section{Results \revised{and Practical Examples}}
+\label{sec:results}
+In this section, we first validate the $S_{brain}$ derived from a simplified five-layer slab model against previously published atlas-based $S_{brain}$ results~\cite{Strangman2013}. Then we demonstrate how \updated{the module-level parameters of} MOCA can be used to characterize and compare full-head probes composed of different choices of elementary module designs. Lastly, we show examples using MOCA\updated{'s assembly processes} as investigational tools to \revised{potentially} improve existing designs by altering probe-level parameters such as \updated{probe spacing, module orientations, and the staggering of modules within an assembled probe.}
+
+\begin{figure}[ht]
+    \begin{center}
+    \begin{tabular}{c}
+    %\includegraphics[height=5.5cm]{mcr3b.eps}
+    \includegraphics[width=9cm]{Fig_3.pdf}
+    \end{tabular}
+    \end{center}
+    \caption {Results comparing brain sensitivity derived from finite slab models \updated{used by MOCA} and atlas-based models. The blue line shows calculated brain sensitivity based on a five-layer slab model for SD separations from 0 to 60~mm in 1~mm increments. Overlaid in black are the brain sensitivity results calculated from an atlas \updated{by averaging brain sensitivity for fixed source-detector separations} across nineteen locations in the international 10-20 system~\cite{Strangman2013}. } 
+    \label{fig:BScomparison}
+\end{figure} 
+
+\subsection{Slab-based brain sensitivity corresponds with atlas-based sensitivity}
+Fig.~\ref{fig:BScomparison} shows $S_{brain}$ calculated using our five-layer slab model at SD separations ranging from 1 to 60~mm in 1~mm increments (blue line). We also overlay full-head averages of $S_{brain}$ and standard deviations at 20, 25, 30, 35, and 40~mm separations from a previously published study~\cite{Strangman2013} using the Colin27 atlas.
+
+Simulations on a five-layer slab model show an increase in $S_{brain}$ as SDS increases. Additionally, $S_{brain}$ for SD separations below 10~mm is less than 1.17\%. At 20, 25, 30, 35, and 40~mm separations, the maximum difference between the atlas-based and slab-based $S_{brain}$ values is less than 0.6\%. Fig.~\ref{fig:BScomparison} demonstrates that using 2-D approximation of the ROI and a layered brain structure provides a reasonable trade-off between accuracy and computational efficiency, especially for high density probe characterization.
+
+\subsection{Comparison between sample modules of various shapes.}
+\label{subsec:comparison}
+MOCA allows the comparison of a wide range of fNIRS module designs \updated{by quantifying the effects of probe-level design parameters on a probe's performance.} As a showcase, here we report the results from a comparison of three equilateral module shapes (square, hexagon, and triangle) with the same optode layout tessellated over a 200$\times$200~mm ROI, derived from the average surface area of the top half of an adult male head~\cite{McConville1980}. Square~\cite{Chitnis2016, Bci2017, Zimmermann2013} and hexagonal~\cite{Funane2017, Wyser2017, Zhao2019} fNIRS modules have been extensively studied in literature and are chosen here for a quantitative comparison. While an equilateral triangle has not been reported in published module designs, we include it here because of the potential suitability for better tessellation of a 3-D surface in future extensions. With this comparison, we want to demonstrate both the scalability of MOCA in analyzing full-head probes and how \updated{performance metrics change across module-level design decisions}.
+
+As mentioned above, MOCA systematically tessellates the target ROI using the module geometry and assigns each module an index number. If not considering within-module optode locations, only translation is needed for both square and hexagon modules to completely cover a region. For the triangle shape, MOCA rotates every other triangle and its optodes 180 degrees to fill the ROI without leaving any gaps. No other probe-level parameter changes are made for this comparison. Probe spacing is set to zero. The default SS threshold is set to 10~mm and the $SDS_{max}$ is set to 30~mm. \revised{The minimum distance between sources used in calculating SMGs is set to 2$\times SDS_{max}$}. To avoid simultaneously changing multiple parameters and only focus on module shape, an identical optode layout made of two sources and two detectors is used in all three module designs in this example. The edge-length of the square is set to 33.33~mm, determined by the average length of three previously reported square-shaped module designs~\cite{Chitnis2016, Bci2017, Zimmermann2013}. The edge-length of the hexagon and triangle is set to 20.68 and 50.65~mm, respectively, calculated to achieve the same area as the square module. The three module designs as well as the tessellation of the hexagon-based probe over the ROI are shown in Fig.~\ref{fig:fullmodules}. The derived performance metrics for each of the three sample probes are summarized in Table~\ref{tab:results}. \updated{The results that follow are only applicable for the specific module- and probe-level parameters chosen for this showcase.}
+
+\begin{figure}[ht]
+\begin{center}
+\subfigure[]{\label{fg:module1}\includegraphics[height=\EXTPLOT]{Fig_4a.pdf}}
+\subfigure[]{\label{fg:module2}\includegraphics[height=\EXTPLOT]{Fig_4b.pdf}}
+\subfigure[]{\label{fg:module3}\includegraphics[height=\EXTPLOT]{Fig_4c.pdf}}
+\subfigure[]{\label{fg:module4}\includegraphics[height=\EXTPLOT]{Fig_4d.pdf}}
+\end{center}
+\caption {Elementary module designs used in a full-head comparison. (a), (b), and (c) show the perimeter of the square, hexagon, and triangle-based module designs, respectively. The optode layout of all three shapes is identical. Red circles represent sources while blue crosses represent detectors. (d) Tessellation of the hexagon module over an ROI. The dashed green line outlines the 200$\times$200~mm ROI.} \label{fig:fullmodules}
+
+\end{figure} 
+
+\begin{table}
+    \centering
+    \caption{Summary of quantitative \updated{performance} metrics derived by MOCA when tessellating the three elementary module shapes over a 200$\times$200~mm region of interest.}
+    \label{tab:results}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}llccc@{}}
+        \toprule
+        Row &
+          Performance Metric &
+          \begin{tabular}[c]{@{}c@{}}Square-based \\ probe\end{tabular} &
+          \begin{tabular}[c]{@{}c@{}}Hexagon-based\\ probe\end{tabular} &
+          \begin{tabular}[c]{@{}c@{}}Triangle-based\\ probe\end{tabular} \\ \midrule
+        1  & Total modules {[}N{]}                              & 36            & 42            & 40          \\
+        2  & Total optodes {[}N{]}                              & 144           & 168           & 160         \\
+        3  & Total channels {[}N{]}                             & 324           & 405           & 496         \\
+        4  & Intra-module channels {[}N{]}                      & 180           & 237           & 336         \\
+        5  & Inter-module channels {[}N{]}                      & 144           & 168           & 160         \\
+        6  & \% of channels that are inter-module {[}\%{]}      & 55.56         & 58.52         & 67.74       \\
+        7  & Average brain sensitivity {[}\%{]}                 & 7.52 $\pm$ 1.95 & 6.50 $\pm$ 2.44 & 8.83 $\pm$ 3.10 \\
+        8  & Average intra-module brain sensitivity {[}\%{]}    & 6.44 $\pm$ 2.10 & 6.44 $\pm$ 2.10 & 6.44 $\pm$ 2.10 \\
+        9  & Average inter-module brain sensitivity {[}\%{]}    & 8.82 $\pm$ 0.00 & 6.54 $\pm$ 2.66 & 9.94 $\pm$ 2.86 \\
+        10 & Spatial multiplexing groups {[}N{]}                & 9             & 8             & 13          \\
+        11 & Spatial Multiplexing Ratio                         & 8             & 10.5          & 6.15      \\ \bottomrule
+    \end{tabular}%
+    }
+\end{table}
+
+\subsubsection{Effect of module shape on channel separation distributions}
+Fig.~\ref{fig:fullchannels} shows a histogram of the SD separations of the full-head (200$\times$200~mm area) probe composed from the three selected module shapes. Table~\ref{tab:results} shows that the number of modules needed to cover the ROI varies for each shape due to \updated{the complete coverage constraint enforced by MOCA for this showcase} (Fig.~\ref{fig:fullmodules}d). Since each module utilizes the same optode layout, the intra-module channel distributions (blue bars in Figs.~\ref{fig:fullchannels}a, \ref{fig:fullchannels}b, and \ref{fig:fullchannels}c) are simply scaled by the total numbers of modules needed to completely cover the ROI. The SDS of inter-module channels are dependent on the module shape, resulting in varying inter-module channel distributions between all three probes (orange bars in Figs.~\ref{fig:fullchannels}a, \ref{fig:fullchannels}b, and \ref{fig:fullchannels}c). 
+
+\begin{figure}[ht]
+\begin{center}
+\subfigure[]{\label{fg:chann1}\includegraphics[height=5.2cm]{Fig_5a.pdf}}
+\subfigure[]{\label{fg:chann2}\includegraphics[height=5.2cm]{Fig_5b.pdf}}
+\subfigure[]{\label{fg:chann3}\includegraphics[height=5.2cm]{Fig_5c.pdf}}
+\subfigure[]{\label{fg:chann4}\includegraphics[height=5.2cm]{Fig_5d.pdf}}
+\end{center}
+\caption {Channel distributions and total channel counts resulting from the tessellation of the three elementary module shapes over a 200$\times$200~mm region of interest. (a-c) Resulting intra- and inter-module channel distributions for square, hexagon, and triangle module-based probes. (d) The total channel count of each probe grouped by intra- and inter-module channels.} \label{fig:fullchannels}
+
+\end{figure} 
+
+For this particular example, the triangle-based probe reports both the highest number of total channels (Fig.~\ref{fig:fullchannels}d) and the largest SD separations of all three tessellated probes (Fig.~\ref{fig:fullchannels}c). The hexagon-based probe appears to have the shortest inter-module channels (Fig.~\ref{fig:fullchannels}b). Due to its symmetry and given the $SDS_{max}$ setting, the square-based probe happens to have all SD separations at 24~mm. Notably, the triangle-based probe adds the most inter-module channels, almost twice the number of intra-module channels (Fig.~\ref{fig:fullchannels}d), while also requiring two fewer modules than the hexagon-based probe (Table~\ref{tab:results}, Rows 1-5). Fig.~\ref{fig:fullchannels}d also shows that the number of inter-module channels is greater than the number of intra-module channels for all three probes.
+
+
+\subsubsection{Combining intra- and inter-module channels for brain sensitivity}
+The $\overline{S_{brain}}$ values derived from the three probe designs, grouped by intra-module channels, inter-module channels, and all channels, are summarized in Fig.~\ref{fig:fullbrainsensitivity}. Only channels above the SS threshold and below the $SDS_{max}$ are used. Despite having the fewest total channels (Table~\ref{tab:results}, Row 3), the square-based probe results in a higher $\overline{S_{brain}}$ than the hexagon-based probe. For the square- and triangle-based probes, the use of inter-module channels increases the probe's $\overline{S_{brain}}$ as compared to simply using intra-module channels alone. For the hexagon-based probe, $\overline{S_{brain}}$ computed using only intra-module channels is similar to that when using only inter-module channels (6.44\% vs 6.54\%). Due to having the same optode layout, the intra-module $\overline{S_{brain}}$ is the same for all three probes. 
+
+\begin{figure}[ht]
+    \begin{center}
+    \begin{tabular}{c}
+    \includegraphics[width=8cm]{Fig_6.pdf}
+    \end{tabular}
+    \end{center}
+    \caption {Resulting average brain sensitivity organized by intra- and inter-module channels for square-, hexagon-, and triangle-based probes tessellated over a 200$\times$200~mm region. Short-separation channels are excluded in all calculations.} 
+    \label{fig:fullbrainsensitivity}
+\end{figure} 
+
+
+\subsubsection{Effect of module shapes on \updated{improving sampling rate}}
+The total $n_s$ compared to the $n_{SMG}$ arising from the tessellation of each module over the ROI are compared in Fig.~\ref{fig:fullgroups}a. The total number of sources for the square-, hexagon- and triangle-based probes are 72, 84, and 80, respectively. Fig.~\ref{fig:fullgroups}b overlays the first SMG over the triangle-based full-head probe. Using the $n_{SMG}$ for each probe (Table~\ref{tab:results}, Row 10), the SMR (the ratio between $n_s$ and $n_{SMG}$) is 8, 10.5, and 6.15 for the square-, hexagon-, and triangle-based probe, respectively. This result indicates that the hexagon-based probe's sampling rate can benefit the most when using  group-based spatial multiplexing.
+
+\begin{figure}[ht]
+\begin{center}
+\subfigure[]{\label{fg:group1}\includegraphics[height=6cm]{Fig_7a.pdf}}
+\subfigure[]{\label{fg:group2}\includegraphics[height=6cm]{Fig_7b.pdf}}
+\end{center}
+\caption {Spatial multiplexing group results from the tessellation of the square-, hexagon-, and triangle-based probes. (a) Comparison of total number of sources (orange) and total number of spatial multiplexing groups (green). (b) The triangle-based module tessellation with sources (red circles) and detectors (blue crosses). The dashed red circles indicate the ``effective'' region (30~mm radius) of each of the nine sources in the first spatial multiplexing group. The nine sources turned on simultaneously in this group are indicated by filled in red circles.} \label{fig:fullgroups}
+\end{figure} 
+
+
+\subsection{Improving existing probes through probe\updated{-level parameter} alterations}
+The ability to compute \updated{performance metrics} from basic design parameters allows users to explore probe-level alterations and \revised{potentially} improve existing probes using MOCA. Here, we simulate and alter published examples to demonstrate how even simple module layout changes such as rotating selected modules, altering probe spacing, and staggering modules can \revised{potentially} improve published probe designs.
+
+\subsubsection{Effect of optode orientation on probe characteristics}
+Re-orienting modules within existing probes alters the SDS distribution and, consequently, the probe's $S_{brain}$ \updated{and SMR}. In Fig.~\ref{fig:orientation}, we \revised{simulate a 36~$\textrm{mm}^2$ square module in a probe configuration inspired by the $\mu$NTS fNIRS module described in Chitnis~\emph{et al.}~\cite{Chitnis2016}}. The modules in the initial tessellation are oriented in the same direction as in the original paper (Fig.~\ref{fig:orientation}a). \revised{In our investigation, the spacing between each module is set to 5~mm and the $SDS_{max}$ is set to 30~mm}. Each module has 2 sources and 4 detectors, resulting in 8 intra-module channels per module ranging from 8 to 29~mm. \updated{A total of 256 different probe configurations result from exhaustively re-orienting each module individually by 90 degrees. Without losing generality, a subset of 128 layouts are shown in Fig.~\ref{fig:orientation}b to show the range of the variations.}
+
+\begin{figure}[ht]
+\begin{center}
+\subfigure[]{\label{fg:orien1}\includegraphics[height=4.7cm]{Fig_8a.pdf}}
+\subfigure[]{\label{fg:orien2}\includegraphics[height=4.7cm]{Fig_8b.pdf}}
+\subfigure[]{\label{fg:orien4}\includegraphics[height=4.7cm]{Fig_8c.pdf}}
+\subfigure[]{\label{fg:orien5}\includegraphics[height=4.7cm]{Fig_8d.pdf}}
+\subfigure[]{\label{fg:orien3}\includegraphics[height=4.7cm]{Fig_8e.pdf}}
+\end{center}
+\caption{A 4-module probe \revised{simulated} using MOCA. \updated{(a) All modules are oriented in the same direction. Red circles represent sources and blue crosses represent detectors. An exhaustive search of all combinations of orientations for each of the four modules results in 256 possible layouts. The average brain sensitivity and number of spatial multiplexing groups for the first 128 layouts are shown in (b). The original layout (layout number 1) is highlighted in the red square. An example layout with the maximum possible brain sensitivity (layout number 66) is highlighted in the green square. (c) A visual representation of layout 66 with the bottom-left and top-right modules rotated 90 degrees clockwise with respect to orientation in (a). Intra- and inter-module channel distribution resulting from the original layout is shown in (d). Channel counts resulting from the probe configuration in (c) are shown in (e). In both channel distribution histograms (d, e), intra- and inter-module channels are shown in blue and orange, respectively. Dark orange indicates overlapping histogram counts.} } 
+\label{fig:orientation}
+\end{figure} 
+
+\updated{Of the 256 possible layout configurations, 8 of those layouts result in a maximum average brain sensitivity of 9.87\%. These 8 layouts also achieve the minimum number ($n_{SMG}=4$) of spatial multiplexing groups. The intra- and inter-module channel distribution and channel count resulting from the MOCA analysis of the original probe layout are shown in Fig.~\ref{fig:orientation}d. Fig.~\ref{fig:orientation}c shows the same 4-module probe but constructed with the bottom-left and top-right modules rotated 90 degrees clockwise, corresponding to layout number 66 in Fig.~\ref{fig:orientation}b. Using MOCA, the spatial channel plot overlaid onto this re-oriented probe shows a denser coverage of the center of the ROI compared to the original probe layout. The channel count distribution of this re-oriented probe is shown in Fig.~\ref{fig:orientation}e. As expected, the intra-module channels in Fig.~\ref{fig:orientation}a and Fig.~\ref{fig:orientation}c are identical. However, re-orienting the two modules produces a shift towards longer separation inter-module channels that are known to be more sensitive to brain tissues. The number of inter-module channels within the 10 to 20~mm range decreases from 8 to 4 and the number of 29~mm separation inter-module channels increases from 2 to 12 upon re-orienting the 2 modules. The re-orientation of modules not only allows the probe to have more long-separation channels, it also increases the total number of inter-module channels from 14 to 20 (Fig.~\ref{fig:orientation}d and e). Additionally, $\overline{S_{brain}}$ of the probe increases from 8.56\% to 9.87\% (Fig.~\ref{fig:orientation}f) while the number of spatial multiplexing groups, and subsequently the probe's sampling rate, remains the same.}
+
+
+\subsubsection{Effect of probe spacing on probe performance}
+Probe spacing\textemdash the distance between edges of adjacent modules in a probe\textemdash is a parameter that can vary the resulting channel distribution and channel density of a probe by altering the relative distances between optodes on neighboring modules. To investigate the effect of this parameter, in Fig.~\ref{fig:spacing}, we \revised{simulate} the probe layout described by Zhao~\emph{et al.}~\cite{Zhao2019}, which utilizes hexagonal shaped LUMO fNIRS modules developed by Gowerlabs~\cite{Gowerlabs2019}. The length of each side of \revised{the hexagonal-shaped module used in our investigation} is set to 18~mm and each module contains three sources and four detectors. The $SDS_{max}$ is set to 30~mm. A uniform spacing is set between all adjacent modules. \updated{Probe spacing is varied from 0 to 30~mm in 1~mm increments. }
+
+
+\begin{figure}[ht]
+\begin{center}
+\subfigure[]{\label{fg:spacing1}\includegraphics[height=5cm]{Fig_9a.pdf}}
+\subfigure[]{\label{fg:spacing2}\includegraphics[height=5cm]{Fig_9b.pdf}}
+\end{center}
+\caption {An analysis of hexagonal modules in a twelve-module probe. (a) Green arrows indicate the distances between modules as probe spacing varies. (b) The total channel count, average brain sensitivity, and the spatial multiplexing ratio at \updated{probe spacing values between 1 and 30~mm. Module orientations are held constant.}} \label{fig:spacing}
+\end{figure} 
+
+When all modules are densely packed with a spacing of 1~mm, the probe results in 328 total channels (184 of which are inter-module channels), an $\overline{S_{brain}}$ of 5.95\%, and 12 SMGs. When the probe spacing is increased to 6~mm, the number of channels and spatial multiplexing groups remain the same while the $\overline{S_{brain}}$ increases (Fig.~\ref{fig:spacing}b). The increase in $\overline{S_{brain}}$ arises due to the overall increased distances between sources and detectors of inter-module channels which sample deeper into the brain tissue. This results in a local maximum $\overline{S_{brain}}$ of 7.87\%. 
+
+\updated{When we increase probe spacing to 8~mm, the inter-module channel separations increase to above the $SDS_{max}$. This decreases the number of ``usable'' inter-module channels and the probe's $\overline{S_{brain}}$. The SMR remains unchanged between 6 and 8~mm probe spacing. Above 11~mm, the increase in probe spacing increases the relative distance between adjacent sources, allowing more sources to be turned on at the same time and decreasing the $n_{SMG}$ needed. This trend continues as we increase probe spacing. Consequently, the probe's $\overline{S_{brain}}$ reaches a minimal plateau of 3\% at 15~mm spacing and beyond because only intra-module channels above the SS threshold remain within the SD range (Fig.~\ref{fig:spacing}b). Similarly, since modules are further apart, the $n_{SMG}$ continues to drop which increases the SMR (and the sampling rate of the probe when spatial multiplexing encoding is utilized). At 29mm spacing, the SMR value is 12 due to only 3 spatial multiplexing groups needed (one for each of the 3 sources on each module).}
+
+\subsubsection{Effect of staggering modules on probe characteristics}
+\updated{Staggering adjacent modules within a high-density probe can increase inter-module SD separations to improve performance.} To demonstrate the effect of staggering on the resulting probe, \revised{in Fig.~\ref{fig:stagger} we simulate a 42~$\textrm{mm}^2$ square module in a 3$\times$1 layout configuration inspired by M3BA modules~\cite{Bci2017}}. Each \revised{of our simulated modules} contain two sources and two detectors. \updated{The probe was staggered by translating the center module between 0~mm and 42~mm along the horizontal axis}.
+
+\begin{figure}[ht]
+\begin{center}
+\subfigure[]{\label{fg:stag1}\includegraphics[height=4.5cm]{Fig_10a.pdf}}
+\subfigure[]{\label{fg:stag2}\includegraphics[height=4.5cm]{Fig_10b.pdf}}
+\subfigure[]{\label{fg:stag4}\includegraphics[height=4.5cm]{Fig_10c.pdf}}
+\subfigure[]{\label{fg:stag5}\includegraphics[height=4.5cm]{Fig_10d.pdf}}
+\subfigure[]{\label{fg:stag3}\includegraphics[height=4.5cm]{Fig_10e.pdf}}
+\subfigure[]{\label{fg:stag6}\includegraphics[height=4.5cm]{Fig_10f.pdf}}
+\end{center}
+\caption {An analysis of square modules in a three-module probe. (a) A traditional three-module tessellation. Red circles represent sources and blue crosses represent detectors. \updated{(b) The resulting intra- and inter-module channel distribution from the probe layout in (a). (c) The average brain sensitivity for each layout resulting from module staggering separated by intra- and inter-module channel contributions. (d) The center module staggered by 26~mm, resulting in increased channel separation for inter-module channels, as shown in (e). (f) The total channel count and the number of spatial multiplexing groups of the probe layout as the center module is staggered between 0 and 42~mm.} }
+ \label{fig:stagger}
+\end{figure} 
+
+In Fig.~\ref{fig:stagger}a, we overlaid the intra- (blue) and inter-module (orange) channels over the three-module probe. The resulting channel distribution shows 12 intra-module channels at 28~mm and 4 inter-module channels at 14~mm SD separations (Fig.~\ref{fig:stagger}b). The $\overline{S_{brain}}$ of this probe using all channels is 8.79\% (Fig.~\ref{fig:stagger}c). When analyzed separately by intra- and inter-module channels, the $\overline{S_{brain}}$ using only intra-module channels (10.75\%) is larger the $\overline{S_{brain}}$ when using only inter-module channels (2.9\%) since in this tessellation intra-module channels are larger and probe deeper into the tissue.  
+
+\updated{In Fig.~\ref{fig:stagger}c, we show the effect of staggering the tessellated module layout by translating the center module along the horizontal axis. This alteration increases the inter-module channel separations. Consequently, the $\overline{S_{brain}}$ due to only inter-module channels increases until the inter-module channel separations are larger than the $SDS_{max}$. The $\overline{S_{brain}}$ using all channels increases from 8.79\% in the original tessellation to a maximum of 10.95\% in the staggered tessellation at 26~mm. The $n_{SMG}$ between the two layouts remained the same until a staggering amount of 31~mm at which point the sources are far away enough to group them together (Fig.~\ref{fig:stagger}f). }
