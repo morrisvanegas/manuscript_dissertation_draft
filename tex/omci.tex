@@ -30,7 +30,7 @@ In this chapter, we first describe the overall \ac{OMCI} instrument and its subs
 
 %%% Subsection %%%
 \subsection{OMCI Instrument}
-\begin{figure}[]
+\begin{figure}
     \begin{center}
     \subfigure[]{\label{fig:OMCISystemA}\includegraphics[width=.4\textwidth]{fig/omci/OMCISystemImage_1.png}}
     %\subfigure[]{\label{fig:OMCISystemB}\includegraphics[width=.5\textwidth]{fig/omci/OMCISystemSketch.png}}
@@ -198,7 +198,7 @@ Table~\ref{tab:residuals} shows the mean and standard deviation of the residual 
 The \ac{MSE} errors from these reconstructed images are summarized in Fig.~\ref{fig:mse}, showing the effect of different surface estimation methods on the accuracy of optical property recovery. Overall, surface mesh accuracy appears to have a notable impact on relatively shallow tumors, with a depth of less than 25~mm. \ac{MSE} values obtained using the \ac{SLI} method closely follow those using the ground truth \ac{DBT} mesh for most inclusion depths. The top- and side-sweep-based meshes followed similar trends, however, reporting higher errors compared to \ac{SLI} especially when the tumor is relatively shallow. The maximum \ac{MSE} value for the \ac{SLI} mesh at a distance of 5~mm from the surface ($4.89\times 10^{-7}$~mm$^2$) was 23\% higher than the maximum \ac{MSE} value for the \ac{DBT} mesh ($4.35\times 10^{-7}$~mm$^2$). In contrast, the single-axis-extrusion method (EXT) \ac{MSE} was nearly twice higher ($8.62\times 10^{-7}$ mm$^2$) than that from the \ac{DBT} mesh. Although the \ac{DBT} and \ac{SLI} mesh \ac{MSE}s plateau to their minimum around 15~mm from the surface, top-, side-, and extrusion-based mesh \ac{MSE}s continue to decrease until a depth of 25~mm. Beyond the depth of 25 mm, the errors between different methods become minimal.
 
 \subsection{Full system \textit{in-vivo} patient results}
-\begin{figure}[]
+\begin{figure}
     \begin{center}
     \subfigure[]{\label{fig:PatientResultsA}\includegraphics[width=.4\textwidth]{fig/omci/SLIMeshC.png}}
     \subfigure[]{\label{fig:PatientResultsB}\includegraphics[width=.4\textwidth]{fig/omci/SLIMeshD.png}}
@@ -229,7 +229,7 @@ From Table~\ref{tab:residuals}, the single-axis extrusion method resulted in the
 Our results also demonstrated that the improvement in surface estimation accuracy can lead to improved \ac{DOT} reconstruction accuracy. Fig.~\ref{fig:mse} shows using breast surfaces derived from \ac{SLI} can accurately recover the absorption profile compared to those recovered using the ground-truth (\ac{DBT}) mesh at most tested tumor depths. For superficial/shallow ($<$ 10~mm) tumors, the top- and side-sweep surface estimation methods followed similar trends to each other, reporting \ac{MSE}s about 50\% higher compared to those from using ground-truth (\ac{DBT}) surface models, and about 30\% higher than those from using \ac{SLI} surfaces. As expected, the effect of the surface accuracy decreases as the inclusion is moving further away ($>$ 25~mm) from the skin.
 
 % Patient results - to be added after patient results are added
-%In patient measurements, the \ac{SLI} subsystem successfully adjusted its projector intensity to prevent webcam saturation. The recovered bulk breast tissue optical properties from the \ac{FD} subsystem followed the reported values from our group~\cite{Fang2009} and others~\cite{Durduran2002}. Moreover, the 3-D reconstruction of the tissue physiology parameters resembles the internal breast tissue structures (i.e. adipose, muscle, and fibroglandular tissue) described previously~\cite{Fang2009}, denoting the capability of our system to resolve breast compounds.
+
 
 %limitations
 Despite the ability to produce sub-millimeter resolution of breast surfaces in poorly lit and confined mammography-like settings, both our \ac{SLI} system and our analysis have limitations. Firstly, the span of the output point-cloud from our \ac{SLI} system is limited to the area of the breast that is well-illuminated by the projector. As a result, tissue boundaries near the chest wall or those in direct contact with the compression plate may not be well covered due to the limited angles of the projector/camera line-of-sight. Still, for \ac{DOT} of a compressed breast, capturing a significant portion of the front-facing breast tissue as our system does, provides quantitative differences in reconstructions, as shown above. Future improvement of this system should consider using more compact, wide-angle projectors, higher resolution cameras, and patterns with higher order binary codes to both expand the field-of-view and increase the point-cloud resolution. Secondly, a 3-D printed breast model was used to experimentally compare different shape acquisition methods. Different choices of extruder sizes, filament colors, and printing techniques could impact the surface texture of the printed phantom and slightly alter the surface estimation errors. Finally, the quantification of reconstruction errors was based on simulations using a single set of pre-determined breast models, tumor size and shape, tumor contrast, and wide-field pattern size. An experimental validation using heterogeneous phantoms may produce more realistic comparisons.
