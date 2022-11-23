@@ -6,7 +6,7 @@ This is part 1 of 2 of the work addressing the second challenge described in Cha
 
 %%% Section %%% 
 \section{Introduction}
-\label{sec:introduction}
+\label{chap:moca:introduction}
 \ac{fNIRS} is an emerging neuroimaging technique to non-invasively measure brain activity using non-ionizing light~\cite{Ferrari2012}. Unlike \ac{fMRI}~\cite{Heinzel2013} that requires high-strength magnetic fields and large scanners, \ac{fNIRS} utilizes \ac{NIR} light to detect brain activation by measuring the associated hemodynamics. The portability of \ac{fNIRS} positions it as a competitive imaging modality to address some of the challenges of conventional neuroimaging techniques, such as \ac{fMRI} and \ac{MEG}, including a lack of wearability for continuous monitoring, limited temporal resolution, and need for subject immobility during use~\cite{Yucel2017}. It has shown great promise for safe and long-term monitoring of brain activity and is increasingly used in studies for behavioral~\cite{McDonald2018} and cognitive neurodevelopment~\cite{Aslin2015, Vanderwert2014, Wilcox2015, Soltanlou2018}, language~\cite{Quaresima2012, Rossi2012}, psychiatric conditions~\cite{Ehlis2014, Kumar2017}, stroke recovery~\cite{Yang2019}, and brain-computer interfaces~\cite{Naseer2015, Ahn2017, Hong2018}. 
 
 Despite exponential growth in the number of applications~\cite{Boas2014, Quaresima2019} and publications~\cite{Yucel2017} in recent years, many \ac{fNIRS} systems still employ fiber-based, cart-sized instrumentation~\cite{Scholkmann2014} that place limits on both channel density and the use of \ac{fNIRS} in natural environments. Although fiber-based high-density~\cite{Eggebrecht2014} and portable~\cite{Wheelock2019} \ac{fNIRS} systems have been demonstrated, the use of fragile fiber optics cables, stationary external source/detector units~\cite{Oxymon2017, Techen2018}, and the need for individual and specialized headgear for specific tasks have motivated the \ac{fNIRS} community to investigate more flexible modular and fiber-less designs~\cite{Zhao2017, Curtin2018}.
@@ -21,14 +21,14 @@ Along these lines, a number of \ac{fNIRS} data analysis packages exists~\cite{Hu
 
 A fully-automated probe design and optimization pipeline is impractical without application-dependent design constraints. Instead, we report a simplified, easy-to-use software toolbox to help designers navigate the vast parameter space of a modular probe. We also share a number of fundamental modular probe design strategies, discovered through our explorations via this toolbox, that are not widely recognized or previously studied. The entire workflow has been implemented into an open-source, MATLAB-based toolbox called Modular Optode Configuration Analyzer (MOCA~\cite{Vanegas2020}). \ac{MOCA} supports a list of commonly used module shapes, user-defined optode layouts, and \ac{ROI} coverage, and can produce quantitative performance metrics such as distributions of \ac{SD} separations, sensitivity maps, and spatial multiplexing groupings. These performance metrics also allow comparisons between different designs of modular probes. Although \ac{MOCA} is not designed as a fully-automated software that produces ``optimal'' probes regardless of application, its unique capability to describe and sweep modular probe parameters in operator-guided interrogations offers valuable perspective to start approaching the complex modular hardware design problem and make informed comparisons between well-constrained design choices.
 
-The remainder of the paper is outlined below. In Section~\ref{sec:overview}, we discuss the relevant design considerations when developing a modular probe using \ac{MOCA}. We specifically focus on the parameterization of the modules, processes required to assemble modules into functional probes, and related performance metrics for system characterization and comparisons. In Section~\ref{sec:results}, we demonstrate \ac{MOCA}'s capability in designing full-head probes using a variety of module shapes and compare their trade-offs regarding channel density, \ac{SD} separations, and average brain sensitivities. Furthermore, we utilize \ac{MOCA} to showcase potential improvements to published \ac{fNIRS} probes by altering module orientations, spacing, and staggering layouts. In Section~\ref{sec:discussion}, we highlight a number of generalizable design strategies that were discovered via our experiments using \ac{MOCA}, including the importance of considering module orientations, tiling strategies, and module spacing tuning, among others.
+The remainder of the paper is outlined below. In Section~\ref{chap:moca:overview}, we discuss the relevant design considerations when developing a modular probe using \ac{MOCA}. We specifically focus on the parameterization of the modules, processes required to assemble modules into functional probes, and related performance metrics for system characterization and comparisons. In Section~\ref{chap:moca:results}, we demonstrate \ac{MOCA}'s capability in designing full-head probes using a variety of module shapes and compare their trade-offs regarding channel density, \ac{SD} separations, and average brain sensitivities. Furthermore, we utilize \ac{MOCA} to showcase potential improvements to published \ac{fNIRS} probes by altering module orientations, spacing, and staggering layouts. In Section~\ref{chap:moca:discussion}, we highlight a number of generalizable design strategies that were discovered via our experiments using \ac{MOCA}, including the importance of considering module orientations, tiling strategies, and module spacing tuning, among others.
 
 
 
 %%% Section %%%
 % OVERVIEW
 \section{Modular Probe Parameters and Performance Metrics}
-\label{sec:overview}
+\label{chap:moca:overview}
 
 \begin{figure}
     \begin{center}
@@ -122,7 +122,7 @@ In addition to $n_{SMG}$, \ac{MOCA} calculates the \ac{SMR}, defined as $SMR=n_s
 %%% Section %%%
 % Additional Features
 \section{Additional Functionalities}
-\label{sec:features}
+\label{chap:moca:features}
 \ac{MOCA} was created as an exploratory tool to interrogate specific design parameters and reveal the trade-offs, within a well-constrained search space, regarding specific design decisions. \ac{MOCA} possesses functions to facilitate changing probe-level parameters and exporting the desired probe for use in existing probe design tools such as AtlasViewer.
 
 \subsection{Parameter sweeping}
@@ -155,7 +155,7 @@ Staggering modules refers to shifting a row (or column) of tessellated modules i
 %%% Section %%%
 % RESULTS
 \section{Results and Practical Examples}
-\label{sec:results}
+\label{chap:moca:results}
 In this section, we first validate the $S_{brain}$ derived from a simplified five-layer slab model against previously published atlas-based $S_{brain}$ results~\cite{Strangman2013}. Then we demonstrate how the module-level parameters of \ac{MOCA} can be used to characterize and compare full-head probes composed of different choices of elementary module designs. Lastly, we show examples using \ac{MOCA}'s assembly processes as investigational tools to potentially improve existing designs by altering probe-level parameters such as probe spacing, module orientations, and the staggering of modules within an assembled probe.
 
 \begin{figure}
@@ -323,7 +323,7 @@ In Figure~\ref{fig:stagger}c, we show the effect of staggering the tessellated m
 %%%% SECTION %%%%
 % DISCUSSION
 \section{Discussion}
-\label{sec:discussion}
+\label{chap:moca:discussion}
 Through the case studies shown in the above section, we demonstrate the high complexity in designing a modular probe, where even adjusting a single parameter may have a profound impact to other parameters as well as the overall performance. Despite the fact that \ac{MOCA} only permits operator-guided parameter interrogation in a well-constrained problem, the results from the above experiments did reveal a number of important design strategies that were not previously discussed in literature, including the effect of module re-orientation, fine-tuning the space between modules, and module staggering to potentially improve existing \ac{fNIRS} probes.
 
 %%% Full probe comparison
